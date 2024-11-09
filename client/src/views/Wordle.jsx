@@ -1,0 +1,160 @@
+import { useState, useEffect } from 'react';
+import { getRandomWord } from '../utils/WordleLogic';
+import WordleBoard from '../components/WordleGame/WordleBoard';
+import WordleKey from '../components/WordleGame/WordleKey';
+import Header from '../components/GameHeader/GameHeader';
+import WinningModal from '../components/Modals/WinningModal';
+
+const Wordle = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
+  const [targetWord, setTargetWord] = useState('');
+  const [currentGuess, setCurrentGuess] = useState('');
+  const [guesses, setGuesses] = useState([]);
+  const [gameStatus, setGameStatus] = useState('playing');
+  const [guessError, setGuessError] = useState(false);
+  const [keyStatus, setKeyStatus] = useState({});
+
+  // Initialize the target word when the component mounts
+  useEffect(() => {
+    resetGame();
+  }, []);
+
+  useEffect(() => {
+    // Check if the user won after each guess
+    if (guesses.length > 0 && guesses[guesses.length - 1].correct) {
+      handleWin();
+      return;
+    }
+    // Check if the user lost after each guess
+    if (guesses.length >= 6 && gameStatus !== 'won') {
+      handleLose();
+    }
+  }, [guesses, gameStatus]);
+
+  // Handle the win
+  const handleWin = () => {
+    setGameStatus('won');
+    setIsWinningModalOpen(true);
+  };
+
+  // Handle the loss
+  const handleLose = () => {
+    setGameStatus('lost');
+    setIsWinningModalOpen(true);
+  };
+
+  // Handle keyboard event for external typing
+  useEffect(() => {
+    const handleKeyboardEvent = (event) => {
+      if (gameStatus === 'playing') {
+        const key = event.key.toUpperCase();
+        if (key === 'ENTER') {
+          // Submit guess on Enter key
+          handleGuess();
+        } else if (key === 'BACKSPACE') {
+          // Handle backspace
+          setCurrentGuess(currentGuess.slice(0, -1));
+        } else if (/^[A-Za-z]$/.test(key) && currentGuess.length < 5) {
+          // Add letter to current guess
+          setCurrentGuess(currentGuess + key);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyboardEvent);
+    return () => {
+      window.removeEventListener('keydown', handleKeyboardEvent);
+    };
+  }, [currentGuess, gameStatus, guesses]);
+
+    // handle keyboard button push
+    const handleKeyPress = (key) => {
+      if (gameStatus === 'playing') {
+        if (key === 'ENTER') {
+          // Submit guess on Enter key
+          handleGuess();
+        } else if (key === 'BACKSPACE') {
+          // Handle backspace
+          setCurrentGuess(currentGuess.slice(0, -1));
+        } else if (/^[A-Za-z]$/.test(key) && currentGuess.length < 5) {
+          // Add letter to current guess
+          setCurrentGuess(currentGuess + key);
+        }
+      }
+    };
+
+  // Process guess
+  const handleGuess = () => {
+    if (currentGuess.length === 5) {
+      // Compare letters and set feedback
+      const feedback = checkGuess(currentGuess);
+      const correct = feedback.every(f => f === 'correct');
+      setGuesses([...guesses, { guess: currentGuess, feedback, correct }]);
+      setGuessError(false);
+      setCurrentGuess('');
+      // Update the keyStatus based on the feedback
+      const updatedKeyStatus = { ...keyStatus };
+      currentGuess.split('').forEach((letter, index) => {
+        const letterFeedback = feedback[index];
+        // If the letter is 'correct', we mark it as correct and don't overwrite it
+        if (letterFeedback === 'correct') {
+          updatedKeyStatus[letter] = 'correct';
+        } else if (letterFeedback === 'present' && updatedKeyStatus[letter] !== 'correct') {
+          // If it is 'present' but not yet 'correct', mark it as present
+          updatedKeyStatus[letter] = 'present';
+        } else if (letterFeedback === 'absent' && !updatedKeyStatus[letter]) {
+          // If it's 'absent' and hasn't been set yet (not present or correct), mark it as absent
+          updatedKeyStatus[letter] = 'absent';
+        }
+      });
+      // update keys
+      setKeyStatus(updatedKeyStatus);
+    } else if (currentGuess.length < 5) {
+      setGuessError(true);
+    }
+  };
+
+  // Check each letter to the target word and return feedback
+  const checkGuess = (guess) => {
+    const feedback = [];
+    for (let i = 0; i < 5; i++) {
+      if (guess[i] === targetWord[i]) {
+        feedback.push('correct');
+      } else if (targetWord.includes(guess[i])) {
+        feedback.push('present');
+      } else {
+        feedback.push('absent');
+      }
+    }
+    return feedback;
+  };
+
+  // Reset board function
+  const resetGame = async () => {
+    setGuesses([]);
+    setKeyStatus({});
+    setIsWinningModalOpen(false);
+    const word = await getRandomWord();
+    setGameStatus('playing');
+    setTargetWord(word);
+    setCurrentGuess('');
+    setGuessError(false);
+  };
+
+  return (
+    <main>
+      <Header title="Wordle" onclick={resetGame} turn_title="Guesses Left" turns={6 - guesses.length} />
+      <div className="wordle-container">
+        <WordleBoard guesses={guesses} currentGuess={currentGuess} guessError={guessError} />
+        <WordleKey onKeyPress={handleKeyPress} keyStatus={keyStatus} />
+      </div>
+      {/* Modals for win/loss */}
+      {isWinningModalOpen && gameStatus === 'lost' && (
+        <WinningModal message1="You lost! The word was " message2={`"${targetWord.toLowerCase()}"`} turns="" onClose={resetGame} />
+      )}
+      {isWinningModalOpen && gameStatus === 'won' && (
+        <WinningModal message1="You win! You took " message2={guesses.length === 1 ? "guess!" : "guesses!"} turns={guesses.length} onClose={resetGame} />
+      )}
+    </main>
+  );
+};
+
+export default Wordle;

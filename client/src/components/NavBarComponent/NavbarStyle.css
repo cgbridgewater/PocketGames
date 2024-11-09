@@ -1,0 +1,197 @@
+/*                         */
+/*      NAVBAR STYLE       */
+/*                         */
+
+/* hide toggle input */
+#drawer_toggle {
+    position: absolute;
+    opacity: 0;
+}
+
+/* hamburger and page "curtain" when navbar drawer is open*/
+#drawer_toggle_label {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    right: 0px;
+    height:80px;
+    width: 60px;
+    top: -31px;
+    display: block;
+    position: fixed;
+    background: none;
+    z-index: 99999;
+    transition: all 300ms ease;
+}
+
+#drawer_toggle_label:before {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 5px;
+    width: 35px;
+    border-radius: 10px;
+    right: 24px;
+    top: 45px;
+    background: var(--white);
+    box-shadow: 0 10px 0 var(--white), 0 20px 0 var(--white);
+}
+
+#drawer_toggle_label:hover::before {
+    transition: all 100ms ease;
+}
+/* End hamburger style */
+
+/* Header contains BeeDev name and logo */
+header {
+    width: 100%;
+    padding-right: 80px;
+    height: 50px;
+    position: fixed;
+    background-color: var(--red);
+    z-index: 99998;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transition: all 300ms ease;
+    filter: drop-shadow(0 0px 10px var(--red));
+    
+    a h1 {
+        position: relative;
+        left: 20px;
+        font-size: 1rem;
+    }
+    
+    img {
+        position: relative;
+        top: 3px;
+        left: 8px;
+        height: 50px;
+        width: auto;
+    }
+}
+/* End Header */
+
+/* Navbar slide out drawer */
+#drawer {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    right: -300px;
+    height: 100%;
+    width: 200px;
+    background: var(--background);
+    overflow-x: hidden;
+    padding: 0 0 0 20px;
+    -webkit-overflow-scrolling: touch;
+    z-index: 99998;
+    transition: all 300ms ease;
+}
+
+/* Drawer when checked */
+#drawer_toggle:checked ~ #drawer_toggle_label {
+    height: calc(100% + 40px);
+    right: 200px;
+    width: calc(100% - 180px);
+    background: rgba(0,0,0,0.85);
+    border-radius: 0 0 0 20px;
+    z-index: 2000000001; 
+}
+
+/* Hamburger when checked */
+#drawer_toggle:checked ~ #drawer_toggle_label:hover:before,#drawer_toggle:checked ~ #drawer_toggle_label::before {
+    visibility: hidden;
+}
+
+/* Darken screen when drawer is checked */
+#drawer_toggle:checked ~ #drawer {
+    right: 0px;
+    box-shadow: 0 0 20px var(--red);
+    z-index: 99999;
+}
+
+/* Drawer list for links */
+#drawer ul {
+    margin-top: 24px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 24px;
+    
+    li a {
+            text-decoration: none;
+    }
+}
+
+/* Required For Accessability */
+.visually_hidden {
+    position: absolute !important;
+    clip: rect(1px, 1px, 1px, 1px);
+    padding: 0 !important;
+    border: 0 !important;
+    height: 1px !important;
+    width: 1px !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+}
+
+/*                     */
+/* ACTIVE LINK STYLING */
+/*                     */
+/* Active Link Highlight under link */
+.active_link {
+    text-decoration: none;
+    
+    span {
+        position: relative;
+        text-decoration: none;
+        cursor: pointer;
+        text-wrap: nowrap;
+    
+        &::before {
+            right: 0; 
+        }
+        &::after {
+            left: 0;
+        }
+    }
+}
+
+.active_link span:before, .active_link span:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.active_link span:hover:before, .active_link span:hover:after {
+    width: 50%;
+}
+
+  /*                    */
+  /* ACTIVE LINK COLORS */
+  /*                    */
+
+  /* white to red */
+.redlink span {
+    color: var(--white);
+    
+    &:hover {
+    color: var(--red);
+    }
+    
+    &:before, &:after {
+    border-bottom: 1px solid  var(--red);
+    }
+}
