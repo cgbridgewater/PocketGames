@@ -474,6 +474,13 @@ a {
   min-width: 370px;
   margin: 36px auto 8px;
   gap: 8px;
+  
+  p {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    top: -28px;
+  }
 }
 
 .wordle-key-row {
@@ -552,6 +559,10 @@ a {
 
   .wordle-keyboard {
     top: 550px;
+
+    p {
+      top: -25px
+    }
   }
 }
 
