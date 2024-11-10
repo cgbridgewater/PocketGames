@@ -330,7 +330,14 @@ a {
       }
 
       &:disabled {
-        pointer-events: none;
+        cursor: default;
+        color: var(--red);
+        font-weight: 900;
+        font-size: 2rem;
+        
+        &:active, &:hover {
+          border-color: black;
+        }
       }
     }
 }
