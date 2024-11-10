@@ -125,6 +125,7 @@ const Wordle = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
     } else if (currentGuess.length < 5) {
       setGuessError(true);
       setInvalidWord(false)
+      setCurrentGuess("")
     }
   };
   
@@ -161,8 +162,8 @@ const Wordle = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
     <main>
       <Header title="Wordle" onclick={resetGame} turn_title="Guesses Left" turns={6 - guesses.length} />
       <div className="wordle-container">
-        <WordleBoard guesses={guesses} currentGuess={currentGuess} guessError={guessError} invalidWord={invalidWord} />
-        <WordleKey onKeyPress={handleKeyPress} keyStatus={keyStatus} />
+        <WordleBoard guesses={guesses} currentGuess={currentGuess} />
+        <WordleKey onKeyPress={handleKeyPress} keyStatus={keyStatus} guessError={guessError} invalidWord={invalidWord} />
       </div>
       {/* Modals for win/loss */}
       {isWinningModalOpen && gameStatus === 'lost' && (
