@@ -408,12 +408,6 @@ a {
 /* WORDLE STYLES */
 /*               */
 
-#guess_error {
-  margin: 0;
-  padding: 0;
-  color: var(--red);
-}
-
 /* Wordle Board */
 .wordle-board {
   display: flex;
@@ -478,8 +472,10 @@ a {
   p {
     position: absolute;
     left: 50%;
-    transform: translate(-50%);
     top: -28px;
+    transform: translate(-50%);
+    color: var(--red);
+    font-weight: bold;
   }
 }
 
