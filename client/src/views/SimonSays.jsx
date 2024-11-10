@@ -136,7 +136,11 @@ function Simon({ isWinningModalOpen, setIsWinningModalOpen }) {
                     />
                 </div>
                 {/* START BUTTON */}
-                <button id="play_button" onClick={handleNextLevel}>
+                <button 
+                    id="play_button" 
+                    onClick={handleNextLevel}
+                    disabled={sequence.length > 0} 
+                >
                     {sequence.length === 0 ? "Start" : sequence.length}
                 </button>
             </div>

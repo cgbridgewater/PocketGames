@@ -179,6 +179,12 @@ a {
   &:hover {
     border-color: white;
   }
+
+  &:focus {
+    outline-offset: 2px;
+    outline: 2px solid  var(--white);
+    border-radius: 12px;
+  }
   
   .game_card_title {
     background-color: var(--red);
@@ -300,6 +306,10 @@ a {
       border: 2px solid black;
       transition: all 0.2s ease;
       cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
     }
 
     #play_button {
@@ -318,6 +328,10 @@ a {
       &:active {
         border-color: var(--red);
       }
+
+      &:disabled {
+        pointer-events: none;
+      }
     }
 }
 
@@ -332,6 +346,7 @@ a {
   &:active {
     opacity: .9;
     transform: scale(0.995);
+    filter: drop-shadow(0px 0px 10px black)
   }
 }
 
@@ -346,6 +361,7 @@ a {
   &:active {
     opacity: .9;
     transform: scale(0.995);
+    filter: drop-shadow(0px 0px 10px black)
   }
 }
 
@@ -360,6 +376,7 @@ a {
   &:active {
     opacity: .9;
     transform: scale(0.995);
+    filter: drop-shadow(0px 0px 10px black)
   }
 }
 
@@ -374,11 +391,12 @@ a {
   &:active {
     opacity: .9;
     transform: scale(0.995);
+    filter: drop-shadow(0px 0px 10px black)
   }
 }
 
 .highlight {
-  filter: brightness(5) !important;
+  filter: drop-shadow(0px 0px 10px white) brightness(5) !important;
 }
 
 .opacity {
@@ -536,7 +554,7 @@ a {
 
 /* Special key sizes */
 .wordle-key.special {
-  width: 60px; /* Wider for Enter and Backspace */
+  width: 60px;
 }
 
 /* Game Status */
@@ -548,7 +566,6 @@ a {
 
 /* Responsive Design for Larger Screens */
 @media (min-width: 500px) {
-  /* Ensure that on Larger Screens the keyboard and other elements are responsive */
   .wordle-board {
     width: 370px;
     height: 510px;
@@ -625,7 +642,3 @@ a {
 /*               */
 /*   END MODAL   */
 /*               */
-
-
-
-
