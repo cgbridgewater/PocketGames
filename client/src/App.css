@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800&display=swap');
 
+/* ERROR 404 FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+
 @import url("./components/NavBarComponent/NavbarStyle.css");
 
 :root {
@@ -124,29 +129,9 @@ a {
   }
 }
 
-#enter_games {
-  background-color: var(--red);
-  border-radius: 50%;
-  height: 300px;
-  border: 2px solid var(--border_trim);
 
-  &:hover {
-    border-color: var(--white);
-  }
 
-  h5 {
-    position: relative;
-    top: 40px;
-  }
 
-  img {
-    position: relative;
-    top: -20px;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-  }
-}
 
 #turns span {
   color: var(--border_trim);
@@ -154,6 +139,63 @@ a {
   /* add in relative position and move number up 2-3px! */
 }
 
+
+/*              */
+/* LANDING PAGE */
+/*              */
+.landing_page {
+  margin-top: 36px;
+  
+  * {
+    font-weight: 400;
+    font-style: normal;
+    font-family: "Rubik Dirt", sans-serif;
+  }
+  
+  h3 {
+    font-size: 1.2rem;
+    width: 100vw;
+    margin: 0 auto;
+  }
+
+  img {
+    width: 390px;
+  }
+  
+  button {
+    background-color: var(--red);
+    font-size: 2rem;
+    padding: 20px;
+    width: 350px;
+    height: 350px;
+    margin: 60px auto 0;
+    border: 2px solid var(--border_trim);
+    border-radius: 50%;
+    cursor: pointer;
+    
+    &:hover {
+      border-color: var(--white);
+    }
+    
+    img {
+      width: 300px;
+    }
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .landing_page {
+    margin-top: 80px;
+    
+    h3 {
+      font-size: 2rem;
+    }
+  }
+}
+
+/*                  */
+/* END LANDING PAGE */
+/*                  */
 
 
 /*             */
@@ -649,3 +691,56 @@ a {
 /*               */
 /*   END MODAL   */
 /*               */
+
+
+/*               */
+/*   404 Style   */
+/*               */
+.error_404 {
+  a {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -60%);
+    
+    img {
+      border: 3px solid var(--border_trim);
+      border-radius: 50%;
+      width: 340px;
+      aspect-ratio: 1/1;
+      background-color: var(--red);
+      
+    }
+    
+    h1 {
+      position: relative;
+      top: 160px;
+      font-size: 1.8rem;
+      font-family: "Rubik Dirt", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      
+      span {
+        position: relative;
+        bottom: 4px;
+        font-size: 1rem;
+        font-family: 'Segoe Script', cursive, sans-serif; /* Cursive as fallback */
+        word-spacing: -0.2rem;
+      }
+      
+    }
+    
+  }
+}
+
+  @media screen and (min-width: 500px) {
+    .error_404 {
+      a {
+        transform: translate(-50%, -70%);
+      }
+    }
+  }
+
+/*                  */
+/*  END 404 Style   */
+/*                  */
