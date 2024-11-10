@@ -15,7 +15,7 @@ export default function WinningModal({ message1, message2, turns, onClose }) {
                 <h2>Game Over!</h2>
                 <p>{message1} {turns} {message2}</p>
                 <div className="button_box">
-                    <button onClick={onClose}>Play Again?</button>
+                    <button onClick={onClose} autoFocus>Play Again?</button>
                     <Link to="/games"><button>Quit</button></Link>
                 </div>
             </div>
