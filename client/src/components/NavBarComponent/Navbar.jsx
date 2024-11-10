@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from "react-router-dom";
-import GameIcon from "../../assets/images/GameIcon.png";
+import PocketGamesIcon from "../../assets/images/PocketGames.png";
 import NavDrawer from './NavDrawer';
 
 export default function Navbar() {
@@ -22,11 +22,8 @@ export default function Navbar() {
             <label htmlFor="drawer_toggle" id="drawer_toggle_label"><span className="visually_hidden">Empty Link</span></label>
             {/* NAV HEADER */}
             <header>
-                <Link to="/">
-                    <img className="logo" src={ GameIcon } alt="Pocket Games"/>
-                </Link>
                 <Link to="/games">
-                    <h1>Pocket Games</h1>
+                                    <img className="logo" src={ PocketGamesIcon } alt="Pocket Games"/>
                 </Link>
             </header>
             {/* END HEADER */}
