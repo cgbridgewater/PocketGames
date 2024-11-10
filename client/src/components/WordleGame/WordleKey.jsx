@@ -12,7 +12,7 @@ const WordleKey = ({ onKeyPress, keyStatus, invalidWord, guessError }) => {
     // Use feedback status as the class (correct, present, absent)
     return keyStatus[key];
   };
-  // &nbsp;
+
   return (
     <div className="wordle-keyboard">
       {/* Error Statements */}
