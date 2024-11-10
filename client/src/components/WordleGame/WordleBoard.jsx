@@ -25,10 +25,7 @@ const WordleBoard = ({ guesses = [], currentGuess }) => {
 
   // Ensure we always render 6 rows, current guess into the first empty row
   const rowsToRender = [
-    // Existing guesses (max 6)
     ...guesses
-
-    // ...(guesses.length < 6 ? [null] : []),  // Add an empty row for the current guess if < 6 guesses
   ];
 
   // Make sure we always have 6 rows (either filled with guesses or empty rows)
@@ -39,26 +36,23 @@ const WordleBoard = ({ guesses = [], currentGuess }) => {
   return (
     <div className="wordle-board">
       {rowsToRender.map((guess, index) => {
-        if (guess) {
-          return renderGuess(guess, index); // Render completed guess
+        if (index < guesses.length) {
+          // Render completed guess
+          return renderGuess(guess, index);
         }
-
-        // If it's the current guess row (first available empty row), render it
         if (index === guesses.length) {
+          // Render current guess row
           return (
-            <>
-              <div className="wordle-row" key={`current-${index}`}>
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <div className="wordle-cell" key={`current-letter-${index}-${i}`}>
-                    {currentGuess[i] || ''}  {/* Show current letters being typed */}
-                  </div>
-                ))}
-              </div>
-            </>
+            <div className="wordle-row" key={`current-${index}`}>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div className="wordle-cell" key={`current-letter-${index}-${i}`}>
+                  {currentGuess[i] || ''}
+                </div>
+              ))}
+            </div>
           );
         }
-
-        // Render empty rows for all unused guesses
+        // Render empty rows for all remaining slots
         return renderEmptyRow(index);
       })}
     </div>
