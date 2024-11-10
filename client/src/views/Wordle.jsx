@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getRandomWord } from '../utils/WordleLogic';
+import { getRandomWord, validateWord } from '../utils/WordleLogic';
 import WordleBoard from '../components/WordleGame/WordleBoard';
 import WordleKey from '../components/WordleGame/WordleKey';
 import Header from '../components/GameHeader/GameHeader';
@@ -12,6 +12,7 @@ const Wordle = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
   const [gameStatus, setGameStatus] = useState('playing');
   const [guessError, setGuessError] = useState(false);
   const [keyStatus, setKeyStatus] = useState({});
+  const [invalidWord , setInvalidWord] = useState(false)
 
   // Initialize the target word when the component mounts
   useEffect(() => {
@@ -82,35 +83,51 @@ const Wordle = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
     };
 
   // Process guess
-  const handleGuess = () => {
+  const handleGuess = async () => {
     if (currentGuess.length === 5) {
-      // Compare letters and set feedback
+      // Validate the word first
+      const isValid = await validateWord(currentGuess.toLowerCase());
+      if (!isValid) {
+        // Set the error message if the word is invalid
+        setGuessError(false)
+        setInvalidWord(true);
+        // Clear the invalid
+        setCurrentGuess("")
+
+        // Stop further execution if the word is invalid
+        return;
+      } else {
+        // Clear any previous error message
+        setInvalidWord(false);
+      }
+  
+      // If the word is valid, proceed with the rest of the logic
       const feedback = checkGuess(currentGuess);
       const correct = feedback.every(f => f === 'correct');
       setGuesses([...guesses, { guess: currentGuess, feedback, correct }]);
       setGuessError(false);
       setCurrentGuess('');
-      // Update the keyStatus based on the feedback
+      
+      // Update keyStatus based on the feedback
       const updatedKeyStatus = { ...keyStatus };
       currentGuess.split('').forEach((letter, index) => {
         const letterFeedback = feedback[index];
-        // If the letter is 'correct', we mark it as correct and don't overwrite it
         if (letterFeedback === 'correct') {
           updatedKeyStatus[letter] = 'correct';
         } else if (letterFeedback === 'present' && updatedKeyStatus[letter] !== 'correct') {
-          // If it is 'present' but not yet 'correct', mark it as present
           updatedKeyStatus[letter] = 'present';
         } else if (letterFeedback === 'absent' && !updatedKeyStatus[letter]) {
-          // If it's 'absent' and hasn't been set yet (not present or correct), mark it as absent
           updatedKeyStatus[letter] = 'absent';
         }
       });
-      // update keys
+  
       setKeyStatus(updatedKeyStatus);
     } else if (currentGuess.length < 5) {
       setGuessError(true);
+      setInvalidWord(false)
     }
   };
+  
 
   // Check each letter to the target word and return feedback
   const checkGuess = (guess) => {
@@ -134,6 +151,7 @@ const Wordle = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
     setIsWinningModalOpen(false);
     const word = await getRandomWord();
     setGameStatus('playing');
+    setInvalidWord(false)
     setTargetWord(word);
     setCurrentGuess('');
     setGuessError(false);
@@ -143,7 +161,7 @@ const Wordle = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
     <main>
       <Header title="Wordle" onclick={resetGame} turn_title="Guesses Left" turns={6 - guesses.length} />
       <div className="wordle-container">
-        <WordleBoard guesses={guesses} currentGuess={currentGuess} guessError={guessError} />
+        <WordleBoard guesses={guesses} currentGuess={currentGuess} guessError={guessError} invalidWord={invalidWord} />
         <WordleKey onKeyPress={handleKeyPress} keyStatus={keyStatus} />
       </div>
       {/* Modals for win/loss */}

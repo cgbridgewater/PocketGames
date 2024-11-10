@@ -7,13 +7,14 @@ import wordList from '../assets/Json/WordleList.json';
 export const validateWord = async (word) => {
   try {
     const res = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-    // Word is valid
+    // If the request succeeds, return true to indicate that the word is valid
     return true;
   } catch (error) {
-    // Return false if the word is not found
+    // Return false if the word is invalid
     return false;
   }
 };
+
 
 // Select a random word from the word list
 export const getRandomWord = () => {
@@ -28,11 +29,11 @@ export const getRandomWord = () => {
 
 
 
-//                                                                //
-// DO NOT DELETE CAN BE USED FOR FETCHING A WORD LIST FROM AN API (AXIOS NPM REQUIRED!!) //
-//                                                                //
-
-// import axios from "axios"
+  //                                                                //
+  // DO NOT DELETE CAN BE USED FOR FETCHING A WORD LIST FROM AN API //
+  //                                                                //
+  
+  // import axios from "axios"
 
   // Pull a random word from the word from API source
   // export const getRandomWord = async () => {
