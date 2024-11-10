@@ -611,6 +611,11 @@ a {
   border:4px groove var(--border_trim);
   border-radius: 8px;
   z-index: 10000001;
+
+  span {
+    position: relative;
+    bottom: 1px;
+  }
 }
 /*               */
 /*   END MODAL   */

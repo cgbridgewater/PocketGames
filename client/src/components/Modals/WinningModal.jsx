@@ -13,7 +13,7 @@ export default function WinningModal({ message1, message2, turns, onClose }) {
         <div id="winning_overlay" onClick={handleOverlayClick} >
             <div id="winning_modal">
                 <h2>Game Over!</h2>
-                <p>{message1} {turns} {message2}</p>
+                <p>{message1} <span>{turns}</span> {message2}</p>
                 <div className="button_box">
                     <button onClick={onClose} autoFocus>Play Again?</button>
                     <Link to="/games"><button>Quit</button></Link>
