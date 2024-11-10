@@ -133,15 +133,44 @@ const Wordle = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
   // Check each letter to the target word and return feedback
   const checkGuess = (guess) => {
     const feedback = [];
+    // Convert target word into an array for easy comparison
+    const targetWordArr = targetWord.split('');
+  
+    // First pass: Check for "correct" letters (green)
+    // To count occurrences of letters in the target word
+    const targetLetterCount = {};
+    targetWordArr.forEach(letter => targetLetterCount[letter] = (targetLetterCount[letter] || 0) + 1);
+  
+    // Mark correct letters (green)
     for (let i = 0; i < 5; i++) {
       if (guess[i] === targetWord[i]) {
         feedback.push('correct');
-      } else if (targetWord.includes(guess[i])) {
-        feedback.push('present');
+        // Decrease the count of the correct letter in targetWord
+        targetLetterCount[guess[i]]--;
       } else {
-        feedback.push('absent');
+        // Placeholder for letters that are not correct yet
+        feedback.push(null);
       }
     }
+  
+    // Second pass: Check for "present" letters (yellow)
+    for (let i = 0; i < 5; i++) {
+      // Only check letters that haven't been marked as correct yet
+      if (feedback[i] === null) {
+        // If the letter exists in the target word
+        if (targetLetterCount[guess[i]] > 0) {
+          // Mark it as present (yellow)
+          feedback[i] = 'present';
+          // Decrease the count of the present letter in targetWord
+          targetLetterCount[guess[i]]--; 
+        } else {
+          // If the letter doesn't exist in the target word, mark it as absent (gray)
+          feedback[i] = 'absent';
+        }
+      }
+    }
+  
+    // Return the feedback for each letter in the guess
     return feedback;
   };
 
