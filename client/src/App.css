@@ -52,12 +52,6 @@ main {
   padding-top: 50px;
   margin: 0px auto;
   background-color: var(--background);
-  
-  *:focus {
-    outline-offset: 1px;
-    outline: 2px solid  var(--red);
-    border-radius: 4px;
-  }
 }
 
 h1, h2, h3, p, a {
@@ -98,6 +92,12 @@ a {
   display: flex;
   align-items: center;
   gap: 0 16px;
+
+  *:focus {
+    outline-offset: 1px;
+    outline: 2px solid  var(--border_trim);
+    border-radius: 4px;
+  }
 
   button {
     position: relative;
@@ -496,17 +496,22 @@ a {
   border-radius: 5px;
   font-size: 0.75rem;
   width: 30px;
-  /* padding: 7px; */
   color: white;
   text-transform: uppercase;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  &:focus {
+    outline-offset: 1px;
+    outline: 2px solid  var(--border_trim);
+    border-radius: 4px;
+  }
 }
 
 .wordle-key.correct {
-  background-color: #6aaa64; /* Green */
+  background-color: #6aaa64;
   color: white;
 }
 
