@@ -75,13 +75,12 @@ function App() {
         />
 
         {/* Stackable GAME */}
-        {/* <Route path='/games/stackable' element={
+        <Route path='/games/stackable' element={
           <Stackable
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
           />}
-        /> */}
-
+        />
 
         <Route path="*" element={
           <BadURL/>
