@@ -1,22 +1,20 @@
+/* FONTS */
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800&display=swap');
-
-/* ERROR 404 FONTS */
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-
-
+/* Nav Bar Style */
 @import url("./components/NavBarComponent/NavbarStyle.css");
 
+* {
+  margin: 0;
+  padding: 0;
+  color: var(--white);
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  background-color: var(--background);
-  
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
   --font_size_default: 16px;
   --border_trim: #D9B14B;
   --button_hover: #C23866;
@@ -26,8 +24,8 @@
   --background: #242424;
 }
 
-
 body {
+  background-color: var(--background);
   font-family: 'Raleway', sans-serif;
   font-size: var(--font_size_default);
   text-align: center;
@@ -39,13 +37,7 @@ body {
   box-sizing: border-box;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  color: var(--white);
-}
-
-/* Main Layout */
+/* Main Page Layout */
 main {
   display: flex;
   flex-direction: column;
@@ -57,6 +49,14 @@ main {
   padding-top: 50px;
   margin: 0px auto;
   background-color: var(--background);
+
+  /* Page titles */
+  h2 {
+    font-family: "Rubik Dirt", sans-serif;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    margin: 12px 0;
+  }
 }
 
 h1, h2, h3, p, a {
@@ -97,13 +97,13 @@ a {
   display: flex;
   align-items: center;
   gap: 0 16px;
-
+  
   *:focus {
     outline-offset: 1px;
     outline: 2px solid  var(--border_trim);
     border-radius: 4px;
   }
-
+  
   button {
     position: relative;
     padding-top: 2px;
@@ -129,10 +129,6 @@ a {
   }
 }
 
-
-
-
-
 #turns span {
   color: var(--border_trim);
   font-size: 1.3rem;
@@ -157,7 +153,7 @@ a {
     width: 100vw;
     margin: 0 auto;
   }
-
+  
   img {
     width: 390px;
   }
@@ -192,7 +188,6 @@ a {
     }
   }
 }
-
 /*                  */
 /* END LANDING PAGE */
 /*                  */
@@ -240,7 +235,7 @@ a {
       color: var(--border_trim);
     }
   }
-
+  
   img {
     width: 85%;
     margin: 12px auto 12px;
@@ -249,10 +244,10 @@ a {
   }
 }
 
-
 /*              */
 /* MEMORY CARDS */
 /*              */
+
 .button_box {
   .selected {
     background-color: var(--button_hover);
@@ -264,10 +259,10 @@ a {
   margin: 0;
   display: grid;
   margin: 48px 16px 8px 16px;
-
+  
   .memory_card {
     position: relative;
-
+    
     img {
       width: 100%;
       aspect-ratio: 1/1;
@@ -278,18 +273,19 @@ a {
   }
 }
 
+/* Card Toggles */
 .card_grid.grid_difficulty_easy {
-  grid-template-columns: repeat(4, 1fr); /* 4 columns for easy */
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
 }
 
 .card_grid.grid_difficulty_medium {
-  grid-template-columns: repeat(5, 1fr); /* 5 columns for medium */
+  grid-template-columns: repeat(5, 1fr);
   gap: 8px;
 }
 
 .card_grid.grid_difficulty_hard {
-  grid-template-columns: repeat(6, 1fr); /* 6 columns for hard */
+  grid-template-columns: repeat(6, 1fr);
   gap: 8px;
 }
 
@@ -322,6 +318,7 @@ a {
     margin: 16px 48px 8px 48px;
   }
 }
+
 /*                  */
 /* END MEMORY CARDS */
 /*                  */
@@ -339,59 +336,60 @@ a {
   width: 100%;
   min-width: 420px;
   background-color: #242424;
-
-    button {
-      position: relative;
-      width: 175px; 
-      height: 175px; 
-      margin: 3px;
-      border: 2px solid black;
-      transition: all 0.2s ease;
-      cursor: pointer;
-
-      &:focus {
-        outline: none;
+  
+  button {
+    position: relative;
+    width: 175px; 
+    height: 175px; 
+    margin: 3px;
+    border: 2px solid black;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    
+    &:focus {
+      outline: none;
+    }
+  }
+  
+  #play_button {
+    cursor:pointer;
+    position: relative;
+    top: -230px;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: var(--black);
+    color: var(--white);
+    border: 2px solid black;
+    
+    &:active {
+      border-color: var(--red);
+    }
+    
+    &:disabled {
+      cursor: default;
+      color: var(--red);
+      font-weight: 900;
+      font-size: 2rem;
+      
+      &:active, &:hover {
+        border-color: black;
       }
     }
-
-    #play_button {
-      cursor:pointer;
-      position: relative;
-      top: -230px;
-      text-transform: uppercase;
-      font-size: 1.2rem;
-      height: 100px;
-      width: 100px;
-      border-radius: 50%;
-      background-color: var(--black);
-      color: var(--white);
-      border: 2px solid black;
-
-      &:active {
-        border-color: var(--red);
-      }
-
-      &:disabled {
-        cursor: default;
-        color: var(--red);
-        font-weight: 900;
-        font-size: 2rem;
-        
-        &:active, &:hover {
-          border-color: black;
-        }
-      }
-    }
+  }
 }
 
+/* Simon Buttons */
 .simon_green {
   background-color: rgb(0, 125, 0);
   border-top-left-radius: 100%;
-
+  
   &:hover {
     transform: scale(1.015);
   }
-
+  
   &:active {
     opacity: .9;
     transform: scale(0.995);
@@ -402,11 +400,11 @@ a {
 .simon_red {
   background-color: rgb(163, 32, 32);
   border-top-right-radius: 100%;
-
+  
   &:hover {
     transform: scale(1.015);
   }
-
+  
   &:active {
     opacity: .9;
     transform: scale(0.995);
@@ -417,11 +415,11 @@ a {
 .simon_yellow {
   background-color: rgb(170, 170, 0);
   border-bottom-left-radius: 100%;
-
+  
   &:hover {
     transform: scale(1.015);
   }
-
+  
   &:active {
     opacity: .9;
     transform: scale(0.995);
@@ -432,11 +430,11 @@ a {
 .simon_blue {
   background-color: rgb(19, 19, 170);
   border-bottom-right-radius: 100%;
-
+  
   &:hover {
     transform: scale(1.015);
   }
-
+  
   &:active {
     opacity: .9;
     transform: scale(0.995);
@@ -444,6 +442,7 @@ a {
   }
 }
 
+/* Simon Button Actions */
 .highlight {
   filter: drop-shadow(0px 0px 10px white) brightness(5) !important;
 }
@@ -456,20 +455,19 @@ a {
   .simon_container {
     padding-top: 30px;
     min-width: 350px;
-
+    
     button {
       width: 150px;
       height: 150px;
       margin: 2px;
     }
-
+    
     #play_button {
       height: 90px;
       width: 90px;
       top: -201px;
     }
   }
-
 }
 
 /*                */
@@ -481,7 +479,7 @@ a {
 /* WORDLE STYLES */
 /*               */
 
-/* Wordle Board */
+/* Board */
 .wordle-board {
   display: flex;
   flex-direction: column;
@@ -493,7 +491,6 @@ a {
   width: 330px;
   height:440px
 }
-
 
 .wordle-row {
   display: flex;
@@ -514,16 +511,19 @@ a {
   background-color: #3a3a3a;
 }
 
+/* Correct Letter */
 .wordle-cell.correct {
   color: white;
   background-color: #386c33;
 }
 
+/* Letter In Word */
 .wordle-cell.present {
   background-color: #c9b458;
   color: white;
 }
 
+/* No Letter In Word */
 .wordle-cell.absent {
   color: white;
   background-color: #787c7e;
@@ -577,18 +577,21 @@ a {
   }
 }
 
+/* Correct Letter Key */
 .wordle-key.correct {
   background-color: #6aaa64;
   color: white;
 }
 
+/* Letter In Word Key */
 .wordle-key.present {
-  background-color: #c9b458; /* Yellow */
+  background-color: #c9b458;
   color: white;
 }
 
+/* No Letter In Word */
 .wordle-key.absent {
-  background-color: #787c7e; /* Gray */
+  background-color: #787c7e;
   color: white;
 }
 
@@ -619,21 +622,21 @@ a {
     width: 370px;
     height: 510px;
   }
-
+  
   .wordle-key {
     font-size: 0.95rem;
     padding: 8px;
   }
-
+  
   .wordle-cell {
     width: 50px;
     height: 50px;
     font-size: 1.4rem;
   }
-
+  
   .wordle-keyboard {
     top: 550px;
-
+    
     p {
       top: -25px
     }
@@ -643,6 +646,60 @@ a {
 /*                   */
 /* END WORDLE STYLES */
 /*                   */
+
+
+/*                  */
+/* LIGHTS OUT STYLE */
+/*                  */
+
+/* BOARD */
+.lightsout_board {
+  display:flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 2px;
+  animation: flicker 1.5s infinite alternate; 
+}
+
+@keyframes flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    box-shadow: 0 0 45px var(--border_trim);
+  }
+  20%, 24%, 55% {
+    box-shadow: none;
+  }
+}
+
+.lightsout_board_row {
+  display: inline-block; 
+  width: auto;
+}
+
+/* LIGHT CELL */
+.lightsout_cell-on {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: var(--red);
+  border: none;
+  margin: 20px;
+  box-shadow: 
+  0 0 22px var(--red),
+  0 0 42px var(--red);
+}
+
+.lightsout_cell-off {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: none;
+  margin: 20px;
+  background-color: rgb(55, 55, 55);
+}
+
+/*                */
+/* END LIGHTS OUT */
+/*                */
 
 
 /*             */
@@ -682,7 +739,7 @@ a {
   border:4px groove var(--border_trim);
   border-radius: 8px;
   z-index: 10000001;
-
+  
   span {
     position: relative;
     bottom: 1px;
