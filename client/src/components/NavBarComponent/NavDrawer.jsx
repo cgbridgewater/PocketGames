@@ -22,6 +22,9 @@ export default function NavDrawer() {
                 <li className="drawer_link">
                     <RedLink href="/games/lightsout" text="Lights Out" external={false} />
                 </li>
+                <li className="drawer_link">
+                    <RedLink href="/games/stacker" text="Stacker" external={false} />
+                </li>
             </ul>
         </nav>
     );

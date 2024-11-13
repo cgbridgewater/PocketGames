@@ -16,7 +16,7 @@ function GameMenu() {
                 <GameCard to="/games/simon" text="Simon Says" image={SimonIcon} isComplete={true} />
                 <GameCard to="/games/wordle" text="Wordle" image={WordleIcon} isComplete={true} />
                 <GameCard to="/games/lightsout" text="Lights Out" image={LightsOut} isComplete={true} />
-                <GameCard to="/games/stackable" text="Stackable" image={Stackable} isComplete={false} />
+                <GameCard to="/games/stackable" text="Stackable" image={Stackable} isComplete={true} />
                 <GameCard to="/games/#" text="Starship" image={PlaceHolder} isComplete={false} />
                 <GameCard to="/games/#" text="Tetris" image={PlaceHolder} isComplete={false} />
                 {/* <GameCard to="/games/#" text="Bubble Pop" image={PlaceHolder} isComplete={false} /> */}
