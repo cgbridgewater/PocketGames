@@ -716,9 +716,10 @@ a {
 /*          */
 
 #stack_it_p {
+  margin: 4px 0 0;
+  font-weight: 800;
+  font-size: .85rem;
   color: var(--red);
-  margin: 1px 0 0;
-  font-weight: 700;
 }
 
 /*              */

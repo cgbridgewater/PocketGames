@@ -32,7 +32,7 @@ function Stackit() {
                 onClose={restartGame}
                 />
             )}
-            <p id='stack_it_p'>Click Black Area To Drop A Block</p>
+            <p id='stack_it_p'>Click Black Area Or Space Bar To Drop A Block</p>
         </main>
     );
 }

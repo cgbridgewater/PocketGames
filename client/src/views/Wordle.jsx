@@ -189,17 +189,39 @@ const Wordle = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
 
   return (
     <main>
-      <Header title="Wordle" onclick={resetGame} turn_title="Guesses Left" turns={6 - guesses.length} />
+      <Header 
+        title="Wordle" 
+        onclick={resetGame} 
+        turn_title="Guesses Left" 
+        turns={6 - guesses.length} 
+      />
       <div className="wordle-container">
-        <WordleBoard guesses={guesses} currentGuess={currentGuess} />
-        <WordleKey onKeyPress={handleKeyPress} keyStatus={keyStatus} guessError={guessError} invalidWord={invalidWord} />
+        <WordleBoard 
+          guesses={guesses} 
+          currentGuess={currentGuess} 
+        />
+        <WordleKey 
+          onKeyPress={handleKeyPress} 
+          keyStatus={keyStatus} 
+          guessError={guessError} 
+          invalidWord={invalidWord} 
+        />
       </div>
       {/* Modals for win/loss */}
       {isWinningModalOpen && gameStatus === 'lost' && (
-        <WinningModal message1="You lost! The word was " message2={`"${targetWord.toLowerCase()}"`} turns="" onClose={resetGame} />
+        <WinningModal 
+          message1="You lost! The word was " 
+          message2={`"${targetWord.toLowerCase()}"`} 
+          turns="" onClose={resetGame} 
+        />
       )}
       {isWinningModalOpen && gameStatus === 'won' && (
-        <WinningModal message1="You win! You took " message2={guesses.length === 1 ? "guess!" : "guesses!"} turns={guesses.length} onClose={resetGame} />
+        <WinningModal 
+          message1="You win! You took " 
+          message2={guesses.length === 1 ? "guess!" : "guesses!"} 
+          turns={guesses.length}
+          onClose={resetGame} 
+        />
       )}
     </main>
   );
