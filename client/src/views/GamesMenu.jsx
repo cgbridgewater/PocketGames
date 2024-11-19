@@ -16,7 +16,7 @@ function GameMenu() {
                 <GameCard to="/games/simon" text="Simon Says" image={SimonIcon} status={1} />
                 <GameCard to="/games/wordle" text="Wordle" image={WordleIcon} status={1} />
                 <GameCard to="/games/lightsout" text="Lights Out" image={LightsOut} status={1} />
-                <GameCard to="/games/stackit" text="Stack It" image={Stackable} status={2} />
+                <GameCard to="/games/stackit" text="Stack It" image={Stackable} status={1} />
                 <GameCard to="/games/#" text="Starship" image={PlaceHolder} status={3} />
                 <GameCard to="/games/#" text="Tetris" image={PlaceHolder} status={3} />
                 {/* <GameCard to="/games/#" text="Bubble Pop" image={PlaceHolder} status={3} /> */}
