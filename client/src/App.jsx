@@ -7,9 +7,9 @@ import GameMenu from './views/GamesMenu'
 import Memory from './views/Memory'
 import SimonSays from './views/SimonSays'
 import Wordle from './views/Wordle'
-import Stackable from './views/Stackable'
 import BadURL from './views/BadURL'
 import LightsOut from './views/LightsOut'
+import Stackit from './views/Stackit'
 
 function App() {
 
@@ -58,14 +58,6 @@ function App() {
           />}
         />
 
-        {/* Stackable GAME */}
-        <Route path='/games/stackable' element={
-          <Stackable
-            isWinningModalOpen={isWinningModalOpen} 
-            setIsWinningModalOpen={setIsWinningModalOpen}
-          />}
-        />
-
         {/* Lights Out GAME */}
         <Route path='/games/lightsout' element={
           <LightsOut
@@ -74,9 +66,9 @@ function App() {
           />}
         />
 
-        {/* Stackable GAME */}
-        <Route path='/games/stackable' element={
-          <Stackable
+        {/* Stack It GAME */}
+        <Route path='/games/stackit' element={
+          <Stackit
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
           />}

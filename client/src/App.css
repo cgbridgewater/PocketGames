@@ -8,6 +8,9 @@
   margin: 0;
   padding: 0;
   color: var(--white);
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none; 
 }
 
 :root {
@@ -807,3 +810,15 @@ a {
 /*                  */
 /*  END 404 Style   */
 /*                  */
+
+
+
+
+/*          */
+/* STACK IT */
+/*          */
+
+#stack_it_p {
+  color: var(--red);
+  font-weight: 700;
+}
