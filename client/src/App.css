@@ -49,7 +49,7 @@ main {
   width: 95%;
   max-width: 700px;
   min-width: 360px;
-  padding-top: 50px;
+  padding-top: 45px;
   margin: 0px auto;
   background-color: var(--background);
 
@@ -711,6 +711,21 @@ a {
 /*                */
 
 
+/*          */
+/* STACK IT */
+/*          */
+
+#stack_it_p {
+  color: var(--red);
+  margin: 1px 0 0;
+  font-weight: 700;
+}
+
+/*              */
+/* END STACK IT */
+/*              */
+
+
 /*             */
 /*     MODALS   */
 /*             */
@@ -810,15 +825,3 @@ a {
 /*                  */
 /*  END 404 Style   */
 /*                  */
-
-
-
-
-/*          */
-/* STACK IT */
-/*          */
-
-#stack_it_p {
-  color: var(--red);
-  font-weight: 700;
-}
