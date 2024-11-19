@@ -1,22 +1,23 @@
 import { Link } from "react-router-dom"
 
-function GameCard ({ to, text, image, isComplete }) {
+function GameCard ({ to, text, image, status }) {
+
+    const statusMap = {
+        1: <span>&nbsp;</span>,
+        2: "(testing)",
+        3: "(coming soon)"
+    };
+
+    const statusText = statusMap[status] || "";
 
     return (
         <Link className="game_card" to={to}>
-            {/* add coming soon if false */}
-            {isComplete === false ?
             <div className="game_card_title">
                 <h5>{text}</h5>
-                <h6>(coming soon)</h6>
+                {statusText && <h6>{statusText}</h6>}
             </div>
-            : 
-            <div className="game_card_title">
-                <h5>{text}</h5>
-                <h6>&nbsp;</h6>
-            </div>
-            }
-            <img src={`${image}`} alt={text}/>
+            {/* Game Icon */}
+            <img src={`${image}`} alt={text} />
         </Link>
     )
 }
