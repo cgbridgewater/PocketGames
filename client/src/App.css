@@ -826,3 +826,529 @@ a {
 /*                  */
 /*  END 404 Style   */
 /*                  */
+
+
+
+
+
+
+
+
+
+/* TETRIS STYLE */
+
+
+.gameboy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -41%);
+  width: 365px;
+  height: 550px;
+  border: 2px solid rgb(153, 153, 153);
+  border-radius: 10px 10px 77px 10px;
+  background-image: -webkit-linear-gradient(#adb6b3, #bec2c1 50%);
+  background-image: linear-gradient(#adb6b3, #bec2c1 50%);
+  box-shadow: -5px 6px 20px rgba(0, 0, 0, 0.37),
+    -21px 17px 65px rgba(0, 0, 0, 0.46), inset -3px 0 4px #8e918e,
+    inset -7px 0 7px #dfdfdf, inset 1px 0 3px #66696a, inset 3px 0 10px #616465,
+    inset 0 3px 7px #919496, inset 0 4px 10px white;
+
+    * {
+      list-style-type: none;
+    }
+}
+
+.gameboy_start:hover,
+.gameboy_pause:hover {
+  cursor: pointer;
+}
+
+.gameboy_buttons_2 li span {
+  font-family: "Squada One";
+  position: absolute;
+  color: #666;
+  transform: rotate(-90deg) translate(-8px, 0) scaleY(0.5);
+}
+
+.gameboy_buttons li span {
+  transform: rotate(-90deg) translate(-8px, 40px) scaleY(0.5);
+  font-family: "Squada One";
+  position: absolute;
+  color: #666;
+}
+
+.gameboy_buttons {
+  position: absolute;
+  top: 390px;
+  left: 256px;
+  padding: 4px;
+  border-radius: 50px;
+  box-shadow: 1px 1px 5px rgba(255, 255, 255, 0.21), -1px -1px 0px #babdbc,
+    inset 0 12px 22px rgba(0, 0, 0, 0.12);
+  transform: rotate(64deg);
+}
+
+.gameboy_buttons li {
+  transition: ease-in-out 0.3s;
+  width: 35px;
+  height: 35px;
+  border: 1px solid rgba(68, 32, 54, 1);
+  border-radius: 100%;
+  background-image: -webkit-linear-gradient(
+    6deg,
+    rgba(133, 50, 108, 0.61),
+    #6d1851 89%
+  );
+  background-image: linear-gradient(
+    6deg,
+    rgba(133, 50, 108, 0.61),
+    #6d1851 89%
+  );
+  box-shadow: inset 1px 2px 4px #a87493, -1px -1px 2px #000000,
+    3px 6px 7px rgba(125, 136, 134, 0.79);
+}
+
+.gameboy_buttons li:first-child {
+  margin-bottom: 17px;
+}
+
+.gameboy_buttons li:active {
+  transition: ease-in-out 0.05s;
+  box-shadow: inset 0px 0px 0px #a87493, -1px -1px 2px #000000,
+    0px 0px 0px rgba(125, 136, 134, 0.79);
+  cursor: pointer;
+}
+
+.gameboy_buttons_2 {
+  position: absolute;
+  top: 493px;
+  left: 155px;
+  transform: rotate(64deg);
+}
+
+.gameboy_buttons_2 li {
+  position: absolute;
+  width: 12px;
+  height: 39px;
+  border-radius: 50px;
+  background-image: -webkit-linear-gradient(269deg, #6f7875, #9b9b9b 71%);
+  background-image: linear-gradient(269deg, #6f7875, #9b9b9b 71%);
+  box-shadow: 1px 1px 1px rgba(226, 226, 226, 0.97), -1px -1px 2px #767a79,
+    inset 1px 1px 1px #a3aca9;
+}
+
+.gameboy_buttons_2 li:last-child {
+  position: absolute;
+  bottom: 7px;
+  left: 20px;
+}
+
+.gameboy_buttons_2 li:active {
+    background-image: -webkit-linear-gradient(269deg, #6f7875, #9b9b9b 51%);
+    background-image: linear-gradient(269deg, #6f7875, #9b9b9b 51%);
+}
+
+.gameboy_speaker {
+  position: absolute;
+  top: 470px;
+  left: 274px;
+  transform: rotate(64deg);
+}
+
+.gameboy_speaker li {
+  margin-bottom: 8px;
+  width: 42px;
+  height: 6px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7), inset 2px 1px 3px #5b5a53,
+    inset 1px -1px black;
+}
+
+.gameboy_game_pad {
+  position: absolute;
+  top: 395px;
+  left: 32px;
+  width: 93px;
+  height: 93px;
+  border-radius: 50%;
+  box-shadow: inset -7px 10px 22px #c7cbca, inset 7px -10px 22px #b8b8b8;
+}
+
+.gameboy_pad_up {
+  position: absolute;
+  top: 15px;
+  left: 34px;
+  width: 24px;
+  height: 21px;
+  border-radius: 2px 2px 0 0;
+  background: #282c2b;
+  background-image: -webkit-linear-gradient(90deg, #282c2b, #808382 120%);
+  background-image: linear-gradient(90deg, #282c2b, #9b9b9b 120%);
+  box-shadow: 1px -1px 1px rgb(53, 53, 53), -4px 2px 7px rgba(96, 99, 98, 0.64);
+}
+
+.gameboy_pad_up li {
+  margin: 2px;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: #353837;
+  box-shadow: inset 0 -1px 1px #494c4b;
+}
+
+.gameboy_pad_up:active {
+    background-image: -webkit-linear-gradient(90deg, #282c2b, #808382 100%);
+    background-image: linear-gradient(90deg, #282c2b, #9b9b9b 100%);
+}
+
+.gameboy_pad_right {
+  position: absolute;
+  top: 36px;
+  left: 56px;
+  width: 24px;
+  height: 22px;
+  border-radius: 2px 2px 0px 0;
+  background: #282c2b;
+  background-image: -webkit-linear-gradient(303deg, #282c2b, #9b9b9b 110%);
+  background-image: linear-gradient(303deg, #282c2b, #9b9b9b 110%);
+  box-shadow: -1px -1px 1px rgb(53, 53, 53);
+  transform: rotate(90deg);
+}
+
+.gameboy_pad_right li {
+  margin: 2px;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: #353837;
+  box-shadow: inset 0 -1px 1px #494c4b;
+}
+
+.gameboy_pad_right:active {
+  background-image: -webkit-linear-gradient(303deg, #282c2b, #9b9b9b 90%);
+  background-image: linear-gradient(303deg, #282c2b, #9b9b9b 90%);
+}
+
+.gameboy_pad_down {
+  position: absolute;
+  top: 58px;
+  left: 34px;
+  width: 24px;
+  height: 21px;
+  border-radius: 0 0 2px 2px;
+  background: #282c2b;
+  background-image: -webkit-linear-gradient(55deg, #131716, #6a706f 145%);
+  background-image: linear-gradient(55deg, #131716, #6a706f 145%);
+  box-shadow: -5px 0px 6px #606362;
+}
+
+.gameboy_pad_down li {
+  margin: 2px;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: #050908;
+  box-shadow: inset 0 -1px 1px #343839;
+}
+
+.gameboy_pad_down:active {
+  background-image: -webkit-linear-gradient(55deg, #131716, #6a706f 125%);
+  background-image: linear-gradient(55deg, #131716, #6a706f 125%);
+}
+
+.gameboy_pad_left {
+  position: absolute;
+  top: 36px;
+  left: 12px;
+  z-index: 2;
+  width: 24px;
+  height: 22px;
+  border-radius: 0px 0px 2px 2px;
+  background: #282c2b;
+  background-image: -webkit-linear-gradient(290deg, #131716, #6a706f 175%);
+  background-image: linear-gradient(290deg, #131716, #6a706f 175%);
+  box-shadow: 2px 3px 7px rgb(53, 53, 53);
+  transform: rotate(90deg);
+}
+
+.gameboy_pad_left li {
+  margin: 2px;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: #050908;
+  box-shadow: inset 0 -1px 1px #343839;
+}
+
+.gameboy_pad_left:active {
+  background-image: -webkit-linear-gradient(290deg, #131716, #6a706f 135%);
+  background-image: linear-gradient(290deg, #131716, #6a706f 135%);
+}
+
+.gameboy_circle {
+  position: absolute;
+  top: 36px;
+  left: 35px;
+  z-index: 5;
+  width: 22px;
+  height: 22px;
+  background-image: -webkit-linear-gradient(-134deg, #656666, #2e3231 60%);
+  background-image: linear-gradient(-134deg, #656666, #2e3231 60%);
+}
+
+.gameboy_circle li {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(39, 42, 41, 0.91);
+  border-radius: 16px;
+  background: #4b4e4d;
+  box-shadow: inset 2px -1px 8px #868787, inset 3px -1px 10px black;
+}
+
+
+
+
+
+
+
+
+
+
+
+.Tetris {
+
+  *{
+    margin:0;
+    padding:0;  
+    box-sizing: border-box;
+  }
+}
+
+
+.PreviewContainer {
+  position: relative;
+  left: 6px;
+  background-color: #88AC28;
+  border: 1px solid #224132;
+  border-radius: 6px;
+  padding: 2px;
+  height: 56px;
+  width: 50px;
+}
+
+/* .Preview {
+  width: 50px;
+  height: 50px;
+  margin: 0 ;
+} */
+
+.Preview-board {
+  display: grid;
+  grid-gap: 0px;
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  height: 50px;
+  width: 50px;
+  margin: 0 auto;
+}
+
+/* hides the input */
+.GameController {
+  position:absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+
+
+.BoardCell {
+  width: auto;
+  border-radius: 4px;
+  position: relative;
+}
+
+.tetromino {
+  border-top: 3px solid rgba(255,255,255,0.1);
+  border-left: 3px solid rgba(255,255,255,0.1);
+  border-bottom: 3px solid rgba(0,0,0,0.1);
+  border-right:  3px solid rgba(0,0,0,0.1);
+}
+
+.tetromino .Sparkle {
+  position: absolute;
+  z-index: 10;
+  width: 3px;
+  height: 3px;
+  left: -2px;
+  top: -2px;
+  background-color: rgba(255,255,255,0.4);
+  border-radius: 6px 6px;
+}
+
+.tetromino.ghost {
+  background-color: transparent; 
+  border:  1px solid #04befe;
+  opacity: calc(25%);
+}
+
+.tetromino.ghost .Sparkle {
+  opacity: 0;
+}
+
+.tetromino__i {
+background-color: rgba(255,127,0,1);
+}
+
+.tetromino__j {
+  background-color: rgb(0,0,255,1);
+}
+
+.tetromino__l {
+  background-color: rgb(0,255,255,1);
+}
+
+.tetromino__o {
+  background-color: rgba(255,255,0,1);
+}
+
+.tetromino__s {
+  background-color: rgb(0,255,0,1); 
+}
+
+.tetromino__t {
+  background-color: rgb(128,0,128,1);
+}
+
+.tetromino__z {
+  background-color: rgb(255,0,0,1);
+}
+
+
+
+
+
+
+
+.BoardContainer {
+  margin: 16px auto 0;
+  padding: 0;
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  background-color: #224132;
+  border: 2px solid #224132;
+  border-radius: 12px;
+
+}
+
+.Board {
+  padding:1px;
+  display: grid;
+  grid-gap: 0px;
+  width: 250px;
+  height: 360px;
+  background: #88AC28;
+  border: 1px solid #224132;
+  border-left: 10px solid #224132;
+  border-radius: 8px 0 0px 8px;
+}
+
+.Scoring {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+  gap: 28px;
+  height: 340px;
+  width: 65px;
+  background-color: #224132;
+  border: none;
+  border-radius: 0 10px 10px 0;
+/* }
+
+.ScoringText, .Scoring p { */
+padding: 5px;
+  p {
+    text-transform: uppercase;
+    text-align: right;
+    font-size: .85rem;
+    font-weight: 600;
+    color: #000;
+  }
+}
+
+.tetris_score_box, .tetris_level, .tetris_lines {
+  background-color: #88AC28;
+  border-radius: 6px;
+  padding: 2px 4px;
+}
+
+
+
+.RulesOfGame{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0;
+  width: 298px;
+  height: 362.5px;
+  background-color: #88AC28;
+  border-radius: 10px;
+  margin-top: 4%;
+  color: #224132;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: 2px solid #224132;
+  
+  li {
+      display: flex;
+      align-items: center;
+      color: #224132;
+      
+      span {
+        font-size: 0.64rem;
+        font-weight: 800;
+        padding: 3px 5px 2px 6px;
+        color: #224132;
+        border: 2px solid  #224132;
+        border-radius: 50%;
+      }
+
+      svg {
+        fill:  #224132;
+      }
+  }
+
+  button {
+      padding: 4px 8px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      width: 100px;
+      border-radius: 8px;
+      border: 1px solid #224132;
+      cursor: pointer;
+      background-color: #224132;
+      color:#88AC28;
+      margin: 0 auto;
+      
+      &:hover {
+        -moz-transition: all .2s ease-in-out;
+        -o-transition: all .2s ease-in-out;
+        -webkit-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+        border: 1px solid #000;
+      }
+  }
+}
+
+.RulesList {
+  list-style-type: none;
+  padding: 5px;
+  text-align: start;
+}

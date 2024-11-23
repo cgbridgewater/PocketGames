@@ -4,6 +4,7 @@ import SimonIcon from "../assets/images/SimonIcon.jpg";
 import WordleIcon from "../assets/images/WordleIcon.png";
 import LightsOut from "../assets/images/LightsOutIcon.png";
 import Stackable from "../assets/images/StackableIcon.png";
+import Tetris from "../assets/images/TetrisIcon.png";
 import PlaceHolder from "../assets/images/PlaceHolder.jpg";
 
 function GameMenu() {
@@ -17,8 +18,8 @@ function GameMenu() {
                 <GameCard to="/games/wordle" text="Wordle" image={WordleIcon} status={1} />
                 <GameCard to="/games/lightsout" text="Lights Out" image={LightsOut} status={1} />
                 <GameCard to="/games/stackit" text="Stack It" image={Stackable} status={1} />
+                <GameCard to="/games/tetris" text="Tetris" image={Tetris} status={2} />
                 <GameCard to="/games/#" text="Starship" image={PlaceHolder} status={3} />
-                <GameCard to="/games/#" text="Tetris" image={PlaceHolder} status={3} />
                 {/* <GameCard to="/games/#" text="Bubble Pop" image={PlaceHolder} status={3} /> */}
                 {/* <GameCard to="/games/#" text="15+1" image={PlaceHolder} status={3} /> */}
                 {/* <GameCard to="/games/#" text="Placeholder" image={PlaceHolder} status={3} /> */}

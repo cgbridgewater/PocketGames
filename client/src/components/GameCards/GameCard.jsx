@@ -4,7 +4,7 @@ function GameCard ({ to, text, image, status }) {
 
     const statusMap = {
         1: <span>&nbsp;</span>,
-        2: "(testing)",
+        2: "(beta version)",
         3: "(coming soon)"
     };
 

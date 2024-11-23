@@ -10,6 +10,8 @@ import Wordle from './views/Wordle'
 import BadURL from './views/BadURL'
 import LightsOut from './views/LightsOut'
 import Stackit from './views/Stackit'
+import BrickBreaker from './views/BrickBreaker'
+import Tetris from './views/Tetris'
 
 function App() {
 
@@ -73,6 +75,31 @@ function App() {
             setIsWinningModalOpen={setIsWinningModalOpen}
           />}
         />
+
+
+        {/* Tetris GAME */}
+        <Route path='/games/tetris' element={
+            <Tetris
+              isWinningModalOpen={isWinningModalOpen} 
+              setIsWinningModalOpen={setIsWinningModalOpen}
+            />}
+          />
+
+          {/* Brick Breaker GAME
+          <Route path='/games/brickbreaker' element={
+            <BrickBreaker
+              isWinningModalOpen={isWinningModalOpen} 
+              setIsWinningModalOpen={setIsWinningModalOpen}
+            />}
+          /> */}
+
+        {/* 3D Stacking GAME */}
+        {/* <Route path='/games/stacker3d' element={
+          <Stacker3d
+            isWinningModalOpen={isWinningModalOpen} 
+            setIsWinningModalOpen={setIsWinningModalOpen}
+          />}
+        /> */}
 
         <Route path="*" element={
           <BadURL/>
