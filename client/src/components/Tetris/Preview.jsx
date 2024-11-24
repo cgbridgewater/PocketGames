@@ -1,3 +1,4 @@
+import React from "react";
 import { buildBoard } from "./utils/Board";
 import { transferToBoard } from "./utils/Tetrominoes";
 import BoardCell from "./BoardCell";

@@ -1,5 +1,4 @@
-// NOT IN USE!!!!
-
+import React from "react";
 import Preview from "./Preview";
 
 const Previews = ({ tetrominoes }) => {
