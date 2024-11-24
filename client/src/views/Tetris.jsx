@@ -1,5 +1,4 @@
-import Header from "../components/GameHeader/GameHeader"
-import TetrisGame from "../components/Tetris/Game";
+import TetrisGame from "../components/Tetris/TetrisGame";
 import { useGameOver } from "../components/Tetris/hooks/useGameOver";
 
 const Tetris = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
@@ -7,18 +6,15 @@ const Tetris = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
 
     return (
         <main>
-            <Header title={"Tetris"} onclick={() => setGameOver(true)} turns={0} />
-            <div>
-                {/* Tetris Game As Screen */}
-                <TetrisGame 
-                    rows={20} 
-                    columns={10} 
-                    isWinningModalOpen={isWinningModalOpen} 
-                    setIsWinningModalOpen={setIsWinningModalOpen}
-                    gameOver={gameOver}
-                    setGameOver={setGameOver}
-                />
-            </div>
+            {/* Tetris Game */}
+            <TetrisGame 
+                rows={20}
+                columns={10}
+                isWinningModalOpen={isWinningModalOpen} 
+                setIsWinningModalOpen={setIsWinningModalOpen}
+                gameOver={gameOver}
+                setGameOver={setGameOver}
+            />
         </main>
     );
 };

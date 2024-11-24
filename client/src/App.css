@@ -840,10 +840,9 @@ a {
 
 .gameboy {
   position: relative;
-  /* top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); */
-  margin-top: -85px;
+  transform: translateX(-50%);
+  margin-top: -7px;
   width: 365px;
   height: 550px;
   border: 2px solid rgb(153, 153, 153);
@@ -1378,13 +1377,4 @@ padding: 5px;
   list-style-type: none;
   padding: 5px;
   text-align: start;
-}
-
-@media screen and (min-width: 500px) {
-  .gameboy {
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: -16px;
-  }
 }

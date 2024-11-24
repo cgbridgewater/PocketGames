@@ -59,14 +59,16 @@ export const TETROMINOES = {
     }
 };
 
-export const randomTetromino = () => { // generate a random tetromino
+// generate a random tetromino
+export const randomTetromino = () => {
     const keys = Object.keys(TETROMINOES);
     const index = Math.floor(Math.random() * keys.length);
     const key = keys[index];
     return TETROMINOES[key];
 };
 
-export const  rotate = ({ piece, direction }) => { //clockwise rotation 
+//clockwise rotation 
+export const  rotate = ({ piece, direction }) => {
     // transpose rows and columns
     const newPiece = piece.map(( _, index ) =>
         piece.map((column) => column[index])
@@ -78,21 +80,23 @@ export const  rotate = ({ piece, direction }) => { //clockwise rotation
     return newPiece.reverse();
 }
 
-
-export const transferToBoard = ({ //given board,shape and start position, transfer the shape to the board
+//given board,shape and start position, transfer the shape to the board
+export const transferToBoard = ({
     className,
     isOccupied,
     position,
     rows,
     shape
 }) => {
+
     shape.forEach((row, y) => {
         row.forEach((cell, x) => {
         if (cell) {
             const occupied = isOccupied;
             const _y = y + position.row;
             const _x = x + position.column;
-            rows[_y][_x] = { occupied, className };  // track that insertion point is colliding or not
+            // track that insertion point is colliding or not
+            rows[_y][_x] = { occupied, className };
         }
         });
     });

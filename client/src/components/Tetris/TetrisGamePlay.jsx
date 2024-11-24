@@ -1,20 +1,18 @@
 
 import { useState } from "react";
-import Board from "./Board";
-import ButtonController from "./ButtonController";
-import GameController from "./GameController";
-
-// import Previews from "./Previews";
-
 import { useBoard } from "./hooks/useBoard"
 import { useGameStats} from "./hooks/useGameStats";
 import { usePlayer } from "./hooks/usePlayer";
+import ButtonController from "./ButtonController";
+import GameController from "./GameController";
+import Board from "./Board";
 
+const TetrisGamePlay = ({ rows, columns, setGameOver }) => {
 
-
-const Tetris = ({ rows, columns, setGameOver }) => {
-
+    // STATE
     const [ isPaused, setIsPaused ] = useState(false);
+
+    // HOOKS
     const [gameStats, addLinesCleared] = useGameStats();
     const [player, setPlayer, resetPlayer] = usePlayer();
     const [board, setBoard] = useBoard({
@@ -27,9 +25,11 @@ const Tetris = ({ rows, columns, setGameOver }) => {
 
     return (
         <div className="gameboy">
+            {/* GAME BOARD */}
             <div className="Tetris">
                 <Board board={board} gameStats={gameStats} tetrominoes={player.tetrominoes}  />
             </div>
+            {/* GAME CONTROL FOR KEY STROKES */}
             <GameController
                 board={board}
                 gameStats={gameStats}
@@ -39,6 +39,7 @@ const Tetris = ({ rows, columns, setGameOver }) => {
                 isPaused={isPaused}
                 setIsPaused={setIsPaused}
             />
+            {/* GAME CONTROL FOR BUTTON STROKES */}
             <ButtonController
                 board={board}
                 gameStats={gameStats}
@@ -52,4 +53,4 @@ const Tetris = ({ rows, columns, setGameOver }) => {
     );
 };
 
-export default Tetris;
+export default TetrisGamePlay;

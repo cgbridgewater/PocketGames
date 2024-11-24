@@ -8,8 +8,11 @@ import { buildBoard, nextBoard } from "../utils/Board";
         resetPlayer,
         addLinesCleared
     }) => {
+
+        // STATE
         const [board, setBoard] = useState(buildBoard({ rows, columns }));
 
+    // CONSTRUCT BOARD
     useEffect(() => {
         setBoard((previousBoard) =>
             nextBoard({

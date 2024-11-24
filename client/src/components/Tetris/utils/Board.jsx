@@ -2,12 +2,13 @@ import { defaultCell } from "./Cell";
 import { movePlayer } from "./PlayerController";
 import { transferToBoard } from "./Tetrominoes";
 
-
-export const buildBoard = ({ rows, columns }) => { //build board based on size input (map array in array)
+//build board based on size input (map array in array)
+export const buildBoard = ({ rows, columns }) => {
     const builtRows = Array.from({ length: rows }, () =>
     Array.from({length: columns }, () => ({ ...defaultCell }))
     );
 
+    // Return Board
     return {
         rows: builtRows,
         size: { rows, columns }
@@ -16,24 +17,33 @@ export const buildBoard = ({ rows, columns }) => { //build board based on size i
 
 // for fast dropping funciton
 const findDropPosition = ({ board, position, shape }) => {  
-    let max = board.size.rows - position.row + 1;  //check board size and current row
-    let row = 0;                                   //initial row
+    //check board size and current row
+    let max = board.size.rows - position.row + 1;
+    //initial row
+    let row = 0;
 
-    for (let i = 0; i < max; i++) {    // for loop moves piece until collision occurs
-        const delta = {row: i, column: 0 };    // delta is moving rows down by i increments
-        const result = movePlayer({ delta, position, shape, board});  // variables to make piece movement
-        const  {collided } = result;   // collision check
-
-        if (collided) {    // if collision stop loop
-            break;    
+    // for loop moves piece until collision occurs
+    for (let i = 0; i < max; i++) {
+        // delta is moving rows down by i increments
+        const delta = {row: i, column: 0 };
+        // variables to make piece movement
+        const result = movePlayer({ delta, position, shape, board});
+        // collision check
+        const  {collided } = result;
+        // if collision stop loop
+        if (collided) {
+            break;
         }
-        row = position.row + i;     // if no collision increment row count
+        // if no collision increment row count
+        row = position.row + i; 
     }
-    return { ...position, row};   //return position and new row location
+    //return position and new row location
+    return { ...position, row};
 };
 
 
 export const nextBoard = ({ board, player, resetPlayer, addLinesCleared}) => {
+    
     const { tetromino, position } = player;
 
     // copy and clear spaces used by pieces that
@@ -49,12 +59,13 @@ export const nextBoard = ({ board, player, resetPlayer, addLinesCleared}) => {
         shape: tetromino.shape
     });
 
-    /////// place ghost //////   maybe remove?? or toggle??
     // if fast dropping don't render it as a ghost, if you are not render the ghost
     const className = `${tetromino.className} ${player.isFastDropping ? "" : "ghost"}`;
-        rows = transferToBoard({  // transfer ghost to board
+    // transfer ghost to board
+    rows = transferToBoard({
             className, 
-            isOccupied: player.isFastDropping, // if fast dropping, space is occupied
+            // if fast dropping, space is occupied
+            isOccupied: player.isFastDropping,
             position: dropPosition,
             rows,
             shape: tetromino.shape
@@ -62,8 +73,10 @@ export const nextBoard = ({ board, player, resetPlayer, addLinesCleared}) => {
 
         //place the piece
         //if it collided, mark the board cells as collided
-        if(!player.isFastDropping) { //when not fast dropping place piece
-            rows = transferToBoard({ // pull piece from preview and move onto the board
+        //when not fast dropping place piece
+        if(!player.isFastDropping) {
+            // pull piece from preview and move onto the board
+            rows = transferToBoard({
                 className: tetromino.className,
                 isOccupied: player.collided,
                 position,
@@ -71,35 +84,33 @@ export const nextBoard = ({ board, player, resetPlayer, addLinesCleared}) => {
                 shape: tetromino.shape
             });
         }
-    
     // check for cleared lines
-    const blankRow = rows[0].map((_) => ({ ...defaultCell})); //create new blank line
-    let linesCleared = 0;                                      // cleared lines count
-    rows = rows.reduce((acc, row) => {                 //accumulator count and rows to be cleared
-        if (row.every((column) => column.occupied)) { // check if every column in row is occupied
-            linesCleared++;                             //increase clear count
+    //create new blank line
+    const blankRow = rows[0].map((_) => ({ ...defaultCell})); 
+    // cleared lines count
+    let linesCleared = 0;
+    //accumulator count and rows to be cleared
+    rows = rows.reduce((acc, row) => {
+        // check if every column in row is occupied
+        if (row.every((column) => column.occupied)) {
+            //increase clear count
+            linesCleared++;
             acc.unshift([...blankRow]);
         } else {
-            acc.push(row);   // push new row onto end of line
+            // push new row onto end of line
+            acc.push(row);
         }
-        return acc;   //return accumulator 
+        //return accumulator 
+        return acc;
     }, []);
-
+    // Add any lines cleard to count
     if (linesCleared > 0) {
         addLinesCleared(linesCleared);
     }
-
-
-
-
-
-
-
     //if we collided, reset the player to top with new piece
     if (player.collided || player.isFastDropping) {
         resetPlayer();
     }
-
     // return the next board
     return{
         rows,
@@ -107,42 +118,49 @@ export const nextBoard = ({ board, player, resetPlayer, addLinesCleared}) => {
     };
 };
 
-
-export const hasCollision = ({ board, position, shape }) => {  // collision detection
-    for (let y = 0; y < shape.length; y++) { // go through shape rows
+// collision detection
+export const hasCollision = ({ board, position, shape }) => {
+    // go through shape rows
+    for (let y = 0; y < shape.length; y++) {
         const row = y + position.row;
-
-        for(let x = 0; x < shape[y].length; x++) {  // go through shape columns
+        // go through shape columns
+        for(let x = 0; x < shape[y].length; x++) {
             if (shape[y][x]) {
                 const column = x + position.column;  
-
+                // if we have a row, column or both occupied give true
                 if(
-                    board.rows[row] &&     // if we have a row, column or both occupied give true
+                    board.rows[row] &&
                     board.rows[row][column] &&
                     board.rows[row][column].occupied
                 ) {
-                    return true;  // if true there is a collision
+                    // if true there is a collision
+                    return true;
                 }
             }
         }
     }
-
-    return false;  // if false there is no collision
+    // if false there is no collision
+    return false;
 }
 
-
-export const isWithinBoard =  ({ board, position, shape }) => { //check inside board limits
-    for (let y = 0; y < shape.length; y++) {  // go through shape rows
+//check inside board limits
+export const isWithinBoard =  ({ board, position, shape }) => {
+    // go through shape rows
+    for (let y = 0; y < shape.length; y++) {
         const row = y + position.row;
-
-        for (let x = 0; x < shape[y].length; x++) {// go through columns
-            if (shape[y][x]) {                     // check if there is a tetromino at that position
-                const column = x + position.column;  // add piece into column
-                const isValidPosition = board.rows[row] && board.rows[row][column]; //check if empty or valid
-
-                if (!isValidPosition) return false; // reject if occupied
+        // go through columns
+        for (let x = 0; x < shape[y].length; x++) {
+            // check if there is a tetromino at that position
+            if (shape[y][x]) {
+                // add piece into column
+                const column = x + position.column;
+                //check if empty or valid
+                const isValidPosition = board.rows[row] && board.rows[row][column];
+                // reject if occupied
+                if (!isValidPosition) return false; 
             }
         }
     }
-    return true; // all positions are valid within board
+    // all positions are valid within board
+    return true;
 };

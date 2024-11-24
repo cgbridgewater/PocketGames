@@ -2,18 +2,22 @@ import { hasCollision, isWithinBoard } from "./Board";
 import { rotate } from "./Tetrominoes";
 import { Action } from "./Input";
 
+// RIGHT ROTATION LOGIC
 const attemptRightRotation = ({ board, player, setPlayer }) => {
+
     const shape = rotate ({
         piece: player.tetromino.shape,
         direction: 1
     });
 
-    const position = player.position; // check for collision or off board on rotation
+    // check for collision or off board on rotation
+    const position = player.position;
     const isValidRotation = 
         isWithinBoard ({ board, position, shape }) &&
         !hasCollision({ board, position, shape });
 
-    if (isValidRotation) { // if rotation is valid, update with new rotated shape
+    
+    if (isValidRotation) {
         setPlayer({
             ...player,
             tetromino: {
@@ -25,18 +29,23 @@ const attemptRightRotation = ({ board, player, setPlayer }) => {
         return false;
     }
 }
+
+// LEFT ROTATION LOGIC
 const attemptLeftRotation = ({ board, player, setPlayer }) => {
+
     const shape = rotate ({
         piece: player.tetromino.shape,
         direction: -1   
     });
 
-    const position = player.position; // check for collision or off board on rotation
+    // check for collision or off board on rotation
+    const position = player.position; 
     const isValidRotation = 
         isWithinBoard ({ board, position, shape }) &&
         !hasCollision({ board, position, shape });
 
-    if (isValidRotation) { // if rotation is valid, update with new rotated shape
+    // if rotation is valid, update with new rotated shape
+    if (isValidRotation) { 
         setPlayer({
             ...player,
             tetromino: {
@@ -49,90 +58,105 @@ const attemptLeftRotation = ({ board, player, setPlayer }) => {
     }
 }
 
+// MOVE PIECE LOGICE
 export const movePlayer = ({ delta, position, shape, board }) => {
-    const desiredNextPosition = {      // check desired location
+    // check desired location
+    const desiredNextPosition = {
         row: position.row + delta.row,
         column: position.column + delta.column
     };
-    const collided = hasCollision({ // is it colliding?
+    // is it colliding?
+    const collided = hasCollision({
         board,
         position: desiredNextPosition,
         shape
     });
-
-    const isOnBoard = isWithinBoard({ // is it on the board?
+    // is it on the board?
+    const isOnBoard = isWithinBoard({
         board,
         position: desiredNextPosition,
         shape
     });
-    const preventMove = !isOnBoard || (isOnBoard && collided); // prevent move if off board or colliding
-    const nextPosition = preventMove ? position : desiredNextPosition; // prevent move or proceed ternary
-
-    const isMovingDown = delta.row > 0; // check for down movement number increases as you go down
-    const isHit = isMovingDown && (collided || !isOnBoard);  // define collision on down move
-
-    return { collided: isHit, nextPosition }; //return position and if collision
+    // prevent move if off board or colliding
+    const preventMove = !isOnBoard || (isOnBoard && collided);
+    // prevent move or proceed ternary
+    const nextPosition = preventMove ? position : desiredNextPosition;
+    // check for down movement number increases as you go down
+    const isMovingDown = delta.row > 0;
+    // define collision on down move
+    const isHit = isMovingDown && (collided || !isOnBoard);
+    //return position and if collision
+    return { collided: isHit, nextPosition };
 }
 
-
-const attemptMovement = ({  // player piece movement 
-    board, 
-    action, 
-    player, 
-    setPlayer, 
+// player piece movement
+const attemptMovement = ({
+    board,
+    action,
+    player,
+    setPlayer,
     setGameOver
 }) => {
-    const delta = { row: 0, column: 0 }; //reference delta movement assume 0 from start
-    let isFastDropping = false; // check fast drop
 
-    if (action === Action.FastDrop) {   // set if fast dropping
+    //reference delta movement assume 0 from start
+    const delta = { row: 0, column: 0 };
+    // check fast drop
+    let isFastDropping = false;
+    // set if fast dropping
+    if (action === Action.FastDrop) {
         isFastDropping = true;
-    } else if (action === Action.SlowDrop) { // set if slow drop
+    // set if slow drop
+    } else if (action === Action.SlowDrop) {
         delta.row += 1;
-    } else if (action === Action.Left) {  // set if left movement
+    // set if left movement
+    } else if (action === Action.Left) {
         delta.column -= 1;
-    } else if (action === Action.Right) {  // set if right movement
+    // set if right movement
+    } else if (action === Action.Right) {
         delta.column +=1;
     }
-    const { collided, nextPosition } = movePlayer({ // try moving player with delta and check for collision
+    // try moving player with delta and check for collision
+    const { collided, nextPosition } = movePlayer({ 
         delta,
         position: player.position,
         shape: player.tetromino.shape,
         board
     });
-
     //did we collide immediately?   if so, set game over!
     const isGameOver = collided && player.position.row === 0;
     if (isGameOver) {
-        // add high score in here
+        // add high score in here if needed
+        // 
+        // Set game over to bring menu screen up
         setGameOver(isGameOver);
     }
-
-    setPlayer({  // update new values to move the player position
+    // update new values to move the player position
+    setPlayer({  
         ...player,
         collided,
         isFastDropping,
         position: nextPosition
     });
-
 };
 
-
-export const playerController = ({ // pass 'action' to the board and check for rotate or movement
+// pass 'action' to the board and check for rotate or movement
+export const playerController = ({
     action,
     board,
     player,
     setPlayer,
     setGameOver
 }) => {
+    // check for any action
     if (!action) return;
-
-    if (action === Action.RotateRight) {                  // rotate action
+    // rotate action
+    if (action === Action.RotateRight) {
         attemptRightRotation({ board, player, setPlayer });
-    } else if (action === Action.RotateLeft){                                        // if no rotation action...attempt movement
+    // if no rotation action...attempt movement
+    } else if (action === Action.RotateLeft){
         attemptLeftRotation({ board, player, setPlayer });
-    } else {                                        // if no rotation action...attempt movement
+    // if no rotation action...attempt movement
+    } else {
         attemptMovement({ board, player, setPlayer, action, setGameOver });
-
     }
 };

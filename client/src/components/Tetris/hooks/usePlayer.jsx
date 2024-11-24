@@ -3,13 +3,18 @@ import { useState, useCallback } from "react";
 import { randomTetromino } from "../utils/Tetrominoes";
 
 const buildPlayer = (previous) => {
-    let tetrominoes;
 
-    if (previous) {  // if new, build array to fill with tetrominoes
+    // Declare
+    let tetrominoes;
+    
+    // if new, build array to fill with tetrominoes
+    if (previous) {  
         tetrominoes = [...previous.tetrominoes];
         tetrominoes.unshift(randomTetromino());
-    }else{ // fill array with random tetrominoes
-        tetrominoes = Array(2)  // how many preview places are shown for preview, (-2)
+    // fill array with random tetrominoes
+    } else {
+        // how many preview places are shown for preview, (-2)
+        tetrominoes = Array(2)
         .fill(0)
         .map((_) => randomTetromino());
     };
@@ -19,13 +24,15 @@ const buildPlayer = (previous) => {
         isFastDropping: false,
         position: { row: 0, column: 4 },
         tetrominoes,
-        tetromino: tetrominoes.pop() // push out newest to remove piece on board
+        // push out newest to remove piece on board
+        tetromino: tetrominoes.pop() 
     };
 };
 
 export const usePlayer = () => {
-    const[player, setPlayer] = useState(buildPlayer());  //use and set built tetriminoes
-
+    // STATE
+    const[player, setPlayer] = useState(buildPlayer()); 
+    //use and set built tetriminoes
     const resetPlayer = useCallback(() => {
         setPlayer((prev) => buildPlayer(prev));
     }, []);

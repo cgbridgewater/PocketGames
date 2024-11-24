@@ -10,27 +10,32 @@ const GameController = ({
     player,
     setGameOver, 
     setPlayer,
-    isPaused, // Receive isPaused from the parent component
-    setIsPaused // To control the pause state in the parent
+    isPaused,
+    setIsPaused
 }) => {
+
+    //Bring in drop time hook
     const [dropTime, pauseDropTime, resumeDropTime] = useDropTime({ gameStats });
 
     // Handle interval for slow drop, only if the game is not paused
     useInterval(() => {
-        if (!isPaused && dropTime !== null) {  // Ensure the game isn't paused
+        // Ensure the game isn't paused
+        if (!isPaused && dropTime !== null) {
             handleInput({ action: Action.SlowDrop });
         }
     }, dropTime);
 
     const onKeyUp = ({ code }) => {
         const action = ActionForKey(code);
-        if (actionIsDrop(action)) resumeDropTime();  // Resume drop time on key release
+        // Resume drop time on key release
+        if (actionIsDrop(action)) resumeDropTime();
     };
     
     const onKeyDown = ({ code }) => {
+        // Handle Action of Key Strokes
         const action = ActionForKey(code);
-
-        if (action === Action.Pause) {    // Handle Pause action
+        // Handle Pause Action
+        if (action === Action.Pause) {
             if (isPaused) {
                 resumeDropTime();  // Resume drop time if paused
                 setIsPaused(false); // Unpause the game
@@ -38,14 +43,18 @@ const GameController = ({
                 pauseDropTime();   // Pause drop time
                 setIsPaused(true);  // Pause the game
             }
-        } else if (action === Action.Quit) {  // Quit game action
+        // Quit Game Action
+        } else if (action === Action.Quit) {
             setGameOver(true);
         } else {
-            if (actionIsDrop(action)) pauseDropTime(); // Pause drop time during drop actions
-            handleInput({ action });  // Execute other actions
+            // Pause drop time during drop actions
+            if (actionIsDrop(action)) pauseDropTime();
+            // Execute other actions
+            handleInput({ action });
         }
     };
 
+    // Pass action into playerController
     const handleInput = ({ action }) => {
         playerController({
             action,
@@ -56,10 +65,8 @@ const GameController = ({
         });
     };
 
-
     // Using `useRef` to keep a reference to the input element
     const inputRef = useRef(null);
-
     // Focus the input element, ensuring that it's active and can receive keyboard input
     const focusInput = () => {
         // Check if the inputRef is properly assigned to the input element
@@ -88,11 +95,8 @@ const GameController = ({
         };
     }, []);
 
-
-
-
-
     return (
+        // This input is hidden from view, but it required for keyboard stroke input
         <input 
             ref={inputRef}
             className="GameController" 

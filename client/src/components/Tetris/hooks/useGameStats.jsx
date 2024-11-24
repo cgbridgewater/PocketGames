@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 
+// Build State Defaults
 const buildGameStats = () => ({
     // eslint-disable-next-line
     level:1,
@@ -14,8 +15,10 @@ const buildGameStats = () => ({
 });
 
 export const useGameStats = () => {
+    // STATE
     const [gameStats,setGameStats] = useState(buildGameStats());
 
+    // Add scoring and level incrementing actions for lines cleared
     const addLinesCleared = useCallback((lines) => { 
         setGameStats((previous) => {
             const points = lines===4 ? previous.points + ((lines * 100) * lines + 1000) :previous.points + ((lines * 100) * lines); //points multiplier

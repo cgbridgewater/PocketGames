@@ -1,5 +1,4 @@
-
-
+// Single Tetrimino cell
 const BoardCell = ({ cell }) => (
     <div className={`BoardCell ${cell.className}`}>
         <div className="Sparkle"></div>

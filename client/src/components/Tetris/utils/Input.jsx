@@ -1,4 +1,4 @@
-export const Action = {  // strings that match key inputs
+export const Action = {  // strings that match key or button inputs
     RotateRight: "RotateRight",
     RotateLeft: "RotateLeft",
     SlowDrop: "SlowDrop",

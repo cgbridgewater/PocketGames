@@ -8,28 +8,36 @@ const ButtonController = ({
     player,
     setGameOver,
     setPlayer,
-    isPaused,  // Receive `isPaused` from the parent component
-    setIsPaused // To set the paused state in the parent
+    isPaused,
+    setIsPaused
 }) => {
-    const [dropTime, pauseDropTime, resumeDropTime] = useDropTime({ gameStats });
 
+    // DropTime Hook
+    const [dropTime, pauseDropTime, resumeDropTime] = useDropTime({ gameStats });
 
     // Handle the button presses triggered from Tetris.jsx
     const handleButtonPress = (action) => {
         if (action === Action.Pause) {
             // Toggle the paused state and update drop time accordingly
             if (isPaused) {
-                resumeDropTime();  // Resume the drop time if paused
-                setIsPaused(false); // Unpause the game
+                // Resume the drop time if paused
+                resumeDropTime();
+                // Unpause the game
+                setIsPaused(false);
             } else {
-                pauseDropTime();   // Pause the drop time
-                setIsPaused(true);  // Pause the game
+                // Pause the drop time
+                pauseDropTime();
+                // Pause the game
+                setIsPaused(true);
             }
         } else if (action === Action.Quit) {
-            setGameOver(true);  // Set game over state if action is quit
+            // Set game over state if action is quit
+            setGameOver(true);
         } else {
-            if (actionIsDrop(action)) pauseDropTime();  // Pause drop time during action
-            handleInput({ action });  // Handle the action (move, rotate, etc)
+            // Pause drop time during action
+            if (actionIsDrop(action)) pauseDropTime();
+            // Handle the action (move, rotate, etc)
+            handleInput({ action });
         }
     };
 
@@ -44,10 +52,10 @@ const ButtonController = ({
         });
     };
 
-
     return (
         <div>
-            {/* Button press handlers */}
+            {/* Button Press Handlers and Controll Buttons */}
+            {/* A/B BUTTONS */}
             <ul className="gameboy_buttons">
                 <li onClick={() => handleButtonPress(Action.RotateRight)}>
                     <span>A</span>
@@ -56,6 +64,7 @@ const ButtonController = ({
                     <span>B</span>
                 </li>
             </ul>
+            {/* START/SELECT BUTTONS */}
             <ul className="gameboy_buttons_2">
                 <li
                     className="gameboy_pause"
@@ -81,6 +90,7 @@ const ButtonController = ({
             </ul>
             {/* GamePad Buttons */}
             <div className="gameboy_game_pad">
+                {/* GAME PAD LEFT */}
                 <ul
                     className="gameboy_pad_left"
                     onClick={() => handleButtonPress(Action.Left)}
@@ -91,6 +101,7 @@ const ButtonController = ({
                     <li></li>
                     <li></li>
                 </ul>
+                {/* GAME PAD RIGHT */}
                 <ul
                     className="gameboy_pad_right"
                     onClick={() => handleButtonPress(Action.Right)}
@@ -101,9 +112,11 @@ const ButtonController = ({
                     <li></li>
                     <li></li>
                 </ul>
+                {/* GAME PAD CENTER */}
                 <ul className="gameboy_circle">
                     <li></li>
                 </ul>
+                {/* GAME PAD UP */}
                 <ul
                     className="gameboy_pad_up"
                     onClick={() => handleButtonPress(Action.FastDrop)}
@@ -114,6 +127,7 @@ const ButtonController = ({
                     <li></li>
                     <li></li>
                 </ul>
+                {/* GAME PAD DOWN */}
                 <ul
                     className="gameboy_pad_down"
                     onClick={() => handleButtonPress(Action.SlowDrop)}
