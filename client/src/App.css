@@ -337,14 +337,16 @@ a {
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-width: 420px;
+  padding-top: 30px;
+  min-width: 350px;
   background-color: #242424;
+
   
   button {
     position: relative;
-    width: 175px; 
-    height: 175px; 
-    margin: 3px;
+    width: 150px;
+    height: 150px;
+    margin: 2px;
     border: 2px solid black;
     transition: all 0.2s ease;
     cursor: pointer;
@@ -357,11 +359,11 @@ a {
   #play_button {
     cursor:pointer;
     position: relative;
-    top: -230px;
     text-transform: uppercase;
     font-size: 1.2rem;
-    height: 100px;
-    width: 100px;
+    height: 90px;
+    width: 90px;
+    top: -201px;
     border-radius: 50%;
     background-color: var(--black);
     color: var(--white);
@@ -454,21 +456,21 @@ a {
   opacity: 0.5 !important;
 }
 
-@media screen and (max-width: 499px) {
+@media screen and (min-width: 500px) {
   .simon_container {
-    padding-top: 30px;
-    min-width: 350px;
+    padding-top: 50px;
+    min-width: 420px;
     
     button {
-      width: 150px;
-      height: 150px;
-      margin: 2px;
+      width: 175px; 
+      height: 175px; 
+      margin: 3px;
     }
     
     #play_button {
-      height: 90px;
-      width: 90px;
-      top: -201px;
+      top: -230px;
+      height: 100px;
+      width: 100px;
     }
   }
 }
@@ -659,7 +661,7 @@ a {
 /* BOARD */
 .lightsout_board {
   position: absolute;
-  top: 60%;
+  top: 52%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 325px;
