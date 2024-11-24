@@ -99,7 +99,7 @@ const GameController = ({
         // This input is hidden from view, but it required for keyboard stroke input
         <input 
             ref={inputRef}
-            className="GameController" 
+            className="game_controller" 
             type="text" 
             onKeyDown={onKeyDown}
             onKeyUp={onKeyUp}

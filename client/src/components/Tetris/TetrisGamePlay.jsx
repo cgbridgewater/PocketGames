@@ -26,7 +26,7 @@ const TetrisGamePlay = ({ rows, columns, setGameOver }) => {
     return (
         <div className="gameboy">
             {/* GAME BOARD */}
-            <div className="Tetris">
+            <div className="tetris">
                 <Board board={board} gameStats={gameStats} tetrominoes={player.tetrominoes}  />
             </div>
             {/* GAME CONTROL FOR KEY STROKES */}

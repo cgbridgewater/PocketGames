@@ -15,9 +15,9 @@ const Board = ({ board, gameStats, tetrominoes }) => {
 
     return (
         // container for the board , scoring , preview 
-        <div className="BoardContainer">
+        <div className="board_container">
             {/* Game board */}
-            <div className="Board" style={boardStyles}>
+            <div className="board" style={boardStyles}>
                 {board.rows.map((row,y) =>
                     row.map((cell, x) => (
                         <BoardCell key={x * board.size.columns + x} cell={cell} />
@@ -25,7 +25,7 @@ const Board = ({ board, gameStats, tetrominoes }) => {
                 )}
             </div>
             {/* Scoring coloumn */}
-            <div className="Scoring">
+            <div className="scoring">
                 <div className="tetris_score_box">
                     <p className="tetris_score">Score</p>
                     <p>{ points}</p>
@@ -39,7 +39,7 @@ const Board = ({ board, gameStats, tetrominoes }) => {
                     <p>{totalLines}</p>
                 </div>
                 {/* preview container */}
-                <div className="PreviewContainer">
+                <div className="preview_container">
                     <Previews tetrominoes={tetrominoes} />
                 </div>
             </div>

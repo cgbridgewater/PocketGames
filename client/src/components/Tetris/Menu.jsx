@@ -4,27 +4,27 @@ import { FaRegArrowAltCircleDown, FaRegArrowAltCircleLeft, FaRegArrowAltCircleRi
 const Menu = ({ onClick }) =>{
 
     return(
-        <div className="RulesOfGame">
+        <div className="rules_of_game">
             {/* Game Movement Rules */}
             <ul>
-                <li className="RulesList"> <FaRegArrowAltCircleLeft/> &nbsp; MOVE LEFT</li>
-                <li className="RulesList"> <FaRegArrowAltCircleRight/> &nbsp; MOVE RIGHT</li>
-                <li className="RulesList"> <FaRegArrowAltCircleUp/> &nbsp; FAST DROP</li>
-                <li className="RulesList"> <FaRegArrowAltCircleDown/> &nbsp; MOVE DOWN</li>
-                <li className="RulesList"> <span>A</span> &nbsp; ROTATE RIGHT</li>
-                <li className="RulesList"> <span>B</span> &nbsp; ROTATE LEFT</li>
-                <li className="RulesList"> START = PAUSE GAME</li>
-                <li className="RulesList"> SELECT = QUIT GAME</li>
+                <li className="rules_list"> <FaRegArrowAltCircleLeft/> &nbsp; MOVE LEFT</li>
+                <li className="rules_list"> <FaRegArrowAltCircleRight/> &nbsp; MOVE RIGHT</li>
+                <li className="rules_list"> <FaRegArrowAltCircleUp/> &nbsp; FAST DROP</li>
+                <li className="rules_list"> <FaRegArrowAltCircleDown/> &nbsp; MOVE DOWN</li>
+                <li className="rules_list"> <span>A</span> &nbsp; ROTATE RIGHT</li>
+                <li className="rules_list"> <span>B</span> &nbsp; ROTATE LEFT</li>
+                <li className="rules_list"> START = PAUSE GAME</li>
+                <li className="rules_list"> SELECT = QUIT GAME</li>
             </ul>
             {/* Play and Quit Buttons */}
             <div className="rules_buttons">
                 {/* Start Game Play */}
-                <button className="Button" onClick={ onClick } autoFocus>
+                <button onClick={ onClick } autoFocus>
                     PLAY
                 </button>
                 {/* Return To /games menu page */}
                 <Link to="/games">
-                    <button className="Button" >
+                    <button >
                         QUIT
                     </button>
                 </Link>
