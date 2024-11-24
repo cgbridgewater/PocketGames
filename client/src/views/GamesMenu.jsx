@@ -6,6 +6,7 @@ import WordleIcon from "../assets/images/WordleIcon.png";
 import LightsOutIcon from "../assets/images/LightsOutIcon.png";
 import StackitIcon from "../assets/images/StackitIcon.png";
 import TetrisIcon from "../assets/images/TetrisIcon.png";
+import ColorFusionIcon from "../assets/images/ColorFusionIcon.png";
 import PlaceHolder from "../assets/images/PlaceHolder.jpg";
 
 // Import game JSON
@@ -19,6 +20,7 @@ const imageMap = {
     LightsOutIcon,
     StackitIcon,
     TetrisIcon,
+    ColorFusionIcon,
     PlaceHolder,
 };
 

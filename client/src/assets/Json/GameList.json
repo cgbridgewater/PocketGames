@@ -84,7 +84,7 @@
         "status": "3",
         "title": "Color Fusion",
         "url": "colorfusion",
-        "img_ref": "PlaceHolder",
+        "img_ref": "ColorFusionIcon",
         "external_link": false,
         "isActive": true,
         "requirements": []
