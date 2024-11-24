@@ -1,4 +1,5 @@
 import { FaRegArrowAltCircleDown, FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight, FaRegArrowAltCircleUp } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Menu = ({ onClick }) =>{
     
@@ -14,9 +15,16 @@ const Menu = ({ onClick }) =>{
                     <li className="RulesList"> Start = Pause Game</li>
                     <li className="RulesList"> Select = Quit Game</li>
                 </ul>
-                <button className="Button" onClick={ onClick } autoFocus>
-                    Play
-                </button>
+                <div className="rules_buttons">
+                    <button className="Button" onClick={ onClick } autoFocus>
+                        Play
+                    </button>
+                    <Link to="/games">
+                        <button className="Button" onClick={ onClick } >
+                            Menu
+                        </button>
+                    </Link>
+                </div>
             </div>
     );
 }

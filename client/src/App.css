@@ -1338,25 +1338,39 @@ padding: 5px;
       }
   }
 
-  button {
-      padding: 4px 8px;
-      font-size: 1.2rem;
-      font-weight: 800;
-      width: 100px;
-      border-radius: 8px;
-      border: 1px solid #224132;
-      cursor: pointer;
-      background-color: #224132;
-      color:#88AC28;
-      margin: 0 auto;
-      
-      &:hover {
-        -moz-transition: all .2s ease-in-out;
-        -o-transition: all .2s ease-in-out;
-        -webkit-transition: all .2s ease-in-out;
-        transition: all .2s ease-in-out;
-        border: 1px solid #000;
-      }
+  .rules_buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+
+    a {
+      outline: none;
+    }
+
+    button {
+        padding: 4px 8px;
+        font-size: 1.2rem;
+        font-weight: 800;
+        width: 100px;
+        border-radius: 8px;
+        border: 1px solid #224132;
+        cursor: pointer;
+        background-color: #224132;
+        color:#88AC28;
+        margin: 0 auto;
+        
+        &:hover {
+          -moz-transition: all .2s ease-in-out;
+          -o-transition: all .2s ease-in-out;
+          -webkit-transition: all .2s ease-in-out;
+          transition: all .2s ease-in-out;
+          border: 1px solid #000;
+        }
+
+        &:focus {
+          outline: none; /* Remove default outline */
+          box-shadow: 0 0 0 3px var(--red); /* Apply custom focus ring */        }
+    }
   }
 }
 
