@@ -839,10 +839,11 @@ a {
 
 
 .gameboy {
-  position: absolute;
-  top: 50%;
+  position: relative;
+  /* top: 50%;
   left: 50%;
-  transform: translate(-50%, -41%);
+  transform: translate(-50%, -50%); */
+  margin-top: -85px;
   width: 365px;
   height: 550px;
   border: 2px solid rgb(153, 153, 153);
@@ -864,18 +865,30 @@ a {
   cursor: pointer;
 }
 
+
+
+.gameboy_buttons li span {
+  transform: rotate(-90deg) translate(-8px, 40px) scaleY(0.75);
+  font-family: "Squada One";
+  font-weight: 900;
+  position: absolute;
+  right: 27px;
+  color: rebeccapurple;
+}
+
 .gameboy_buttons_2 li span {
   font-family: "Squada One";
   position: absolute;
-  color: #666;
-  transform: rotate(-90deg) translate(-8px, 0) scaleY(0.5);
+  left: -5px;
+  font-weight: 900;
+  color: rebeccapurple;
+  transform: rotate(-90deg) translate(-8px, 0) scale(0.6, 0.7);
 }
 
-.gameboy_buttons li span {
-  transform: rotate(-90deg) translate(-8px, 40px) scaleY(0.5);
-  font-family: "Squada One";
+.gameboy_pause span {
   position: absolute;
-  color: #666;
+  right: -36px;
+  top: 4px;
 }
 
 .gameboy_buttons {
@@ -1351,4 +1364,13 @@ padding: 5px;
   list-style-type: none;
   padding: 5px;
   text-align: start;
+}
+
+@media screen and (min-width: 500px) {
+  .gameboy {
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: -16px;
+  }
 }

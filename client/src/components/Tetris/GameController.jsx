@@ -1,6 +1,5 @@
 import { Action, ActionForKey, actionIsDrop } from "./utils/Input";
 import { playerController } from "./utils/PlayerController";
-
 import { useDropTime } from "./hooks/useDropTime";
 import { useInterval } from "./hooks/useInterval";
 
@@ -9,41 +8,44 @@ const GameController = ({
     gameStats, 
     player,
     setGameOver, 
-    setPlayer 
+    setPlayer,
+    isPaused, // Receive isPaused from the parent component
+    setIsPaused // To control the pause state in the parent
 }) => {
-    const [dropTime, pauseDropTime, resumeDropTime] = useDropTime({ // drop time controller
-        gameStats
-    })
+    const [dropTime, pauseDropTime, resumeDropTime] = useDropTime({ gameStats });
 
-    useInterval(() => { // set slow drop action to 1000ms standard drop rate
-        handleInput({ action: Action.SlowDrop });
+    // Handle interval for slow drop, only if the game is not paused
+    useInterval(() => {
+        if (!isPaused && dropTime !== null) {  // Ensure the game isn't paused
+            handleInput({ action: Action.SlowDrop });
+        }
     }, dropTime);
 
-
-    const onKeyUp = ({ code }) => { //release of keyboard key
+    const onKeyUp = ({ code }) => {
         const action = ActionForKey(code);
-        if (actionIsDrop(action)) resumeDropTime();
+        if (actionIsDrop(action)) resumeDropTime();  // Resume drop time on key release
     };
     
-    const onKeyDown = ({ code }) => { //down stroke of keyboard key
+    const onKeyDown = ({ code }) => {
         const action = ActionForKey(code);
 
-        if (action === Action.Pause) {    // pause/unpause
-            if (dropTime) {  // if we have a drop time, pause
-                pauseDropTime();
-            } else {     //  if you dont have a drop time, resume
-                resumeDropTime();
+        if (action === Action.Pause) {    // Handle Pause action
+            if (isPaused) {
+                resumeDropTime();  // Resume drop time if paused
+                setIsPaused(false); // Unpause the game
+            } else {
+                pauseDropTime();   // Pause drop time
+                setIsPaused(true);  // Pause the game
             }
-        } else if (action === Action.Quit) {  // quit game action
-                setGameOver(true);
-            }
-        else {
-            if (actionIsDrop(action)) pauseDropTime(); //pause drop time during action move
-            handleInput ({ action });  // make action
+        } else if (action === Action.Quit) {  // Quit game action
+            setGameOver(true);
+        } else {
+            if (actionIsDrop(action)) pauseDropTime(); // Pause drop time during drop actions
+            handleInput({ action });  // Execute other actions
         }
     };
 
-    const handleInput = ({ action }) => {  // controls player
+    const handleInput = ({ action }) => {
         playerController({
             action,
             board,
@@ -53,8 +55,7 @@ const GameController = ({
         });
     };
 
-
-    return(
+    return (
         <input 
             className="GameController" 
             type="text" 
@@ -62,9 +63,7 @@ const GameController = ({
             onKeyUp={onKeyUp}
             autoFocus
         />
-
     );
-}
+};
 
-
-export default GameController
+export default GameController;

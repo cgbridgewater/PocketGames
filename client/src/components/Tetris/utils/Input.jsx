@@ -20,7 +20,6 @@ export const Key = { // Key codes for actions input
     KeyP: Action.Pause
 };
 
-
 export const actionIsDrop = (action) => 
     // function for dropping actions made
     [Action.SlowDrop, Action.FastDrop].includes(action);

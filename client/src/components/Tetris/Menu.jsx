@@ -14,7 +14,7 @@ const Menu = ({ onClick }) =>{
                     <li className="RulesList"> Start = Pause Game</li>
                     <li className="RulesList"> Select = Quit Game</li>
                 </ul>
-                <button className="Button" onClick={ onClick } >
+                <button className="Button" onClick={ onClick } autoFocus>
                     Play
                 </button>
             </div>
