@@ -1,30 +1,27 @@
 import RedLink from "./RedLink";
+// Import game JSON
+import GamesData from "../../assets/Json/GameList.json";
 
 export default function NavDrawer() {
+
+    // Filter JSON GamesData for isActive = true
+    const GameData = GamesData.filter(data => data.isActive);
+
     return (
         <nav id="drawer">
             <ul>
+                {/* HOME LINK */}
                 <li className="drawer_link">
                     <RedLink href="/" text="Home" external={false} />
                 </li>
-                <li className="drawer_link">
-                    <RedLink href="/games" text="Games Menu" external={false} />
-                </li>
-                <li className="drawer_link">
-                    <RedLink href="/games/memory" text="Memory Magic" external={false} />
-                </li>
-                <li className="drawer_link">
-                    <RedLink href="/games/simon" text="Simom Says" external={false} />
-                </li>
-                <li className="drawer_link">
-                    <RedLink href="/games/wordle" text="Wordle" external={false} />
-                </li>
-                <li className="drawer_link">
-                    <RedLink href="/games/lightsout" text="Lights Out" external={false} />
-                </li>
-                <li className="drawer_link">
-                    <RedLink href="/games/stackit" text="Stack It" external={false} />
-                </li>
+                {/* Mapping through game links from JSON file */}
+                {GameData.map((Game) => {
+                    return (
+                        <li className="drawer_link" key={Game.id}>
+                            <RedLink href={`/games/${Game.url}`} text={Game.title} external={Game.external_link} />
+                        </li>
+                    )
+                })}
             </ul>
         </nav>
     );
