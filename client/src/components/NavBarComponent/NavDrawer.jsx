@@ -4,8 +4,10 @@ import GamesData from "../../assets/Json/GameList.json";
 
 export default function NavDrawer() {
 
-    // Filter JSON GamesData for isActive = true
-    const GameData = GamesData.filter(data => data.isActive);
+    // Filter JSON for isActive = true and sort alphabetically
+    const GameData = GamesData
+        .filter(data => data.isActive)
+        .sort((a, b) => a.title.localeCompare(b.title));
 
     return (
         <nav id="drawer">

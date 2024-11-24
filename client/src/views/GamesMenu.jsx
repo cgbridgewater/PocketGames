@@ -23,8 +23,10 @@ const imageMap = {
 };
 
 function GameMenu() {
-    // Filter for isActive = true 
-    const GameData = GamesData.filter(data => data.isActive);
+    // Filter JSON for isActive = true and sort alphabetically
+    const GameData = GamesData
+        .filter(data => data.isActive)
+        .sort((a, b) => a.title.localeCompare(b.title));
 
     return (
         <main>
