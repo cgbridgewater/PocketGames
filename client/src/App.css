@@ -1205,7 +1205,7 @@ a {
 
 .tetromino.ghost {
   background-color: transparent; 
-  border:  1px solid #04befe;
+  border:  1px solid #224132;
   opacity: calc(25%);
 }
 
