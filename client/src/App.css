@@ -1345,3 +1345,12 @@ background-color: rgba(255,127,0,1);
 /*                     */
 /* END OF TETRIS STYLE */
 /*                     */
+
+
+
+iframe {
+  border: 4px double var(--border_trim);
+  border-radius: 8px;
+  transform: scale(1.4);  
+  transform-origin: 50% 0;
+}

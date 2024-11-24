@@ -12,6 +12,7 @@ import LightsOut from './views/LightsOut'
 import Stackit from './views/Stackit'
 import BrickBreaker from './views/BrickBreaker'
 import Tetris from './views/Tetris'
+import ColorFusion from './views/ColorFusion'
 
 function App() {
 
@@ -80,6 +81,14 @@ function App() {
         {/* Tetris GAME */}
         <Route path='/games/tetris' element={
             <Tetris
+              isWinningModalOpen={isWinningModalOpen} 
+              setIsWinningModalOpen={setIsWinningModalOpen}
+            />}
+          />
+
+        {/* Color Fusion GAME */}
+        <Route path='/games/colorfusion' element={
+            <ColorFusion
               isWinningModalOpen={isWinningModalOpen} 
               setIsWinningModalOpen={setIsWinningModalOpen}
             />}
