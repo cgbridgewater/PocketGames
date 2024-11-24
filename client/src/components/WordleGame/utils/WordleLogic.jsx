@@ -1,6 +1,6 @@
 import axios from "axios"
 // Import JSON file
-import wordList from '../assets/Json/WordleList.json';
+import wordList from '../../../assets/Json/WordleList.json';
 
 
 // Check if the word is valid

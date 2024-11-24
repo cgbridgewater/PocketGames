@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getRandomWord, validateWord } from '../utils/WordleLogic';
+import { getRandomWord, validateWord } from '../components/WordleGame/utils/WordleLogic';
 import WordleBoard from '../components/WordleGame/WordleBoard';
 import WordleKey from '../components/WordleGame/WordleKey';
 import Header from '../components/GameHeader/GameHeader';
