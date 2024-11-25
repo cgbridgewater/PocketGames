@@ -10,7 +10,7 @@ import Wordle from './views/Wordle'
 import BadURL from './views/BadURL'
 import LightsOut from './views/LightsOut'
 import Stackit from './views/Stackit'
-import BrickBreaker from './views/BrickBreaker'
+// import BrickBreaker from './views/BrickBreaker'
 import Tetris from './views/Tetris'
 import ColorFusion from './views/ColorFusion'
 
