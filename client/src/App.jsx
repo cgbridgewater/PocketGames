@@ -10,9 +10,10 @@ import Wordle from './views/Wordle'
 import BadURL from './views/BadURL'
 import LightsOut from './views/LightsOut'
 import Stackit from './views/Stackit'
-// import BrickBreaker from './views/BrickBreaker'
 import Tetris from './views/Tetris'
 import ColorFusion from './views/ColorFusion'
+// import BrickBreaker from './views/BrickBreaker'
+// import BubbleBlast from './views/BubbleBlast'
 
 function App() {
 
@@ -93,6 +94,14 @@ function App() {
               setIsWinningModalOpen={setIsWinningModalOpen}
             />}
           />
+
+        {/* Bubble Blast GAME */}
+        {/* <Route path='/games/bubbleblast' element={
+            <BubbleBlast
+              isWinningModalOpen={isWinningModalOpen} 
+              setIsWinningModalOpen={setIsWinningModalOpen}
+            />}
+          /> */}
 
           {/* Brick Breaker GAME
           <Route path='/games/brickbreaker' element={

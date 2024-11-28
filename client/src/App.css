@@ -21,10 +21,12 @@
   --font_size_default: 16px;
   --border_trim: #D9B14B;
   --button_hover: #C23866;
-  --white: #FFF;
+  /* --white: #FFF; */
+  --white: #DED6D1;
   --red: #C23866;
   --black: #000;
   --background: #242424;
+  --fusion_corner_radius: 4px;
 }
 
 body {
@@ -99,6 +101,7 @@ a {
 .button_box {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0 16px;
   
   *:focus {
@@ -1350,9 +1353,271 @@ background-color: rgba(255,127,0,1);
 
 
 
-iframe {
-  border: 4px double var(--border_trim);
-  border-radius: 8px;
-  transform: scale(1.4);  
-  transform-origin: 50% 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*                    */
+/* COLOR FUSION STYLE */
+/*                    */
+
+.fusion_game_wrapper {
+  width: fit-content;
+}
+
+.fusion_grid_container {
+  position: relative;
+  padding: 5px ;
+  background-color: #DED6D1;
+  border-top-left-radius: 4px ;
+  border-top-right-radius: 4px ;
+  border-left: 3px solid var(--border_trim);
+  border-right: 3px solid var(--border_trim);
+  border-top: 3px solid var(--border_trim);
+}
+
+.fusion_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0,0, 0.9);
+}
+
+.fusion_info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 290px;
+  height: 200px;
+  padding: 10px;
+  text-align: center;
+  background-color: var(--background);
+  border: 3px solid var(--border_trim);
+  border-radius: 4px;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: space-evenly;
+  overflow-x: hidden;
+  overflow-y: auto;
+  
+  h3 {
+    font-size: 1.75rem;
+    font-family: "Rubik Dirt", sans-serif;
+    margin: 0;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+}
+
+.fusion_button {
+  width: 150px;
+  margin: 10px auto;
+  padding: 5px 8px;
+  cursor: pointer;
+  font: .9rem;
+  font-weight: 700;
+  color: var(--white);
+  background-color: var(--background);
+  border: 2px solid var(--border_trim);
+  border-radius: 4px;
+  text-transform: uppercase;
+
+  &:hover {
+    background-color: var(--button_hover);
+  }
+}
+
+.fusion_footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 12px 8px;
+  background-color: var(--red);
+  height: 30px;
+  border-top: 1px solid #00000060;
+  border-left: 3px solid var(--border_trim);
+  border-right: 3px solid var(--border_trim);
+  border-bottom: 3px solid var(--border_trim);
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  
+  .icon_container {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    
+    svg {
+      padding: 6px;
+      font-size: 1.1rem;
+      fill: #DED6D1;
+      cursor: pointer;
+      background-color: #00000040;
+      border-radius: 50%;
+    
+      &:hover {
+        background-color: #00000070;
+      }
+    }
+  }
+  
+  .pieces_left {
+    position: relative;
+    bottom: 2px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--border_trim);
+    letter-spacing: 0.025rem;
+
+    span {
+      font-weight: 900;
+      color: #DED6D1;
+    }
+  }
+}
+
+
+
+/*            */
+/* GRID STYLE */
+/*            */
+/* VStack replacement (Vertical Stack) */
+.vstack {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* HStack replacement (Horizontal Stack) */
+.hstack {
+  display: flex;
+  gap: 0;
+  background-color: #DED6D1;
+}
+
+/* Tile container for individual grid items */
+.fusion_tile_container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Separator styling for horizontal separators between tiles */
+.fusion_tile_separator_horizontal {
+  margin-left: 1px;
+  width: 20px;
+  height: 1px;
+  background-color: #DED6D1;
+}
+
+/* Tile wrapper, to ensure tiles are in a flexbox row */
+.fusion_tile_wrapper {
+  display: flex;
+}
+
+/* Separator styling for vertical separators between tiles */
+.fusion_tile_separator_vertical {
+  width: 1px;
+  height: 20px;
+  background-color: #DED6D1;
+}
+/*                */
+/* END GRID STYLE */
+/*                */
+
+
+/*            */
+/* TILE STYLE */
+/*            */
+/* Tile styles */
+.fusion_tile {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.fusion_blank {
+  background-color: var(--background);
+}
+
+.fusion_rounded {
+border-radius: var(--fusion_corner_radius);
+}
+
+.fusion_top {
+  border-top-left-radius: var(--fusion_corner_radius);
+  border-top-right-radius: var(--fusion_corner_radius);
+}
+
+.fusion_bottom {
+  border-bottom-right-radius: var(--fusion_corner_radius);
+  border-bottom-left-radius: var(--fusion_corner_radius);
+}
+
+.fusion_left {
+  border-top-left-radius: var(--fusion_corner_radius);
+  border-bottom-left-radius: var(--fusion_corner_radius);
+}
+
+.fusion_right {
+  border-top-right-radius: var(--fusion_corner_radius);
+  border-bottom-right-radius: 4px
+}
+
+.fusion_topleft {
+  border-top-left-radius: var(--fusion_corner_radius);
+}
+
+.fusion_topright {
+  border-top-right-radius: var(--fusion_corner_radius);
+}
+
+.fusion_bottomleft {
+  border-bottom-left-radius: var(--fusion_corner_radius);
+}
+
+.fusion_bottomright {
+  border-bottom-right-radius: var(--fusion_corner_radius);
+}
+
+.fusion_black {
+  color: var(--black);
+  border-radius: var(--fusion_corner_radius);
+}
+/*                */
+/* END TILE STYLE */
+/*                */
+
+/* Screen adaption */
+
+@media screen and (min-width: 500px) {
+  .fusion_tile {
+    height: 29px;
+    width: 29px;
+  }
+  
+  .fusion_tile_separator_horizontal {
+    margin-left: 2px;
+    width: 29px;
+    height: 2px;
+  }
+  
+  .fusion_tile_separator_vertical {
+    width: 2px;
+    height: 29px;
+  }
 }
