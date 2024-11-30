@@ -9,7 +9,7 @@ const Tile = ({ shape, color, onClick, debug }) => {
     case "blank":
       return <div className="fusion_tile fusion_blank" />;
     case "square":
-      return <div className="fusion_tile top" style={{ backgroundColor: color }} onClick={onClick} />;
+      return <div className="fusion_tile" style={{ backgroundColor: color }} onClick={onClick} />;
     case "rounded":
       return <div className="fusion_tile fusion_rounded fusion_shine" style={{ backgroundColor: color }} />;
     case "topRounded":
