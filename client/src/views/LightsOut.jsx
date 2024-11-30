@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "../components/GameHeader/GameHeader";
 import Cell from "../components/LightsOut/LightsOutCell";
 import WinningModal from "../components/Modals/WinningModal";
+import GameFooter from "../components/GameFooter/GameFooter";
 
 const LightsOut = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
     const [moves, setMoves] = useState(0);
@@ -75,6 +76,11 @@ const LightsOut = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
         setBoard({ grid: createGrid() });
         setIsWinningModalOpen(false);
     };
+
+    // Ensure modal is closed on page load
+    useEffect(() => {
+        resetGame()
+    }, [])
 
     return (
         <main>
