@@ -41,7 +41,7 @@ export const getGameState = (grid) => {
 
 export const getPieces = (grid) => grid.length ? grid.flat().filter(tile => tile.color !== "blank").length : 0;
 
-const colorsForRandomize = ["purple", "yellow", "green", "blue"];
+const colorsForRandomize = ["red", "orange", "green", "blue"];
 const getRandomColor = () => colorsForRandomize[Math.floor(Math.random() * colorsForRandomize.length)];
 
 const generateColoredGrid = (height, width) => {

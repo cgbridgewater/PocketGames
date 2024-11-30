@@ -87,9 +87,9 @@ const ColorFusion = () => {
                 <FaInfo />
               </div>
             </div>
-            <div className="pieces_left">Pieces Left: <span>{piecesLeft}</span></div>
           </div>
         </div>
+        <div className="box"></div>
       </main>
     );
   }
