@@ -9,11 +9,10 @@ import SimonSays from './views/SimonSays'
 import Wordle from './views/Wordle'
 import BadURL from './views/BadURL'
 import LightsOut from './views/LightsOut'
-import Stackit from './views/Stackit'
+import Stackable from './views/Stackable'
 import Tetris from './views/Tetris'
 import ColorFusion from './views/ColorFusion'
-// import BrickBreaker from './views/BrickBreaker'
-// import BubbleBlast from './views/BubbleBlast'
+import BubbleMania from './views/BubbleMania'
 
 function App() {
 
@@ -71,8 +70,8 @@ function App() {
         />
 
         {/* Stack It GAME */}
-        <Route path='/games/stackit' element={
-          <Stackit
+        <Route path='/games/stackable' element={
+          <Stackable
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
           />}
@@ -96,20 +95,12 @@ function App() {
           />
 
         {/* Bubble Blast GAME */}
-        {/* <Route path='/games/bubbleblast' element={
-            <BubbleBlast
+        <Route path='/games/bubblemania' element={
+            <BubbleMania
               isWinningModalOpen={isWinningModalOpen} 
               setIsWinningModalOpen={setIsWinningModalOpen}
             />}
-          /> */}
-
-          {/* Brick Breaker GAME
-          <Route path='/games/brickbreaker' element={
-            <BrickBreaker
-              isWinningModalOpen={isWinningModalOpen} 
-              setIsWinningModalOpen={setIsWinningModalOpen}
-            />}
-          /> */}
+          />
 
         {/* 3D Stacking GAME */}
         {/* <Route path='/games/stacker3d' element={

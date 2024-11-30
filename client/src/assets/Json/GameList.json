@@ -42,8 +42,8 @@
     {
         "id": "5",
         "status": "1",
-        "title": "Stack It",
-        "url": "stackit",
+        "title": "Stackable",
+        "url": "stackable",
         "img_ref": "StackitIcon",
         "external_link": false,
         "isActive": true,
@@ -61,27 +61,7 @@
     },
     {
         "id": "7",
-        "status": "3",
-        "title": "Bubble Mania",
-        "url": "#",
-        "img_ref": "PlaceHolder",
-        "external_link": false,
-        "isActive": false,
-        "requirements": []
-    },
-    {
-        "id": "8",
-        "status": "3",
-        "title": "Break Out",
-        "url": "#",
-        "img_ref": "PlaceHolder",
-        "external_link": false,
-        "isActive": false,
-        "requirements": []
-    },
-    {
-        "id": "9",
-        "status": "2",
+        "status": "1",
         "title": "Color Fusion",
         "url": "colorfusion",
         "img_ref": "ColorFusionIcon",
@@ -90,7 +70,37 @@
         "requirements": []
     },
     {
+        "id": "8",
+        "status": "3",
+        "title": "Bubble Mania",
+        "url": "bubblemania",
+        "img_ref": "PlaceHolder",
+        "external_link": false,
+        "isActive": true,
+        "requirements": []
+    },
+    {
         "id": "10",
+        "status": "3",
+        "title": "Stack It",
+        "url": "stackit",
+        "img_ref": "PlaceHolder",
+        "external_link": false,
+        "isActive": true,
+        "requirements": []
+    },
+    {
+        "id": "10",
+        "status": "3",
+        "title": "Break Out",
+        "url": "brickbreaker",
+        "img_ref": "PlaceHolder",
+        "external_link": false,
+        "isActive": false,
+        "requirements": []
+    },
+    {
+        "id": "11",
         "status": "1",
         "title": "Starship",
         "url": "#",

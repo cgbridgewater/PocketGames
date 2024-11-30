@@ -756,7 +756,7 @@ a {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 330px;
+  width: 310px;
   height: 150px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -765,7 +765,7 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--red);
+  background-color: var(--background);
   border:4px groove var(--border_trim);
   border-radius: 8px;
   z-index: 10000001;

@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
-import { BOX_HEIGHT, CANVAS_WIDTH, INITIAL_BOX_WIDTH, INITIAL_X_SPEED, INITIAL_Y_SPEED } from './Constants';
-import { createStepColor, drawBackground, drawBoxes, drawDebris, gameOver } from './GameLogic';
+import { BOX_HEIGHT, CANVAS_WIDTH, INITIAL_BOX_WIDTH, INITIAL_X_SPEED, INITIAL_Y_SPEED } from '../utils/Constants';
+import { createStepColor, drawBackground, drawBoxes, drawDebris, gameOver } from '../utils/GameLogic';
 
 
 export function useGame() {

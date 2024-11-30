@@ -1,5 +1,5 @@
-import { useGame } from '../components/Stackit/GameHook';
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../components/Stackit/Constants';
+import { useGame } from '../components/Stackable/hooks/GameHook';
+import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../components/Stackable/utils/Constants';
 import WinningModal from '../components/Modals/WinningModal';
 import Header from '../components/GameHeader/GameHeader';
 
