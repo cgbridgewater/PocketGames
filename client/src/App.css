@@ -1352,20 +1352,6 @@ background-color: rgba(255,127,0,1);
 /*                     */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*                    */
 /* COLOR FUSION STYLE */
 /*                    */
@@ -1419,7 +1405,7 @@ background-color: rgba(255,127,0,1);
     font-family: "Rubik Dirt", sans-serif;
     margin: 0;
   }
-
+  
   p {
     font-size: 0.9rem;
   }
@@ -1437,7 +1423,7 @@ background-color: rgba(255,127,0,1);
   border: 2px solid var(--border_trim);
   border-radius: 4px;
   text-transform: uppercase;
-
+  
   &:hover {
     background-color: var(--button_hover);
   }
@@ -1476,8 +1462,6 @@ background-color: rgba(255,127,0,1);
     }
   }
 }
-
-
 
 /*            */
 /* GRID STYLE */
@@ -1525,11 +1509,10 @@ background-color: rgba(255,127,0,1);
 /* END GRID STYLE */
 /*                */
 
-
 /*            */
 /* TILE STYLE */
 /*            */
-/* Tile styles */
+
 .fusion_tile {
   width: 20px;
   height: 20px;
@@ -1537,8 +1520,6 @@ background-color: rgba(255,127,0,1);
   position: relative; /* To position the reflection */
   overflow: hidden; /* Ensure reflection doesn't spill out */
 }
-
-
 
 /* Not In Use */
 .fusion_blank {
@@ -1639,7 +1620,7 @@ border-radius: var(--fusion_corner_radius);
     width: 2px;
     height: 29px;
   }
-
+  
   .fusion_shine::before {
     height: 25px;
   }
@@ -1648,5 +1629,3 @@ border-radius: var(--fusion_corner_radius);
     width: 25px;
   }
 }
-
-
