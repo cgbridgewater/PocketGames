@@ -100,7 +100,13 @@ function Simon({ isWinningModalOpen, setIsWinningModalOpen }) {
     return (
         <main>
             {/* HEADER COMPONENT */}
-            <Header title={"Simon Says"} onclick={resetGame} turn_title={"Level"} turns={sequence.length}/>
+            <Header 
+                title={"Simon Says"}
+                onclick={resetGame}
+                turn_title={"Level"}
+                turns={sequence.length}
+                howTo={"The game begins with one illuminated color, which the player must repeat by pressing the same button. As the game progresses, additional colors are added, making the sequence longer and more complex. The objective is to remember and replicate the longest sequence, testing memory and concentration skills."}
+            />
             {/* GAME */}
             <div className="simon_container">
                 <div>

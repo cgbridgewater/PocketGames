@@ -125,7 +125,13 @@ function Memory({ isWinningModalOpen, setIsWinningModalOpen }) {
     return (
         <main>
             {/* HEADER COMPONENT */}
-            <Header title={"Magic Memory"} onclick={resetGame} turn_title={"Turns"} turns={turns} />
+            <Header
+                title={"Magic Memory"}
+                onclick={resetGame}
+                turn_title={"Turns"}
+                turns={turns}
+                howTo={"Uncover matching pairs hidden beneath a grid of face-down cards in this engaging memory game. Choose from three difficulty levels: easy features a smaller grid for beginners, medium adds more cards for a bit more challenge, and hard tests even the sharpest memories with a larger grid and more pairs. The game ends when all pairs are found" }
+            />
             {/* DIFFICULTY BUTTONS */}
             <div className="button_box">
                 {/* EASY */}

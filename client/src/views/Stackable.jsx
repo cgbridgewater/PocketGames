@@ -14,6 +14,7 @@ function Stackit() {
                 onclick={restartGame}
                 turn_title={"Level"}
                 turns={score}
+                howTo={"Drop a box as it moves back and forth across the screen. If it overhangs the box below, the excess will be trimmed, narrowing the stack and increasing the challenge. The game continues as long as you successfully stack each box, but if you miss one, it’s game over! Rely on precise timing and aim to build the tallest tower possible by stacking the falling boxes."}
             />
             {/* Game Canvas */}
             <canvas

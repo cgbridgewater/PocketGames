@@ -1,5 +1,5 @@
 // React Hooks
-import { useMemo, useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 
 // Custom Hooks
 import { useColorFusion } from "../components/ColorFusion/utils/useColorFusion";
@@ -10,9 +10,6 @@ import Header from "../components/GameHeader/GameHeader";
 
 // Libraries
 import { useLocation } from "react-router-dom";
-
-// Font Icons
-import { FaRotateLeft, FaInfo } from "react-icons/fa6";
 
 // Common Functions
 import { notifyRendering } from "../components/ColorFusion//hooks/commonFunctions";
@@ -29,7 +26,7 @@ const ColorFusion = () => {
   if (debug) notifyRendering("App");
 
   const { grid, gameState, piecesLeft, handleTileClick, handleResetButtonClick } = useColorFusion({ height, width, debug });
-  const [isInfoOpen, setIsInfoOpen] = useState(false);
+  const [ isWinningModalOpen, setIsWinningModalOpen ] = useState(false);
 
 
 
@@ -37,19 +34,19 @@ const ColorFusion = () => {
     return (
       <main>
         {/* HEADER COMPONENT */}
-        <Header title={"Color Fusion"} onclick={handleResetButtonClick} turn_title={"Pieces Left"} turns={piecesLeft}  />
+        <Header 
+          title={"Color Fusion"} 
+          onclick={handleResetButtonClick} 
+          turn_title={"Pieces Left"} 
+          turns={piecesLeft}  
+          howTo={"This game is played by erasing clumps of two or more pieces of the same color attached to each other, and the game is completed when all the pieces are finally erased."}  
+        />
         {/* GAME */}
         <div className="fusion_game_wrapper" >
           <div className="fusion_grid_container" >
             <Grid grid={grid} handleTileClick={handleTileClick} debug={debug} />
             {
-              gameState !== "Playing" && !isInfoOpen ? (
-                // <div className="fusion_overlay">
-                //   <div className="fusion_info">
-                //     <h3>{gameState}</h3>
-                //     <button className="fusion_button" onClick={handleResetButtonClick}>Play Again</button>
-                //   </div>
-                // </div>
+              gameState !== "Playing" && !isWinningModalOpen ? (
                 <WinningModal 
                   message1={piecesLeft >= 1 ?"GameOver - ": "Winner!! " }
                   message2={piecesLeft >= 1 ? `${piecesLeft} pieces left!` : "All Pieces Cleared!"} 
@@ -58,38 +55,8 @@ const ColorFusion = () => {
                 />
               ) : null
             }
-            {
-              isInfoOpen ? (
-                <div  className="fusion_overlay">
-                  <div className="fusion_info">
-                    <h3>How To Play</h3>
-                      <p>
-                        This game is played by erasing clumps of two or more pieces of the same color attached to each other, and the game is completed when all the pieces are finally erased.
-                      </p>
-                    <div className="button_box">
-                      <button
-                        onClick={() => setIsInfoOpen(false)}
-                        >
-                        Close
-                      </button>
-                    </div>
-                  </div>
-                </ div>
-              ) : null
-            }
-          </div>
-          <div className="fusion_footer"  onClick={() => { if (isInfoOpen) setIsInfoOpen(false) }}>
-            <div className="icon_container">
-              <div onClick={handleResetButtonClick} title="Reset" >
-                <FaRotateLeft />
-              </div>
-              <div onClick={() => setIsInfoOpen(true)} title="Info" >
-                <FaInfo />
-              </div>
-            </div>
           </div>
         </div>
-        <div className="box"></div>
       </main>
     );
   }
