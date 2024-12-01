@@ -23,7 +23,6 @@ export const useColorFusion = (props) => {
   }, [grid, props.debug]);
 
   const handleTileClick = useCallback((x, y) => {
-    console.log("TEST")
     if (grid[x][y].color === "blank") return;
     if (props.debug) console.log(`${x}, ${y} Clicked!`);
     setGrid(removeClump(grid, x, y));
