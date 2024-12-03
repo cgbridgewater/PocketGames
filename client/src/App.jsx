@@ -13,19 +13,21 @@ import Stackable from './views/Stackable'
 import Tetris from './views/Tetris'
 import ColorFusion from './views/ColorFusion'
 import BubbleMania from './views/BubbleMania'
+import Stacker3d from './views/Stacker3d'
 
 function App() {
 
+  // State for winning modal //
   const [isWinningModalOpen, setIsWinningModalOpen] = useState(false);
 
   return (
 
     <BrowserRouter>
-    {/* Navbar Here */}
+    {/* NAVBAR */}
     <Navbar />
 
       <Routes>
-        {/* GAME MENU */}
+        {/* LANDING PAGE */}
         <Route exact path='/' element={
           <Index
           />}
@@ -61,7 +63,7 @@ function App() {
           />}
         />
 
-        {/* Lights Out GAME */}
+        {/* LIGHTS OUT GAME */}
         <Route path='/games/lightsout' element={
           <LightsOut
             isWinningModalOpen={isWinningModalOpen} 
@@ -69,7 +71,7 @@ function App() {
           />}
         />
 
-        {/* Stack It GAME */}
+        {/* STACKABLE GAME */}
         <Route path='/games/stackable' element={
           <Stackable
             isWinningModalOpen={isWinningModalOpen} 
@@ -78,7 +80,7 @@ function App() {
         />
 
 
-        {/* Tetris GAME */}
+        {/* TETRIS GAME */}
         <Route path='/games/tetris' element={
             <Tetris
               isWinningModalOpen={isWinningModalOpen} 
@@ -86,7 +88,7 @@ function App() {
             />}
           />
 
-        {/* Color Fusion GAME */}
+        {/* COLOR FUSION GAME */}
         <Route path='/games/colorfusion' element={
             <ColorFusion
               isWinningModalOpen={isWinningModalOpen} 
@@ -94,7 +96,7 @@ function App() {
             />}
           />
 
-        {/* Bubble Blast GAME */}
+        {/* BUBBLE MANIA GAME */}
         <Route path='/games/bubblemania' element={
             <BubbleMania
               isWinningModalOpen={isWinningModalOpen} 
@@ -103,12 +105,12 @@ function App() {
           />
 
         {/* 3D Stacking GAME */}
-        {/* <Route path='/games/stacker3d' element={
+        <Route path='/games/stacker3d' element={
           <Stacker3d
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
           />}
-        /> */}
+        />
 
         <Route path="*" element={
           <BadURL/>
