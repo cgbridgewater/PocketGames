@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PocketGamesIcon from "../../assets/images/PocketGames.png";
 import NavDrawer from './NavDrawer';
 
-export default function Navbar() {
+export default function Navbar({ currentPath  }) {
     // Handle clicks to close nav bar, either link or outside of drawer area
     useEffect(() => {
         const drawerLinks = document.querySelectorAll('.drawer_link');
@@ -28,7 +28,7 @@ export default function Navbar() {
             </header>
             {/* END HEADER */}
             {/* SLIDE OUT DRAWER FOR HAMBURGER */}
-            <NavDrawer />
+            <NavDrawer currentPath={ currentPath }/>
         </>
     );
 };

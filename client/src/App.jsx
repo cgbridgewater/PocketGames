@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import Navbar from './components/NavBarComponent/Navbar'
 import Index from './views/Index'
@@ -16,28 +16,33 @@ import BubbleMania from './views/BubbleMania'
 import Stacker3d from './views/Stacker3d'
 
 function App() {
-
   // State for winning modal //
   const [isWinningModalOpen, setIsWinningModalOpen] = useState(false);
 
   return (
-
     <BrowserRouter>
-    {/* NAVBAR */}
-    <Navbar />
+      <AppContent 
+        isWinningModalOpen={isWinningModalOpen} 
+        setIsWinningModalOpen={setIsWinningModalOpen} 
+      />
+    </BrowserRouter>
+  )
+};
+
+function AppContent({ isWinningModalOpen, setIsWinningModalOpen }) {
+  const location = useLocation();
+
+  return (
+    <>
+      {/* NAVBAR */}
+      <Navbar currentPath={location.pathname} />
 
       <Routes>
         {/* LANDING PAGE */}
-        <Route exact path='/' element={
-          <Index
-          />}
-        />
+        <Route exact path='/' element={<Index />} />
 
         {/* GAME MENU */}
-        <Route path='/games' element={
-          <GameMenu
-          />} 
-        />
+        <Route path='/games' element={<GameMenu />} />
 
         {/* MEMORY GAME */}
         <Route path='/games/memory' element={
@@ -79,32 +84,31 @@ function App() {
           />}
         />
 
-
         {/* TETRIS GAME */}
         <Route path='/games/tetris' element={
-            <Tetris
-              isWinningModalOpen={isWinningModalOpen} 
-              setIsWinningModalOpen={setIsWinningModalOpen}
-            />}
-          />
+          <Tetris
+            isWinningModalOpen={isWinningModalOpen} 
+            setIsWinningModalOpen={setIsWinningModalOpen}
+          />}
+        />
 
         {/* COLOR FUSION GAME */}
         <Route path='/games/colorfusion' element={
-            <ColorFusion
-              isWinningModalOpen={isWinningModalOpen} 
-              setIsWinningModalOpen={setIsWinningModalOpen}
-            />}
-          />
+          <ColorFusion
+            isWinningModalOpen={isWinningModalOpen} 
+            setIsWinningModalOpen={setIsWinningModalOpen}
+          />}
+        />
 
         {/* BUBBLE MANIA GAME */}
         <Route path='/games/bubblemania' element={
-            <BubbleMania
-              isWinningModalOpen={isWinningModalOpen} 
-              setIsWinningModalOpen={setIsWinningModalOpen}
-            />}
-          />
+          <BubbleMania
+            isWinningModalOpen={isWinningModalOpen} 
+            setIsWinningModalOpen={setIsWinningModalOpen}
+          />}
+        />
 
-        {/* 3D Stacking GAME */}
+        {/* STACKER 3D GAME */}
         <Route path='/games/stacker3d' element={
           <Stacker3d
             isWinningModalOpen={isWinningModalOpen} 
@@ -112,13 +116,11 @@ function App() {
           />}
         />
 
-        <Route path="*" element={
-          <BadURL/>
-        } />
-
+        {/* CATCHALL FOR BAD ROUTES */}
+        <Route path="*" element={<BadURL />} />
       </Routes>
-    </BrowserRouter>
-  )
+    </>
+  );
 }
 
-export default App
+export default App;
