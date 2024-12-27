@@ -46,7 +46,7 @@
 }
 /* End hamburger style */
 
-/* Header contains BeeDev name and logo */
+/* Header contains name and logo */
 header {
     width: 100%;
     padding-right: 80px;
@@ -92,7 +92,7 @@ header {
     padding: 0 0 0 20px;
     -webkit-overflow-scrolling: touch;
     z-index: 99998;
-    transition: all 300ms ease;
+    transition: all 300ms ease !important; 
 }
 
 /* Drawer when checked */
