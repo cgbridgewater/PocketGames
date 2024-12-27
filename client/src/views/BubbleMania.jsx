@@ -3,7 +3,7 @@ const BubbleMania = () => {
 
     return (
         <main>
-            <h2>test</h2>
+            <h2>Coming soon...</h2>
         </main>
     );
 };

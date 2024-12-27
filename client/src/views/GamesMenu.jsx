@@ -1,4 +1,6 @@
+// Import Components 
 import GameCard from "../components/GameCards/GameCard";
+
 // Import all images
 import MemoryIcon from "../assets/images/MemoryIcon.jpg";
 import SimonIcon from "../assets/images/SimonIcon.jpg";
@@ -25,6 +27,7 @@ const imageMap = {
 };
 
 function GameMenu() {
+
     // Filter JSON for isActive = true and sort alphabetically
     const GameData = GamesData
         .filter(data => data.isActive)
