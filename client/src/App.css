@@ -20,10 +20,9 @@
   -moz-osx-font-smoothing: grayscale;
   --font_size_default: 16px;
   --border_trim: #D9B14B;
-  --button_hover: #C23866;
-  /* --white: #FFF; */
-  --white: #DED6D1;
-  --red: #C23866;
+  --button_hover: #991843;
+  --white: #E5D5D5;
+  --red: #991843;
   --black: #000;
   --background: #242424;
   --fusion_corner_radius: 4px;
@@ -233,12 +232,15 @@ a {
     background-color: var(--red);
     padding: 8px 0;
     
-    h5 {
+    p {
       color: var(--white);
+      font-weight: 800;
+      letter-spacing: 0.05rem;
     }
     
-    h6 {
+    span {
       color: var(--border_trim);
+      font-weight: 500;
     }
   }
   
