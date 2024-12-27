@@ -15,11 +15,11 @@ function GameCard ({ to, text, image, status }) {
     return (
         <Link className="game_card" to={to} >
             <div className="game_card_title">
-                <h5>{text}</h5>
-                {statusText && <h6>{statusText}</h6>}
+                <p>{text}</p>
+                {statusText && <span>{statusText}</span>}
             </div>
             {/* Game Icon */}
-            <img src={`${image}`} alt={text} />
+            <img src={`${image}`} alt={`${text} Icon`} />
         </Link>
     )
 };
