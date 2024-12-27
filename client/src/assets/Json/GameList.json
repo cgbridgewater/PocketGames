@@ -7,7 +7,16 @@
         "img_ref": "MemoryIcon",
         "external_link": false,
         "isActive": true,
-        "requirements": []
+        "requirements": [],
+        "meta": {
+            "title": "Memory Game - Pocket Games",
+            "description": "Uncover matching pairs in this engaging memory game. Choose from Easy, Medium, or Hard difficulty levels.",
+            "keywords": "memory game, brain game, card game, puzzle game, memory challenge",
+            "ogTitle": "Memory Game - Pocket Games",
+            "ogDescription": "Test your memory skills with this fun card-matching game. Choose your difficulty level and start playing!",
+            "ogImage": "",
+            "ogUrl": ""
+        }
     },
     {
         "id": "2",
@@ -17,7 +26,16 @@
         "img_ref": "SimonIcon",
         "external_link": false,
         "isActive": true,
-        "requirements": []
+        "requirements": [],
+        "meta": {
+            "title": "Simon Says - Pocket Games",
+            "description": "The classic Simon game, now in your browser! Remember and replicate an increasing sequence of lights.",
+            "keywords": "Simon Says, memory game, concentration, puzzle game, fun game",
+            "ogTitle": "Simon Says - Pocket Games",
+            "ogDescription": "Challenge your memory and concentration with this classic game of Simon Says.",
+            "ogImage": "",
+            "ogUrl": ""
+        }
     },
     {
         "id": "3",
@@ -27,7 +45,16 @@
         "img_ref": "WordleIcon",
         "external_link": false,
         "isActive": true,
-        "requirements": []
+        "requirements": [],
+        "meta": {
+            "title": "Wordle - Pocket Games",
+            "description": "Play the popular word-guessing game. Enter 5-letter words and use the color feedback to guess the correct word.",
+            "keywords": "Wordle, word game, puzzle game, word guess, brain game",
+            "ogTitle": "Wordle - Pocket Games",
+            "ogDescription": "Guess the 5-letter word in this fun, challenging game. Use feedback from previous guesses to get it right.",
+            "ogImage": "",
+            "ogUrl": ""
+        }
     },
     {
         "id": "4",
@@ -37,17 +64,35 @@
         "img_ref": "LightsOutIcon",
         "external_link": false,
         "isActive": true,
-        "requirements": []
+        "requirements": [],
+        "meta": {
+            "title": "Lights Out - Pocket Games",
+            "description": "Turn off all the lights in this challenging puzzle game. Pressing a light toggles it and its neighbors.",
+            "keywords": "Lights Out, puzzle game, logic game, brain teaser",
+            "ogTitle": "Lights Out - Pocket Games",
+            "ogDescription": "Can you turn off all the lights? Solve this challenging puzzle by toggling lights on and off.",
+            "ogImage": "",
+            "ogUrl": ""
+        }
     },
     {
         "id": "5",
         "status": "1",
-        "title": "Stackable",
-        "url": "stackable",
+        "title": "Stack It",
+        "url": "stackit",
         "img_ref": "StackitIcon",
         "external_link": false,
         "isActive": true,
-        "requirements": []
+        "requirements": [],
+        "meta": {
+            "title": "Stack It - Pocket Games",
+            "description": "Stack the moving boxes to build the tallest tower. Each misaligned box shortens the stack.",
+            "keywords": "Stack It, stacking game, tower game, timing game, puzzle game",
+            "ogTitle": "Stack It - Pocket Games",
+            "ogDescription": "Test your precision and timing by stacking moving boxes. Build the tallest tower without misaligning.",
+            "ogImage": "",
+            "ogUrl": ""
+        }
     },
     {
         "id": "6",
@@ -57,7 +102,16 @@
         "img_ref": "TetrisIcon",
         "external_link": false,
         "isActive": true,
-        "requirements": []
+        "requirements": [],
+        "meta": {
+            "title": "Tetris - Pocket Games",
+            "description": "Play the classic Tetris game! Stack the falling blocks to complete full lines and score points.",
+            "keywords": "Tetris, classic game, puzzle game, falling blocks, retro game",
+            "ogTitle": "Tetris - Pocket Games",
+            "ogDescription": "The classic Tetris game in your browser! Stack the falling blocks and complete lines to score points.",
+            "ogImage": "",
+            "ogUrl": ""
+        }
     },
     {
         "id": "7",
@@ -67,17 +121,35 @@
         "img_ref": "ColorFusionIcon",
         "external_link": false,
         "isActive": true,
-        "requirements": []
+        "requirements": [],
+        "meta": {
+            "title": "Color Fusion - Pocket Games",
+            "description": "Erase colored pieces by merging identical ones in this fun puzzle game. Clear the board to win.",
+            "keywords": "Color Fusion, puzzle game, color matching, brain game",
+            "ogTitle": "Color Fusion - Pocket Games",
+            "ogDescription": "A fun and relaxing color-matching game. Merge identical pieces to clear the board.",
+            "ogImage": "",
+            "ogUrl": ""
+        }
     },
     {
         "id": "8",
         "status": "3",
-        "title": "Stacker 3d",
+        "title": "Stacker 3D",
         "url": "stacker3d",
         "img_ref": "PlaceHolder",
         "external_link": false,
         "isActive": true,
-        "requirements": []
+        "requirements": [],
+        "meta": {
+            "title": "Stacker 3D - Pocket Games",
+            "description": "A 3D version of the classic Stack It game. Stack 3D boxes to build the tallest tower.",
+            "keywords": "Stacker 3D, 3D stacking game, puzzle game, tower game",
+            "ogTitle": "Stacker 3D - Pocket Games",
+            "ogDescription": "The 3D version of Stack It. Stack the 3D blocks to create the tallest tower.",
+            "ogImage": "",
+            "ogUrl": ""
+        }
     },
     {
         "id": "9",
@@ -87,7 +159,16 @@
         "img_ref": "PlaceHolder",
         "external_link": false,
         "isActive": true,
-        "requirements": []
+        "requirements": [],
+        "meta": {
+            "title": "Bubble Mania - Pocket Games",
+            "description": "Pop bubbles by creating clusters of the same color in this relaxing and fun bubble-popping game.",
+            "keywords": "Bubble Mania, bubble popping, puzzle game, casual game",
+            "ogTitle": "Bubble Mania - Pocket Games",
+            "ogDescription": "Pop bubbles to clear the screen in this fun and casual puzzle game.",
+            "ogImage": "",
+            "ogUrl": ""
+        }
     },
     {
         "id": "10",
@@ -97,7 +178,16 @@
         "img_ref": "PlaceHolder",
         "external_link": false,
         "isActive": false,
-        "requirements": []
+        "requirements": [],
+        "meta": {
+            "title": "Break Out - Pocket Games",
+            "description": "Break out the bricks using a bouncing ball in this classic arcade game.",
+            "keywords": "Break Out, brick breaker, arcade game, retro game, bouncing ball",
+            "ogTitle": "Break Out - Pocket Games",
+            "ogDescription": "Destroy the bricks with a bouncing ball in this fun and challenging arcade classic.",
+            "ogImage": "",
+            "ogUrl": ""
+        }
     },
     {
         "id": "11",
@@ -107,16 +197,15 @@
         "img_ref": "PlaceHolder",
         "external_link": false,
         "isActive": false,
-        "requirements": []
-    },
-    {
-        "id": "11",
-        "status": "3",
-        "title": "Sample Title",
-        "url": "#",
-        "img_ref": "PlaceHolder",
-        "external_link": false,
-        "isActive": false,
-        "requirements": []
+        "requirements": [],
+        "meta": {
+            "title": "Starship - Pocket Games",
+            "description": "A sci-fi themed game coming soon to Pocket Games.",
+            "keywords": "Starship, sci-fi game, coming soon",
+            "ogTitle": "Starship - Pocket Games",
+            "ogDescription": "A sci-fi space adventure game coming soon to Pocket Games.",
+            "ogImage": "",
+            "ogUrl": ""
+        }
     }
 ]
