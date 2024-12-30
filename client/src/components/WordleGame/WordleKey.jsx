@@ -1,3 +1,9 @@
+// IMPORT ICONS
+import { IoReturnDownBackSharp } from "react-icons/io5";
+import { IoIosBackspace } from "react-icons/io";
+
+
+
 // KEYBOARD KEYS
 const keysRow1 = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'BACKSPACE'];
 const keysRow2 = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'ENTER'];
@@ -23,10 +29,10 @@ const WordleKey = ({ onKeyPress, keyStatus, invalidWord, guessError }) => {
         {keysRow1.map((key, index) => (
           <button
             key={index}
-            className={`wordle-key ${getKeyClass(key)}`}
+            className={`wordle-key ${getKeyClass(key)}${key === 'BACKSPACE' ? "special" : ""}`}
             onClick={() => onKeyPress(key)}
           >
-            {key === 'BACKSPACE' ? '←' : key}
+            {key === 'BACKSPACE' ? <IoIosBackspace /> : key}
           </button>
         ))}
       </div>
@@ -35,10 +41,10 @@ const WordleKey = ({ onKeyPress, keyStatus, invalidWord, guessError }) => {
         {keysRow2.map((key, index) => (
           <button
             key={index}
-            className={`wordle-key ${getKeyClass(key)}`}
+            className={`wordle-key ${getKeyClass(key)}${key === 'ENTER' ? "special" : ""}`}
             onClick={() => onKeyPress(key)}
           >
-            {key === 'ENTER' ? '↩' : key}
+            {key === 'ENTER' ? <IoReturnDownBackSharp /> : key}
           </button>
         ))}
       </div>

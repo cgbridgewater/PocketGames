@@ -537,7 +537,7 @@ a {
   flex-direction: column;
   justify-content: flex-start;
   gap: 10px;
-  border: 3px groove var(--border_trim);
+  border: none;
   border-radius: 8px;
   padding: 12px;
   width: 330px;
@@ -613,8 +613,8 @@ a {
 .wordle-key {
   background-color: #3a3a3a;
   border-radius: 5px;
-  font-size: 0.75rem;
-  width: 27px;
+  font-size: 0.85rem;
+  width: 30px;
   padding: 4px;
   color: white;
   text-transform: uppercase;
@@ -631,19 +631,19 @@ a {
 }
 
 /* Correct Letter Key */
-.wordle-key.correct {
+.wordle-key.correct, .wordle-key.correct:active, .wordle-key.correct:hover {
   background-color: #6aaa64;
   color: white;
 }
 
 /* Letter In Word Key */
-.wordle-key.present {
+.wordle-key.present, .wordle-key.present:active, .wordle-key.present:hover {
   background-color: #c9b458;
   color: white;
 }
 
 /* No Letter In Word */
-.wordle-key.absent {
+.wordle-key.absent,.wordle-key.absent:active, .wordle-key.absent:hover {
   background-color: #787c7e;
   color: white;
 }
@@ -658,8 +658,13 @@ a {
 }
 
 /* Special key sizes */
-.wordle-key.special {
-  width: 60px;
+.special {
+  width: 40px;
+
+  svg {
+    height: 1.2rem;
+    width: 1.2rem
+  }
 }
 
 /* Game Status */
@@ -672,8 +677,9 @@ a {
 /* Responsive Design for Larger Screens */
 @media (min-width: 500px) {
   .wordle-board {
-    width: 370px;
-    height: 510px;
+    width: 380px;
+    height: 530px;
+    border: 3px groove var(--border_trim);
   }
   
   .wordle-key {
@@ -682,13 +688,13 @@ a {
   }
   
   .wordle-cell {
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
     font-size: 1.4rem;
   }
   
   .wordle-keyboard {
-    top: 550px;
+    top: 580px;
     
     p {
       top: -20px
@@ -707,16 +713,16 @@ a {
 
 /* BOARD */
 .lightsout_board {
-  position: absolute;
-  top: 52%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 325px;
+  margin-top: 24px;
+  width: 330px;
   display:flex;
   flex-direction: column;
   border-radius: 10px;
-  /* padding: 2px; */
   animation: flicker 1.5s infinite alternate; 
+
+  * {
+    transition: all 300ms ease-in-out;
+  }
 }
 
 @keyframes flicker {
@@ -754,6 +760,27 @@ a {
   margin: 20px;
   background-color: rgb(55, 55, 55);
 }
+
+
+@media screen and (min-width: 600px) {
+  .lightsout_board {
+    width: 520px;
+  }
+
+  .lightsout_cell-on {
+    width: 40px;
+    height: 40px;
+    margin: 30px;
+  }
+  
+  .lightsout_cell-off {
+    width: 40px;
+    height: 40px;
+    margin: 30px;
+  }
+
+}
+
 
 /*                */
 /* END LIGHTS OUT */
@@ -897,10 +924,8 @@ a {
 }
 
   @media screen and (min-width: 500px) {
-    .error_404 {
-      a {
-        transform: translate(-50%, -70%);
-      }
+    .error_404 a {
+      transform: translate(-50%, -70%);
     }
   }
 
