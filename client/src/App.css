@@ -8,12 +8,18 @@
   margin: 0;
   padding: 0;
   color: var(--white);
-  user-select: none;
-  -webkit-user-drag: none;
-  user-drag: none; 
+  list-style-type: none;
+  user-drag: none;
+  -webkit-user-drag: none; /* For WebKit-based browsers */
+  user-select: none;           /* Standard */
+  -webkit-user-select: none;   /* For Safari and other WebKit browsers */
+  -ms-user-select: none;       /* For older versions of IE */
+  -moz-user-select: none;      /* For older versions of Firefox */
+  touch-action: manipulation;  /* Prevent additional interactions like pinch-zoom */
 }
 
 :root {
+  --default_font_size: 16px;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -28,6 +34,10 @@
   --fusion_corner_radius: 4px;
 }
 
+html {
+  font-size: var(--default_font_size);
+}
+
 body {
   background-color: var(--background);
   font-family: 'Raleway', sans-serif;
@@ -39,6 +49,7 @@ body {
   -moz-box-sizing: border-box;
   -o-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-touch-callout: none; /* Disable the callout menu in WebKit-based browsers */
 }
 
 /* Main Page Layout */
@@ -154,8 +165,8 @@ a {
   }
   
   h3 {
-    font-size: 1.2rem;
-    width: 100vw;
+    font-size: 1.6rem;
+    width: 90vw;
     margin: 0 auto;
   }
   
@@ -189,7 +200,7 @@ a {
     margin-top: 80px;
     
     h3 {
-      font-size: 2rem;
+      font-size: 2.5rem;
     }
   }
 }
@@ -206,6 +217,10 @@ a {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 16px;
+  
+  * {
+    transition: all 300ms ease;
+  }
 }
 
 .game_card {
@@ -233,12 +248,14 @@ a {
     padding: 8px 0;
     
     p {
+      font-size: 0.8rem;
       color: var(--white);
-      font-weight: 800;
-      letter-spacing: 0.05rem;
+      font-weight: 700;
+      letter-spacing: 0.03rem;
     }
     
     span {
+      font-size: 0.65rem;
       color: var(--border_trim);
       font-weight: 500;
     }
@@ -249,6 +266,31 @@ a {
     margin: 12px auto 12px;
     aspect-ratio: 1/.8;
     border-radius: 5px;
+  }
+}
+
+
+@media screen and (min-width: 500px) {
+  .game_card .game_card_title {
+    p {
+      font-size: 1.1rem;
+    }
+    
+    span {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@media screen and (min-width: 650px) {
+  .game_card .game_card_title {
+    p {
+      font-size: 1.3rem;
+    }
+    
+    span {
+      font-size: 1rem;
+    }
   }
 }
 
@@ -895,16 +937,20 @@ a {
 
     * {
       list-style-type: none;
+      -webkit-user-drag: none; /* For WebKit-based browsers */
+      -webkit-user-select: none; /* For WebKit-based browsers */
+      -moz-user-select: none;    /* For Mozilla browsers */
+      -ms-user-select: none;     /* For IE/Edge browsers */
+      user-drag: none;
+      user-select: none;
     }
 }
 
-.gameboy_start:hover,
-.gameboy_pause:hover {
+.gameboy_start,
+.gameboy_pause {
   cursor: pointer;
 }
-
-
-
+ 
 .gameboy_buttons li span {
   transform: rotate(-90deg) translate(-8px, 40px) scaleY(0.75);
   font-family: "Squada One";
@@ -931,19 +977,20 @@ a {
 
 .gameboy_buttons {
   position: absolute;
-  top: 390px;
-  left: 256px;
+  top: 385px;
+  left: 250px;
   padding: 4px;
   border-radius: 50px;
   box-shadow: 1px 1px 5px rgba(255, 255, 255, 0.21), -1px -1px 0px #babdbc,
     inset 0 12px 22px rgba(0, 0, 0, 0.12);
   transform: rotate(64deg);
+  cursor: pointer;
 }
 
 .gameboy_buttons li {
   transition: ease-in-out 0.3s;
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   border: 1px solid rgba(68, 32, 54, 1);
   border-radius: 100%;
   background-image: -webkit-linear-gradient(6deg, rgba(133, 50, 108, 0.61), #6d1851 89%);
@@ -960,7 +1007,6 @@ a {
   transition: ease-in-out 0.05s;
   box-shadow: inset 0px 0px 0px #a87493, -1px -1px 2px #000000,
     0px 0px 0px rgba(125, 136, 134, 0.79);
-  cursor: pointer;
 }
 
 .gameboy_buttons_2 {
@@ -1019,15 +1065,16 @@ a {
 
 .gameboy_pad_up {
   position: absolute;
-  top: 15px;
+  top: 9px;
   left: 34px;
   width: 24px;
-  height: 21px;
+  height: 27px;
   border-radius: 2px 2px 0 0;
   background: #282c2b;
   background-image: -webkit-linear-gradient(90deg, #282c2b, #808382 120%);
   background-image: linear-gradient(90deg, #282c2b, #9b9b9b 120%);
   box-shadow: 1px -1px 1px rgb(53, 53, 53), -4px 2px 7px rgba(96, 99, 98, 0.64);
+  cursor: pointer;
 }
 
 .gameboy_pad_up li {
@@ -1046,16 +1093,17 @@ a {
 
 .gameboy_pad_right {
   position: absolute;
-  top: 36px;
-  left: 56px;
+  top: 34px;
+  left: 58px;
   width: 24px;
-  height: 22px;
+  height: 28px;
   border-radius: 2px 2px 0px 0;
   background: #282c2b;
   background-image: -webkit-linear-gradient(303deg, #282c2b, #9b9b9b 110%);
   background-image: linear-gradient(303deg, #282c2b, #9b9b9b 110%);
   box-shadow: -1px -1px 1px rgb(53, 53, 53);
   transform: rotate(90deg);
+  cursor: pointer;
 }
 
 .gameboy_pad_right li {
@@ -1076,13 +1124,15 @@ a {
   position: absolute;
   top: 58px;
   left: 34px;
-  width: 24px;
-  height: 21px;
+  width: 24.5px;
+  height: 24px;
+  padding-top: 5px;
   border-radius: 0 0 2px 2px;
   background: #282c2b;
   background-image: -webkit-linear-gradient(55deg, #131716, #6a706f 145%);
   background-image: linear-gradient(55deg, #131716, #6a706f 145%);
   box-shadow: -5px 0px 6px #606362;
+  cursor: pointer;
 }
 
 .gameboy_pad_down li {
@@ -1101,17 +1151,19 @@ a {
 
 .gameboy_pad_left {
   position: absolute;
-  top: 36px;
-  left: 12px;
+  top: 33px;
+  left: 10px;
   z-index: 2;
   width: 24px;
-  height: 22px;
+  height: 23px;
+  padding-top: 5px;
   border-radius: 0px 0px 2px 2px;
   background: #282c2b;
   background-image: -webkit-linear-gradient(290deg, #131716, #6a706f 175%);
   background-image: linear-gradient(290deg, #131716, #6a706f 175%);
   box-shadow: 2px 3px 7px rgb(53, 53, 53);
   transform: rotate(90deg);
+  cursor: pointer;
 }
 
 .gameboy_pad_left li {
@@ -1130,19 +1182,19 @@ a {
 
 .gameboy_circle {
   position: absolute;
-  top: 36px;
-  left: 35px;
+  top: 35px;
+  left: 34px;
   z-index: 5;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   background-image: -webkit-linear-gradient(-134deg, #656666, #2e3231 60%);
   background-image: linear-gradient(-134deg, #656666, #2e3231 60%);
 }
 
 .gameboy_circle li {
   position: absolute;
-  top: 2px;
-  left: 2px;
+  top: 3px;
+  left: 3px;
   width: 16px;
   height: 16px;
   border: 1px solid rgba(39, 42, 41, 0.91);
