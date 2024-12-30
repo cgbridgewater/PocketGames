@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function RedLink({ href, text, external }) {
     return (
-        // Handle if external is T
+        // Handle if external is True
         external === true ? (
             <a href={href} target="_blank" rel="noopener noreferrer" className="active_link redlink">
                 <span>{text}</span>
