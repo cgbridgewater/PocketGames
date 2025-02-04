@@ -191,6 +191,44 @@
     },
     {
         "id": "11",
+        "status": "3",
+        "title": "FutoShiki",
+        "url": "futoshiki",
+        "img_ref": "PlaceHolder",
+        "external_link": false,
+        "isActive": false,
+        "requirements": [],
+        "meta": {
+            "title": "FutoShiki - Pocket Games",
+            "description": "A sci-fi themed game coming soon to Pocket Games.",
+            "keywords": "It’s a logic puzzle similar to Sudoku but with inequality constraints between some cells.",
+            "ogTitle": "FutoShiki - Pocket Games",
+            "ogDescription": "It’s a logic puzzle similar to Sudoku but with inequality constraints between some cells.",
+            "ogImage": "",
+            "ogUrl": ""
+        }
+    },
+    {
+        "id": "12",
+        "status": "2",
+        "title": "Sudoku",
+        "url": "sudoku",
+        "img_ref": "PlaceHolder",
+        "external_link": false,
+        "isActive": true,
+        "requirements": [],
+        "meta": {
+            "title": "Sudoku - Pocket Games",
+            "description": "A sci-fi themed game coming soon to Pocket Games.",
+            "keywords": "Sudoku, puzzle, coming soon",
+            "ogTitle": "Sudoku - Pocket Games",
+            "ogDescription": "A traditional Sudoku puzzle game coming soon to Pocket Games.",
+            "ogImage": "",
+            "ogUrl": ""
+        }
+    },
+    {
+        "id": "12",
         "status": "1",
         "title": "Starship",
         "url": "#",
