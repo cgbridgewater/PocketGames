@@ -17,8 +17,10 @@ const LightsOut = React.lazy(() => import('./views/LightsOut'));
 const Stackable = React.lazy(() => import('./views/Stackable'));
 const Tetris = React.lazy(() => import('./views/Tetris'));
 const ColorFusion = React.lazy(() => import('./views/ColorFusion'));
-const BubbleMania = React.lazy(() => import('./views/BubbleMania'));
+const Sudoku = React.lazy(() => import('./views/Sudoku'));
+// const BubbleMania = React.lazy(() => import('./views/BubbleMania'));
 const Stacker3d = React.lazy(() => import('./views/Stacker3d'));
+import FutoshikiGame from "./views/Futoshiki";
 
 // Import custom hooks
 import useLoadMetaData from './customHooks/useLoadMetaData';
@@ -111,15 +113,29 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen }) {
           />}/>
 
         {/* BUBBLE MANIA GAME */}
-        <Route path='/games/bubblemania' element={
+        <Route path='/games/sudoku' element={
+          <Sudoku
+            isWinningModalOpen={isWinningModalOpen} 
+            setIsWinningModalOpen={setIsWinningModalOpen}
+          />}/>
+
+        {/* BUBBLE MANIA GAME */}
+        {/* <Route path='/games/bubblemania' element={
           <BubbleMania
+            isWinningModalOpen={isWinningModalOpen} 
+            setIsWinningModalOpen={setIsWinningModalOpen}
+          />}/> */}
+
+        {/* STACKER 3D GAME */}
+        <Route path='/games/stacker3d' element={
+          <Stacker3d
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
           />}/>
 
         {/* STACKER 3D GAME */}
-        <Route path='/games/stacker3d' element={
-          <Stacker3d
+        <Route path='/games/futoshiki' element={
+          <FutoshikiGame
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
           />}/>
