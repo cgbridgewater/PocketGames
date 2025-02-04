@@ -49,7 +49,7 @@ body {
   -moz-box-sizing: border-box;
   -o-box-sizing: border-box;
   box-sizing: border-box;
-  -webkit-touch-callout: none; /* Disable the callout menu in WebKit-based browsers */
+  -webkit-touch-callout: none;
 }
 
 /* Main Page Layout */
@@ -115,20 +115,18 @@ a {
   gap: 0 16px;
   
   *:focus {
-    outline-offset: 1px;
-    outline: 2px solid  var(--border_trim);
-    border-radius: 4px;
+    outline: none;
   }
   
   button {
     position: relative;
-    padding-top: 2px;
     text-transform: uppercase;
+    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100px;
-    height: 30px;
+    padding: 8px 0;
     font-size: .85rem;
     background: none;
     border: 2px solid var(--border_trim);
@@ -138,17 +136,66 @@ a {
     &:hover {
       background-color: var(--button_hover);
     }
-    
-    &:active {
-      top: 2px;
-    }
   }
+
+  button:active {
+    top: 2px;
+  }
+}
+
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-select {
+  position: relative;
+  text-transform: uppercase;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  padding: 7.5px 0;
+  font-size: 0.85rem;
+  background: none;
+  border: 2px solid var(--border_trim);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.dropdown-select:hover {
+  background-color: var(--button_hover);
+}
+
+.dropdown-select.open {
+  background-color: transparent; /* Keep it normal when open */
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #242424; /* Background color when dropdown is open */
+  border: 2px solid var(--border_trim);
+  border-radius: 4px;
+  z-index: 1000; /* Ensure options are above other elements */
+}
+
+.dropdown-option {
+  padding: 8px;
+  color: white; /* Change the text color as needed */
+  cursor: pointer;
+}
+
+.dropdown-option:hover {
+  background-color: var(--button_hover); /* Hover effect for options */
 }
 
 #turns span {
   color: var(--border_trim);
   font-size: 1.3rem;
-  /* add in relative position and move number up 2-3px! */
 }
 
 
