@@ -18,7 +18,7 @@ const BORDER_COLOR = "#991843";
 const FIXED_COLOR = "#0073e6";
 const ERROR_COLOR = "red";
 const HIGHLIGHT_COLOR = "green";
-const ACTIVE_BG = "#E5D5D5";
+const ACTIVE_BG = "dark grey";
 const EMPTY_BG = "#EFEFEF";
 
 export default function SodokuGame() {
@@ -26,6 +26,9 @@ export default function SodokuGame() {
   const [difficulty, setDifficulty] = useState(0.4);
   const [difficultyLabel, setDifficultyLabel] = useState("easy");
   const [isOpen, setIsOpen] = useState(false);
+
+  // Create a ref for the dropdown container
+  const dropdownRef = useRef(null);
 
   // --- Board Interaction State ---
   const [activeCell, setActiveCell] = useState(null);
@@ -282,6 +285,19 @@ export default function SodokuGame() {
     }
   };
 
+  // --- Close Dropdown When Clicking Outside ---
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // If the click is outside the dropdown container, close the dropdown.
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <main onClick={handleMainClick}>
       <Header
@@ -292,7 +308,7 @@ export default function SodokuGame() {
         howTo={`Sudoku is a logic-based puzzle played on a 9x9 grid divided into nine 3x3 regions. Your goal is to fill every row, column, and region with the digits 1 through 9 without repeating any number.\n\nClick on an empty cell to select it and begin inputting a number using either the on-screen number pad or your keyboard. If you click on a cell that already contains a user-entered number, that cell becomes active for editing and all instances of that number will be highlighted in green. Clicking the same active cell a second time will release it. Fixed numbers (those given at the start) cannot be edited, but clicking one will highlight all of its occurrences (a second click will release the highlight).\n\nTo delete a number from an active cell, simply double-click the cell, press the delete/backspace key, or click the 'X' button in the number pad. Good luck and happy puzzling!`}
       />
       <div className="button_box">
-        <div className="dropdown_container">
+        <div className="dropdown_container" ref={dropdownRef}>
           <div
             className={`dropdown_select ${isOpen ? "open" : ""}`}
             onClick={handleToggle}
