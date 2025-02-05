@@ -10,12 +10,12 @@
   color: var(--white);
   list-style-type: none;
   user-drag: none;
-  -webkit-user-drag: none; /* For WebKit-based browsers */
-  user-select: none;           /* Standard */
-  -webkit-user-select: none;   /* For Safari and other WebKit browsers */
-  -ms-user-select: none;       /* For older versions of IE */
-  -moz-user-select: none;      /* For older versions of Firefox */
-  touch-action: manipulation;  /* Prevent additional interactions like pinch-zoom */
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  touch-action: manipulation;
 }
 
 :root {
@@ -64,8 +64,7 @@ main {
   padding-top: 45px;
   margin: 0px auto;
   background-color: var(--background);
-
-  /* Page titles */
+  
   h2 {
     font-family: "Rubik Dirt", sans-serif;
     font-size: 2.5rem;
@@ -137,17 +136,17 @@ a {
       background-color: var(--button_hover);
     }
   }
-
+  
   button:active {
     top: 2px;
   }
 }
 
-.dropdown-container {
+.dropdown_container {
   position: relative;
 }
 
-.dropdown-select {
+.dropdown_select {
   position: relative;
   text-transform: uppercase;
   text-align: center;
@@ -164,33 +163,33 @@ a {
   transition: background-color 0.3s, border-color 0.3s;
 }
 
-.dropdown-select:hover {
+.dropdown_select:hover {
   background-color: var(--button_hover);
 }
 
-.dropdown-select.open {
-  background-color: transparent; /* Keep it normal when open */
+.dropdown_select.open {
+  background-color: transparent;
 }
 
-.dropdown-options {
+.dropdown_options {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  background-color: #242424; /* Background color when dropdown is open */
+  background-color: var(--background);
   border: 2px solid var(--border_trim);
   border-radius: 4px;
-  z-index: 1000; /* Ensure options are above other elements */
+  z-index: 1000;
 }
 
-.dropdown-option {
+.dropdown_option {
   padding: 8px;
-  color: white; /* Change the text color as needed */
+  color: white;
   cursor: pointer;
 }
 
-.dropdown-option:hover {
-  background-color: var(--button_hover); /* Hover effect for options */
+.dropdown_option:hover {
+  background-color: var(--button_hover);
 }
 
 #turns span {
@@ -199,9 +198,9 @@ a {
 }
 
 
-/*              */
-/* LANDING PAGE */
-/*              */
+/* ==================== */
+/*     LANDING PAGE     */
+/* ==================== */
 .landing_page {
   margin-top: 36px;
   
@@ -251,14 +250,14 @@ a {
     }
   }
 }
-/*                  */
-/* END LANDING PAGE */
-/*                  */
+/* ==================== */
+/*   END LANDING PAGE   */
+/* ==================== */
 
 
-/*             */
-/* GAME CARDS */
-/*            */
+/* ==================== */
+/*      GAME CARDS      */
+/* ==================== */
 .game_icon_container{
   margin: 16px;
   display: grid;
@@ -276,7 +275,7 @@ a {
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  background-color: #242424;
+  background-color: var(--background);
   border: 2px solid var(--border_trim);
   border-radius: 12px;
 
@@ -316,7 +315,6 @@ a {
   }
 }
 
-
 @media screen and (min-width: 500px) {
   .game_card .game_card_title {
     p {
@@ -341,9 +339,9 @@ a {
   }
 }
 
-/*              */
-/* MEMORY CARDS */
-/*              */
+/* ==================== */
+/*     MEMORY CARDS     */
+/* ==================== */
 
 .button_box {
   .selected {
@@ -351,7 +349,6 @@ a {
   }
 }
 
-/* Card Layout */
 .card_grid {
   margin: 0;
   display: grid;
@@ -370,7 +367,6 @@ a {
   }
 }
 
-/* Card Toggles */
 .card_grid.grid_difficulty_easy {
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
@@ -386,7 +382,6 @@ a {
   gap: 8px;
 }
 
-/* front of card - picture */
 .memory_card .front {
   transform: rotateY(90deg);
   transition: all ease-in 0.2s;
@@ -398,7 +393,6 @@ a {
   transition-delay: 0.2s;
 }
 
-/* back of card - cover */
 .memory_card .back {
   transition: all ease-in 0.2s;
   transition-delay: 0.2s;
@@ -416,14 +410,14 @@ a {
   }
 }
 
-/*                  */
-/* END MEMORY CARDS */
-/*                  */
+/* ==================== */
+/*   END MEMORY CARDS   */
+/* ==================== */
 
 
-/*            */
-/* SIMON SAYS */
-/*            */
+/* ==================== */
+/*      SIMON SAYS      */
+/* ==================== */
 
 .simon_container {
   display: flex;
@@ -433,8 +427,7 @@ a {
   width: 100%;
   padding-top: 30px;
   min-width: 350px;
-  background-color: #242424;
-
+  background-color: var(--background);
   
   button {
     position: relative;
@@ -480,7 +473,6 @@ a {
   }
 }
 
-/* Simon Buttons */
 .simon_green {
   background-color: rgb(0, 125, 0);
   border-top-left-radius: 100%;
@@ -541,7 +533,6 @@ a {
   }
 }
 
-/* Simon Button Actions */
 .highlight {
   filter: drop-shadow(0px 0px 10px white) brightness(5) !important;
 }
@@ -569,16 +560,15 @@ a {
   }
 }
 
-/*                */
-/* END SIMON SAYS */
-/*                */
+/* ==================== */
+/*    END SIMON SAYS    */
+/* ==================== */
 
 
-/*               */
-/* WORDLE STYLES */
-/*               */
+/* ==================== */
+/*     WORDLE STYLES    */
+/* ==================== */
 
-/* Board */
 .wordle-board {
   display: flex;
   flex-direction: column;
@@ -610,25 +600,21 @@ a {
   background-color: #3a3a3a;
 }
 
-/* Correct Letter */
 .wordle-cell.correct {
   color: white;
   background-color: #386c33;
 }
 
-/* Letter In Word */
 .wordle-cell.present {
   background-color: #c9b458;
   color: white;
 }
 
-/* No Letter In Word */
 .wordle-cell.absent {
   color: white;
   background-color: #787c7e;
 }
 
-/* Wordle Keys */
 .wordle-keyboard {
   position: absolute;
   left: 50%;
@@ -677,19 +663,16 @@ a {
   }
 }
 
-/* Correct Letter Key */
 .wordle-key.correct, .wordle-key.correct:active, .wordle-key.correct:hover {
   background-color: #6aaa64;
   color: white;
 }
 
-/* Letter In Word Key */
 .wordle-key.present, .wordle-key.present:active, .wordle-key.present:hover {
   background-color: #c9b458;
   color: white;
 }
 
-/* No Letter In Word */
 .wordle-key.absent,.wordle-key.absent:active, .wordle-key.absent:hover {
   background-color: #787c7e;
   color: white;
@@ -704,7 +687,6 @@ a {
   color: #434343;
 }
 
-/* Special key sizes */
 .special {
   width: 40px;
 
@@ -714,14 +696,12 @@ a {
   }
 }
 
-/* Game Status */
 .game-status {
   margin-top: 0px;
   font-size: 1rem;
   color: var(--border_trim);
 }
 
-/* Responsive Design for Larger Screens */
 @media (min-width: 500px) {
   .wordle-board {
     width: 380px;
@@ -749,16 +729,15 @@ a {
   }
 }
 
-/*                   */
-/* END WORDLE STYLES */
-/*                   */
+/* ==================== */
+/*   END WORDLE STYLES  */
+/* ==================== */
 
 
-/*                  */
-/* LIGHTS OUT STYLE */
-/*                  */
+/* ==================== */
+/*   LIGHTS OUT STYLE   */
+/* ==================== */
 
-/* BOARD */
 .lightsout_board {
   margin-top: 24px;
   width: 330px;
@@ -786,7 +765,6 @@ a {
   width: auto;
 }
 
-/* LIGHT CELL */
 .lightsout_cell-on {
   width: 25px;
   height: 25px;
@@ -808,7 +786,6 @@ a {
   background-color: rgb(55, 55, 55);
 }
 
-
 @media screen and (min-width: 600px) {
   .lightsout_board {
     width: 520px;
@@ -825,18 +802,16 @@ a {
     height: 40px;
     margin: 30px;
   }
-
 }
 
+/* ==================== */
+/*    END LIGHTS OUT    */
+/* ==================== */
 
-/*                */
-/* END LIGHTS OUT */
-/*                */
 
-
-/*          */
-/* STACK IT */
-/*          */
+/* ==================== */
+/*       STACK IT       */
+/* ==================== */
 
 #stack_it_p {
   margin: 4px 0 0;
@@ -845,14 +820,14 @@ a {
   color: var(--red);
 }
 
-/*              */
-/* END STACK IT */
-/*              */
+/* ==================== */
+/*     END STACK IT     */
+/* ==================== */
 
 
-/*             */
-/*     MODALS   */
-/*             */
+/* ==================== */
+/*         MODALS       */
+/* ==================== */
 
 .modal_overlay {
   position: fixed;
@@ -925,14 +900,14 @@ a {
   }
 }
 
-/*               */
-/*   END MODAL   */
-/*               */
+/* ==================== */
+/*       END MODAL      */
+/* ==================== */
 
 
-/*               */
-/*   404 Style   */
-/*               */
+/* ==================== */
+/*      404 Style       */
+/* ==================== */
 .error_404 {
   a {
     position: absolute;
@@ -961,12 +936,10 @@ a {
         position: relative;
         bottom: 4px;
         font-size: 1rem;
-        font-family: 'Segoe Script', cursive, sans-serif; /* Cursive as fallback */
+        font-family: 'Segoe Script', cursive, sans-serif;
         word-spacing: -0.2rem;
       }
-      
     }
-    
   }
 }
 
@@ -976,20 +949,14 @@ a {
     }
   }
 
-/*                  */
-/*  END 404 Style   */
-/*                  */
+/* ==================== */
+/*     END 404 Style    */
+/* ==================== */
 
 
-
-
-
-
-
-
-/*              */
-/* TETRIS STYLE */
-/*              */
+/* ==================== */
+/*     TETRIS STYLE     */
+/* ==================== */
 
 .gameboy {
   position: relative;
@@ -1009,10 +976,10 @@ a {
 
     * {
       list-style-type: none;
-      -webkit-user-drag: none; /* For WebKit-based browsers */
-      -webkit-user-select: none; /* For WebKit-based browsers */
-      -moz-user-select: none;    /* For Mozilla browsers */
-      -ms-user-select: none;     /* For IE/Edge browsers */
+      -webkit-user-drag: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
       user-drag: none;
       user-select: none;
     }
@@ -1022,7 +989,7 @@ a {
 .gameboy_pause {
   cursor: pointer;
 }
- 
+
 .gameboy_buttons li span {
   transform: rotate(-90deg) translate(-8px, 40px) scaleY(0.75);
   font-family: "Squada One";
@@ -1277,14 +1244,12 @@ a {
 
 
 .tetris {
-
   *{
     margin:0;
     padding:0;  
     box-sizing: border-box;
   }
 }
-
 
 .preview_container {
   position: relative;
@@ -1493,8 +1458,9 @@ background-color: rgba(255,127,0,1);
         }
         
         &:focus {
-          outline: none; /* Remove default outline */
-          box-shadow: 0 0 0 3px var(--red); /* Apply custom focus ring */        }
+          outline: none;
+          box-shadow: 0 0 0 3px var(--red);
+        }
     }
   }
 }
@@ -1505,14 +1471,14 @@ background-color: rgba(255,127,0,1);
   text-align: start;
 }
 
-/*                     */
-/* END OF TETRIS STYLE */
-/*                     */
+/* ==================== */
+/* END OF TETRIS STYLE  */
+/* ==================== */
 
 
-/*                    */
-/* COLOR FUSION STYLE */
-/*                    */
+/* ==================== */
+/*  COLOR FUSION STYLE  */
+/* ==================== */
 
 .fusion_game_wrapper {
   width: fit-content;
@@ -1530,28 +1496,23 @@ background-color: rgba(255,127,0,1);
 
 /*            */
 /* GRID STYLE */
-/*            */
-/* VStack replacement (Vertical Stack) */
+/*           */
 .vstack {
   display: flex;
   flex-direction: column;
   gap: 0;
 }
 
-/* HStack replacement (Horizontal Stack) */
 .hstack {
   display: flex;
   gap: 0;
   background-color: #DED6D1;
 }
 
-/* Tile container for individual grid items */
 .fusion_tile_container {
   position: relative;
   display: inline-block;
 }
-
-/* Separator styling for horizontal separators between tiles */
 .fusion_tile_separator_horizontal {
   margin-left: 1px;
   width: 20px;
@@ -1559,12 +1520,10 @@ background-color: rgba(255,127,0,1);
   background-color: #DED6D1;
 }
 
-/* Tile wrapper, to ensure tiles are in a flexbox row */
 .fusion_tile_wrapper {
   display: flex;
 }
 
-/* Separator styling for vertical separators between tiles */
 .fusion_tile_separator_vertical {
   width: 1px;
   height: 20px;
@@ -1582,8 +1541,8 @@ background-color: rgba(255,127,0,1);
   width: 20px;
   height: 20px;
   cursor: pointer;
-  position: relative; /* To position the reflection */
-  overflow: hidden; /* Ensure reflection doesn't spill out */
+  position: relative;
+  overflow: hidden;
 }
 
 /* Not In Use */
@@ -1591,12 +1550,10 @@ background-color: rgba(255,127,0,1);
   background-color: var(--background);
 }
 
-/* For Single Square */
 .fusion_rounded {
 border-radius: var(--fusion_corner_radius);
 }
 
-/* right shine */
 .fusion_shine::before {
   content: '';
   position: absolute;
@@ -1610,7 +1567,6 @@ border-radius: var(--fusion_corner_radius);
   filter: blur(3px);
 }
 
-/* top shine */
 .fusion_shine::after {
   content: '';
   position: absolute;
@@ -1668,7 +1624,6 @@ border-radius: var(--fusion_corner_radius);
 /*                */
 
 /* Screen adaption */
-
 @media screen and (min-width: 500px) {
   .fusion_tile {
     height: 29px;
@@ -1695,12 +1650,79 @@ border-radius: var(--fusion_corner_radius);
   }
 }
 
+/* ====================== */
+/* END COLOR FUSION STYLE */
+/* ====================== */
 
 
+/* ==================== */
+/*    SUDOKU STYLES     */
+/* ==================== */
 
+.sudoku_board_container {
+  margin: 8px auto 4px;
+  display: grid;
+  grid-template-columns: repeat(9, 39px);
+  gap: 0;
+  width: fit-content;
+  border: 5px solid #991843;
+  background-color: #991843;
+  box-sizing: border-box;
+}
 
+.sudoku_cell {
+  box-sizing: border-box;
+  border-top: none;
+  border-left: none;
+  width: 38px;
+  height: 38px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
 
+.sudoku_numbers_box {
+  margin: 0 auto;
+}
 
+.sudoku_number_inputs {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  width: 351px;
+  margin: 0 auto;
+  border: 5px solid #991843;
+  background-color: #991843;
+}
 
+.sudoku_number_button {
+  font-weight: 800;
+  font-size: 18px;
+  width: 38px;
+  height: 38px;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  
+  &:hover {
+    filter: brightness(0.95);
+  }
+}
 
+.sudoku_puzzle_id {
+  font-size: 0.5rem;
+  font-weight: bold;
+  color: #991843;
+  margin-top: 4px;
+}
 
+/* ==================== */
+/*   END SUDOKU STYLE   */
+/* ==================== */
