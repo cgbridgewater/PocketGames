@@ -27,26 +27,29 @@ export default function SudokuBoard({
           const isHighlighted =
             highlightedNumber !== null && board[rowIndex][colIndex] === highlightedNumber;
 
-          // Set background color:
-          // Active cell gets a dark grey background,
-          // Highlighted (non-active) cells get a green background,
-          // Otherwise, use the default background.
-          const backgroundColor = isActive
-            ? "darkgrey"
-            : isHighlighted
-            ? "lightgreen"
-            : "#EFEFEF";
+          // Check if this cell is in error.
+          const hasError = errors.has(`${rowIndex}-${colIndex}`) && board[rowIndex][colIndex] !== 0;
+
+          // Set the background color.
+          // If there's an error, background is yellow.
+          // Otherwise, active cells are dark grey, highlighted cells are green,
+          // and all other cells use the default background.
+          let backgroundColor;
+          if (hasError) {
+            backgroundColor = "#fffaaa";
+          } else if (isActive) {
+            backgroundColor = "darkgrey";
+          } else if (isHighlighted) {
+            backgroundColor = "lightgreen";
+          } else {
+            backgroundColor = "#EFEFEF";
+          }
 
           // Determine text color:
-          // If there is an error and the cell is not empty, use red.
-          // Otherwise, if the cell is fixed (non-zero in puzzleData.playable), use blue.
-          // Otherwise, use black.
+          // Fixed cells (given in puzzleData.playable) are blue,
+          // while user–entered numbers are black.
           const textColor =
-            errors.has(`${rowIndex}-${colIndex}`) && board[rowIndex][colIndex] !== 0
-              ? "red"
-              : puzzleData.playable[rowIndex][colIndex] !== 0
-              ? "#0073e6"
-              : "#000";
+            puzzleData.playable[rowIndex][colIndex] !== 0 ? "#242424" : "#0073e6";
 
           const dynamicStyle = {
             borderRight: `${borderRight} solid #991843`,

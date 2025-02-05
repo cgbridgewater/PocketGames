@@ -277,20 +277,15 @@ export default function SodokuGame() {
     [board]
   );
 
-  // --- Clear Active Selection When Clicking Off the Board ---
-  const handleMainClick = (e) => {
-    if (e.target === e.currentTarget) {
-      setActiveCell(null);
-      setHighlightedNumber(null);
-    }
-  };
 
-  // --- Close Dropdown When Clicking Outside ---
+  // --- Close Dropdown And Active Cell When Clicking Outside ---
   useEffect(() => {
     const handleClickOutside = (event) => {
       // If the click is outside the dropdown container, close the dropdown.
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
+        setActiveCell(null);
+        setHighlightedNumber(null);
       }
     };
 
@@ -299,7 +294,7 @@ export default function SodokuGame() {
   }, []);
 
   return (
-    <main onClick={handleMainClick}>
+    <main>
       <Header
         title={"Sudoku"}
         onclick={() => newGame()}
