@@ -94,7 +94,7 @@ h3 {
 }
 
 h4 {
-  font: 1.1rem;
+  font-size: 1.1rem;
   margin: 12px;
 }
 
@@ -126,6 +126,7 @@ a {
     align-items: center;
     width: 100px;
     padding: 8px 0;
+    font-family: 'Raleway', sans-serif;
     font-size: .85rem;
     background: none;
     border: 2px solid var(--border_trim);
