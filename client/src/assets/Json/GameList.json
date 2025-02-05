@@ -158,7 +158,7 @@
         "url": "bubblemania",
         "img_ref": "PlaceHolder",
         "external_link": false,
-        "isActive": true,
+        "isActive": false,
         "requirements": [],
         "meta": {
             "title": "Bubble Mania - Pocket Games",
