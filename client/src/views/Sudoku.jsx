@@ -1,9 +1,19 @@
+// Import React Magic
 import { useState, useEffect, useRef, useCallback } from "react";
+
+// Import Subcomponents
 import Header from "../components/GameHeader/GameHeader";
 import WinningModal from "../components/Modals/WinningModal";
+import SudokuBoard from "../components/SudokuGame/SudokuBoard";
+import SudokuNumberInput from "../components/SudokuGame/SudokuNumberInput";
+
+// Import Custom Hook
+import useTimer from "../components/SudokuGame/hooks/useTimer";
+
+// Import JSON File Of Puzzles
 import puzzleList from "../assets/Json/sudoku_puzzles.json";
 
-// Constants for styling and dimensions
+// --- Constants for Dynamic Styling ---
 const BORDER_COLOR = "#991843";
 const FIXED_COLOR = "#0073e6";
 const ERROR_COLOR = "red";
@@ -18,11 +28,8 @@ export default function SodokuGame() {
   const [isOpen, setIsOpen] = useState(false);
 
   // --- Board Interaction State ---
-  // activeCell holds {row, col} if a cell is being edited.
-  // highlightedNumber is used to highlight all occurrences of a number.
   const [activeCell, setActiveCell] = useState(null);
   const [highlightedNumber, setHighlightedNumber] = useState(null);
-
   const difficultyMap = { easy: 0.4, medium: 0.55, hard: 0.7 };
 
   // --- Dropdown Handlers ---
@@ -30,14 +37,17 @@ export default function SodokuGame() {
     setIsOpen((prev) => !prev);
   }, []);
 
-  const handleSelect = useCallback((e) => {
-    const level = e.target.value;
-    const difficultyValue = difficultyMap[level] || 0.4;
-    setDifficulty(difficultyValue);
-    setDifficultyLabel(level);
-    setIsOpen(false);
-    newGame(difficultyValue);
-  }, [difficultyMap]);
+  const handleSelect = useCallback(
+    (e) => {
+      const level = e.target.value;
+      const difficultyValue = difficultyMap[level] || 0.4;
+      setDifficulty(difficultyValue);
+      setDifficultyLabel(level);
+      setIsOpen(false);
+      newGame(difficultyValue);
+    },
+    [difficultyMap]
+  );
 
   // --- Puzzle Generation ---
   const getRandomPuzzle = useCallback(
@@ -67,7 +77,7 @@ export default function SodokuGame() {
       setErrors(new Set());
       setActiveCell(null);
       setHighlightedNumber(null);
-      setTimer(0); // Reset the clock.
+      resetTimer();
       setIsRunning(false);
     },
     [difficulty, getRandomPuzzle]
@@ -76,10 +86,12 @@ export default function SodokuGame() {
   // --- Board and Game State ---
   const [puzzleData, setPuzzleData] = useState(getRandomPuzzle(difficulty));
   const [board, setBoard] = useState(puzzleData.playable);
-  const [timer, setTimer] = useState(0);
   const [showWinningModal, setShowWinningModal] = useState(false);
   const [errors, setErrors] = useState(new Set());
   const [isRunning, setIsRunning] = useState(false);
+
+  // --- Custom Timer Hook ---
+  const { time, resetTimer } = useTimer(isRunning);
 
   // --- Ref for Touch Handling ---
   const lastTapRef = useRef(0);
@@ -93,18 +105,9 @@ export default function SodokuGame() {
     setErrors(new Set());
     setActiveCell(null);
     setHighlightedNumber(null);
-    setTimer(0);
+    resetTimer();
     setIsRunning(false);
-  }, [difficulty, getRandomPuzzle]);
-
-  // --- Timer Effect ---
-  useEffect(() => {
-    if (!isRunning) return;
-    const interval = setInterval(() => {
-      setTimer((prev) => prev + 1);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [isRunning]);
+  }, [difficulty, getRandomPuzzle, resetTimer]);
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -163,9 +166,7 @@ export default function SodokuGame() {
   // --- Board Cell Interaction ---
   const handleCellSelect = useCallback(
     (row, col) => {
-      // Clicking any board cell starts the clock.
       if (!isRunning) setIsRunning(true);
-      // If the cell is fixed (preset), toggle highlight.
       if (puzzleData.playable[row][col] !== 0) {
         if (highlightedNumber === board[row][col]) {
           setHighlightedNumber(null);
@@ -175,16 +176,12 @@ export default function SodokuGame() {
         setActiveCell(null);
         return;
       }
-      // Editable cell:
-      // If the cell is already active, release it (clear active and highlight).
       if (activeCell && activeCell.row === row && activeCell.col === col) {
         setActiveCell(null);
         setHighlightedNumber(null);
         return;
       }
-      // Otherwise, select the cell for editing.
       setActiveCell({ row, col });
-      // If it already contains a user-input number, highlight it.
       if (board[row][col] !== 0) {
         setHighlightedNumber(board[row][col]);
       } else {
@@ -197,7 +194,6 @@ export default function SodokuGame() {
   // --- Number Input Handler ---
   const handleNumberInput = useCallback(
     (num) => {
-      // If no cell is active, toggle the highlight on the input button.
       if (activeCell === null) {
         if (highlightedNumber === num) {
           setHighlightedNumber(null);
@@ -209,7 +205,7 @@ export default function SodokuGame() {
       const { row, col } = activeCell;
       if (puzzleData.playable[row][col] !== 0) return;
       const newBoard = board.map((r) => [...r]);
-      newBoard[row][col] = num; // 0 indicates deletion.
+      newBoard[row][col] = num;
       setBoard(newBoard);
       validateBoard(newBoard);
       if (num !== 0) {
@@ -225,7 +221,6 @@ export default function SodokuGame() {
   );
 
   // --- Reset Handler ---
-  // Resets the board (clearing inputs) without resetting the clock.
   const resetGame = useCallback(() => {
     setBoard(puzzleData.playable);
     setShowWinningModal(false);
@@ -235,8 +230,8 @@ export default function SodokuGame() {
   }, [puzzleData]);
 
   // --- Keyboard Listener ---
-  useEffect(() => {
-    const handleKeyDown = (e) => {
+  const handleKeyDown = useCallback(
+    (e) => {
       if (!activeCell) return;
       const { key } = e;
       if (key >= "1" && key <= "9") {
@@ -244,10 +239,14 @@ export default function SodokuGame() {
       } else if (key === "Backspace" || key === "Delete") {
         handleNumberInput(0);
       }
-    };
+    },
+    [activeCell, handleNumberInput]
+  );
+
+  useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeCell, handleNumberInput]);
+  }, [handleKeyDown]);
 
   // --- Helper: Check if a Number is Locked ---
   const isNumberLocked = useCallback(
@@ -289,11 +288,8 @@ export default function SodokuGame() {
         title={"Sudoku"}
         onclick={() => newGame()}
         turn_title={"Time"}
-        turns={formatTime(timer)}
-        howTo={`Sudoku is a logic-based puzzle played on a 9x9 grid divided into nine 3x3 regions. Your goal is to fill every row, column, and region with the digits 1 through 9 without repeating any number. \n
-          Click on an empty cell to select it and begin inputting a number using either the on-screen number pad or your keyboard. If you click on a cell that already contains a user-entered number, that cell becomes active for editing and all instances of that number will be highlighted in green. Clicking the same active cell a second time will release it. Fixed numbers (those given at the start) cannot be edited, but clicking one will highlight all of its occurrences. \n
-          To delete a number from an active cell, simply double-click the cell, press the delete/backspace key, or click the 'X' button in the number pad.
-          Good luck and happy puzzling!`}
+        turns={formatTime(time)}
+        howTo={`Sudoku is a logic-based puzzle played on a 9x9 grid divided into nine 3x3 regions. Your goal is to fill every row, column, and region with the digits 1 through 9 without repeating any number.\n\nClick on an empty cell to select it and begin inputting a number using either the on-screen number pad or your keyboard. If you click on a cell that already contains a user-entered number, that cell becomes active for editing and all instances of that number will be highlighted in green. Clicking the same active cell a second time will release it. Fixed numbers (those given at the start) cannot be edited, but clicking one will highlight all of its occurrences (a second click will release the highlight).\n\nTo delete a number from an active cell, simply double-click the cell, press the delete/backspace key, or click the 'X' button in the number pad. Good luck and happy puzzling!`}
       />
       <div className="button_box">
         <div className="dropdown_container">
@@ -301,7 +297,8 @@ export default function SodokuGame() {
             className={`dropdown_select ${isOpen ? "open" : ""}`}
             onClick={handleToggle}
           >
-            {difficultyLabel.charAt(0).toUpperCase() + difficultyLabel.slice(1)}
+            {difficultyLabel.charAt(0).toUpperCase() +
+              difficultyLabel.slice(1)}
           </div>
           {isOpen && (
             <div className="dropdown_options">
@@ -321,119 +318,26 @@ export default function SodokuGame() {
         </div>
         <button onClick={resetGame}>Reset</button>
       </div>
-      {/* --- Sudoku Board Container --- */}
-      <div className="sudoku_board_container">
-        {board.map((row, rowIndex) =>
-          row.map((cell, colIndex) => {
-            // Compute dynamic borders based on cell position.
-            const borderRight =
-              colIndex === 8
-                ? "0"
-                : colIndex === 2 || colIndex === 5
-                ? "5px"
-                : "2px";
-            const borderBottom =
-              rowIndex === 8
-                ? "0"
-                : rowIndex === 2 || rowIndex === 5
-                ? "5px"
-                : "2px";
-
-            const dynamicStyle = {
-              borderRight: `${borderRight} solid ${BORDER_COLOR}`,
-              borderBottom: `${borderBottom} solid ${BORDER_COLOR}`,
-              backgroundColor:
-                activeCell &&
-                activeCell.row === rowIndex &&
-                activeCell.col === colIndex
-                  ? ACTIVE_BG
-                  : EMPTY_BG,
-              // If the cell's value equals the highlighted number, use green text.
-              color:
-                board[rowIndex][colIndex] === highlightedNumber
-                  ? HIGHLIGHT_COLOR
-                  : errors.has(`${rowIndex}-${colIndex}`) &&
-                    board[rowIndex][colIndex] !== 0
-                  ? ERROR_COLOR
-                  : puzzleData.playable[rowIndex][colIndex] !== 0
-                  ? FIXED_COLOR
-                  : "#000",
-            };
-
-            return (
-              <input
-                key={`${rowIndex}-${colIndex}`}
-                type="text"
-                readOnly
-                value={cell !== 0 ? cell : ""}
-                className="sudoku_cell"
-                onClick={() => handleCellSelect(rowIndex, colIndex)}
-                onTouchEnd={() => {
-                  const now = Date.now();
-                  if (now - lastTapRef.current < 300) {
-                    handleCellSelect(rowIndex, colIndex);
-                  }
-                  lastTapRef.current = now;
-                }}
-                onMouseDown={(e) => e.preventDefault()}
-                style={dynamicStyle}
-              />
-            );
-          })
-        )}
-      </div>
-      {/* --- Sudoku Number Input Row --- */}
-      <div className="sudoku_numbers_box">
-        <div className="sudoku_number_inputs">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => {
-            const locked = isNumberLocked(num);
-            return (
-              <button
-                key={num}
-                onClick={() =>
-                  activeCell
-                    ? handleNumberInput(num)
-                    : highlightedNumber === num
-                    ? setHighlightedNumber(null)
-                    : setHighlightedNumber(num)
-                }
-                disabled={locked}
-                className="sudoku_number_button"
-                style={{
-                  color:
-                    locked
-                      ? "grey"
-                      : num === highlightedNumber
-                      ? "green"
-                      : BORDER_COLOR,
-                }}
-              >
-                {num}
-              </button>
-            );
-          })}
-          <button
-            onClick={() =>
-              activeCell
-                ? handleNumberInput(0)
-                : highlightedNumber === 0
-                ? setHighlightedNumber(null)
-                : setHighlightedNumber(0)
-            }
-            className="sudoku_number_button"
-            style={{
-              color: BORDER_COLOR,
-            }}
-          >
-            X
-          </button>
-        </div>
-        <p className="sudoku_puzzle_id">Puzzle #{puzzleData.id}</p>
-      </div>
+      <SudokuBoard
+        board={board}
+        puzzleData={puzzleData}
+        activeCell={activeCell}
+        highlightedNumber={highlightedNumber}
+        handleCellSelect={handleCellSelect}
+        lastTapRef={lastTapRef}
+        errors={errors}
+      />
+      <SudokuNumberInput
+        activeCell={activeCell}
+        highlightedNumber={highlightedNumber}
+        handleNumberInput={handleNumberInput}
+        isNumberLocked={isNumberLocked}
+        puzzleId={puzzleData.id}
+      />
       {showWinningModal && (
         <WinningModal
           message1="You solved the puzzle in"
-          turns={formatTime(timer)}
+          turns={formatTime(time)}
           onClose={() => newGame()}
         />
       )}
