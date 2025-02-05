@@ -19,12 +19,9 @@ export default function SudokuNumberInput({
               disabled={locked}
               className="sudoku_number_button"
               style={{
-                color:
-                  locked
-                    ? "grey"
-                    : num === highlightedNumber
-                    ? "green"
-                    : "#991843",
+                backgroundColor: num === highlightedNumber ? "lightgreen" : "",
+                border: "none",
+                color: locked ? "grey" : "#991843",
               }}
             >
               {num}
