@@ -32,6 +32,7 @@
   --black: #000;
   --background: #242424;
   --fusion_corner_radius: 4px;
+  --treasure-hunt-tile-size: 20px;
 }
 
 html {
@@ -1727,3 +1728,98 @@ border-radius: var(--fusion_corner_radius);
 /* ==================== */
 /*   END SUDOKU STYLE   */
 /* ==================== */
+
+
+
+
+/* ====================== */
+/*  TREASURE HUNT STYLE   */
+/* ====================== */
+
+
+
+
+/* Board container styling */
+.treasure_hunt_board {
+  display: grid;
+  grid-template-columns: repeat(20, var(--treasure-hunt-tile-size));
+  gap: 2px;
+  justify-content: center;
+  padding: 2px; 
+  border: 4px solid var(--border_trim);
+  background-color: #babdbc;
+}
+
+/* Tile styling */
+.treasure_hunt_tile {
+  width: var(--treasure-hunt-tile-size);
+  height: var(--treasure-hunt-tile-size);
+  background-color: grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 700;
+  border-radius: 2px;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+}
+
+/* Revealed tile styling */
+.treasure_hunt_tile.revealed {
+  background-color: whitesmoke;
+  cursor: default;
+}
+
+
+/* Distance text styling */
+.treasure_hunt_distance_high {
+  color: rgb(251, 15, 15);
+}
+
+.treasure_hunt_distance_medium {
+  color: var(--border_trim);
+}
+
+.treasure_hunt_distance_low {
+  color: rgb(18, 201, 18);
+}
+
+/* Game stats styling */
+.treasure_hunt_stats {
+  color: var(--white);
+  margin-bottom: 10px;
+  width: 350px;
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.treasure_hunt_moves_number {
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+
+.treasure_hunt_score_number {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: rgb(251, 15, 15);
+}
+
+
+/* Responsive tile sizing */
+@media (max-width: 500px) {
+  :root {
+    --treasure-hunt-tile-size: 15px;
+  }
+}
+
+@media (min-width: 1400px) {
+  :root {
+    --treasure-hunt-tile-size: 25px;
+  }
+}

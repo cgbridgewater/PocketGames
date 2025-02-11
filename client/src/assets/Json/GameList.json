@@ -139,7 +139,7 @@
         "url": "stacker3d",
         "img_ref": "PlaceHolder",
         "external_link": false,
-        "isActive": true,
+        "isActive": false,
         "requirements": [],
         "meta": {
             "title": "Stacker 3D - Pocket Games",
@@ -219,8 +219,8 @@
         "requirements": [],
         "meta": {
             "title": "Sudoku - Pocket Games",
-            "description": "A sci-fi themed game coming soon to Pocket Games.",
-            "keywords": "Sudoku, puzzle, coming soon",
+            "description": "A traditional Sudoku puzzle game coming soon to Pocket Games.",
+            "keywords": "Sudoku, puzzle",
             "ogTitle": "Sudoku - Pocket Games",
             "ogDescription": "A traditional Sudoku puzzle game coming soon to Pocket Games.",
             "ogImage": "",
@@ -228,7 +228,26 @@
         }
     },
     {
-        "id": "12",
+        "id": "13",
+        "status": "2",
+        "title": "Treasure Hunt",
+        "url": "treasurehunt",
+        "img_ref": "TreasureHunt",
+        "external_link": false,
+        "isActive": true,
+        "requirements": [],
+        "meta": {
+            "title": "Treasure Hunt - Pocket Games",
+            "description": "Find the budied treasure as quickly as you can! - coming soon to Pocket Games.",
+            "keywords": "Treasure Hunt, Treasure, game, coming soon",
+            "ogTitle": "Treasure Hunt - Pocket Games",
+            "ogDescription": "Find the budied treasure as quickly as you can! - coming soon to Pocket Games.",
+            "ogImage": "",
+            "ogUrl": ""
+        }
+    },
+    {
+        "id": "",
         "status": "1",
         "title": "Starship",
         "url": "#",

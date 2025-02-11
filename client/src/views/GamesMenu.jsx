@@ -10,6 +10,7 @@ import StackitIcon from "../assets/images/StackitIcon.png";
 import TetrisIcon from "../assets/images/TetrisIcon.png";
 import ColorFusionIcon from "../assets/images/ColorFusionIcon.png";
 import SudokuIcon from "../assets/images/SudokuIcon.png";
+import TreasureHunt from "../assets/images/TreasureHuntIcon.jpg";
 import PlaceHolder from "../assets/images/PlaceHolder.jpg";
 
 // Import game JSON
@@ -25,6 +26,7 @@ const imageMap = {
     TetrisIcon,
     ColorFusionIcon,
     SudokuIcon,
+    TreasureHunt,
     PlaceHolder,
 };
 
