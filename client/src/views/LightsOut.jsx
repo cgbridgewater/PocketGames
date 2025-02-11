@@ -3,7 +3,7 @@ import Header from "../components/GameHeader/GameHeader";
 import Cell from "../components/LightsOut/LightsOutCell";
 import WinningModal from "../components/Modals/WinningModal";
 
-const LightsOut = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
+const LightsOut = ({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, setIsTimerPaused }) => {
     const [moves, setMoves] = useState(0);
     const [size, setSize] = useState(5);
     const [chanceLightStartsOn, setChanceLightStartsOn] = useState(0.25);
@@ -85,6 +85,8 @@ const LightsOut = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
                 turn_title={"Moves"}
                 turns={moves}
                 howTo={"Each light on the grid can be on or off. Pressing a light toggles its state and the adjacent lights (above, below, left, and right). The goal is to turn off all the lights by finding the right sequence of moves."}
+                isTimerPaused={isTimerPaused}
+                setIsTimerPaused={setIsTimerPaused}
             />
             {/* GAME */}
             <div className="lightsout_board">

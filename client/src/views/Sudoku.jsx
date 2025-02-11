@@ -21,7 +21,7 @@ const HIGHLIGHT_COLOR = "green";
 const ACTIVE_BG = "dark grey";
 const EMPTY_BG = "#EFEFEF";
 
-export default function SodokuGame() {
+export default function SodokuGame({ isTimerPaused, setIsTimerPaused }) {
   // --- Difficulty and Dropdown State ---
   const [difficulty, setDifficulty] = useState(0.4);
   const [difficultyLabel, setDifficultyLabel] = useState("easy");
@@ -301,6 +301,8 @@ export default function SodokuGame() {
         turn_title={"Time"}
         turns={formatTime(time)}
         howTo={`Sudoku is a logic-based puzzle played on a 9x9 grid divided into nine 3x3 regions. Your goal is to fill every row, column, and region with the digits 1 through 9 without repeating any number.\n\nClick on an empty cell to select it and begin inputting a number using either the on-screen number pad or your keyboard. If you click on a cell that already contains a user-entered number, that cell becomes active for editing and all instances of that number will be highlighted in green. Clicking the same active cell a second time will release it. Fixed numbers (those given at the start) cannot be edited, but clicking one will highlight all of its occurrences (a second click will release the highlight).\n\nTo delete a number from an active cell, simply double-click the cell, press the delete/backspace key, or click the 'X' button in the number pad. Good luck and happy puzzling!`}
+        isTimerPaused={isTimerPaused}
+        setIsTimerPaused={setIsTimerPaused}
       />
       <div className="button_box">
         <div className="dropdown_container" ref={dropdownRef}>

@@ -5,7 +5,7 @@ import WordleKey from '../components/WordleGame/WordleKey';
 import Header from '../components/GameHeader/GameHeader';
 import WinningModal from '../components/Modals/WinningModal';
 
-const Wordle = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
+const Wordle = ({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, setIsTimerPaused }) => {
   const [targetWord, setTargetWord] = useState('');
   const [currentGuess, setCurrentGuess] = useState('');
   const [guesses, setGuesses] = useState([]);
@@ -195,6 +195,8 @@ const Wordle = ({ isWinningModalOpen, setIsWinningModalOpen }) => {
         turn_title="Guesses Left" 
         turns={6 - guesses.length} 
         howTo={"Players start by entering any five-letter word, which provides feedback on letter placement: green indicates a correct letter in the right position, yellow signals a correct letter in the wrong position, and gray shows a letter not in the word. Use this feed back to make informed guesses, incorporating yellow and green letters while avoiding gray ones. The game continues until the word is guessed or your 6 attempts are exhausted"}
+        isTimerPaused={isTimerPaused}
+        setIsTimerPaused={setIsTimerPaused}
       />
       <div className="wordle-container">
         <WordleBoard 

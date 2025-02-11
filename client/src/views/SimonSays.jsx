@@ -6,7 +6,7 @@ import WinningModal from "../components/Modals/WinningModal";
 // color options
 const colors = ["simon_green", "simon_red", "simon_yellow", "simon_blue"];
 
-function Simon({ isWinningModalOpen, setIsWinningModalOpen }) {
+function Simon({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, setIsTimerPaused }) {
     // states
     const [sequence, setSequence] = useState([]);
     const [playing, setPlaying] = useState(false);
@@ -105,7 +105,8 @@ function Simon({ isWinningModalOpen, setIsWinningModalOpen }) {
                 onclick={resetGame}
                 turn_title={"Level"}
                 turns={sequence.length}
-                howTo={"The game begins with one illuminated color, which the player must repeat by pressing the same button. As the game progresses, additional colors are added, making the sequence longer and more complex. The objective is to remember and replicate the longest sequence, testing memory and concentration skills."}
+                howTo={"The game begins with one illuminated color, which the player must repeat by pressing the same button. As the game progresses, additional colors are added, making the sequence longer and more complex. The objective is to remember and replicate the longest sequence, testing memory and concentration skills."}                isTimerPaused={isTimerPaused}
+                setIsTimerPaused={setIsTimerPaused}
             />
             {/* GAME */}
             <div className="simon_container">

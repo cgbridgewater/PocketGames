@@ -37,7 +37,7 @@ const cardImages = [
     { src: Card15, matched: false },
 ];
 
-function Memory({ isWinningModalOpen, setIsWinningModalOpen }) {
+function Memory({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, setIsTimerPaused }) {
 
     // States
     const [cards, setCards] = useState([]);
@@ -131,6 +131,8 @@ function Memory({ isWinningModalOpen, setIsWinningModalOpen }) {
                 turn_title={"Turns"}
                 turns={turns}
                 howTo={"Uncover matching pairs hidden beneath a grid of face-down cards in this engaging memory game. Choose from three difficulty levels: easy features a smaller grid for beginners, medium adds more cards for a bit more challenge, and hard tests even the sharpest memories with a larger grid and more pairs. The game ends when all pairs are found" }
+                isTimerPaused={isTimerPaused}
+                setIsTimerPaused={setIsTimerPaused}
             />
             {/* DIFFICULTY BUTTONS */}
             <div className="button_box">

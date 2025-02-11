@@ -16,7 +16,7 @@ import { notifyRendering } from "../components/ColorFusion//hooks/commonFunction
 import WinningModal from "../components/Modals/WinningModal";
 
 
-const ColorFusion = () => {
+const ColorFusion = ({ isTimerPaused, setIsTimerPaused }) => {
   const { search } = useLocation();
   const params = useMemo(() => new URLSearchParams(search), [search]);
   const height = useMemo(() => Number(params.get("height")) || 15, [params]);
@@ -40,6 +40,8 @@ const ColorFusion = () => {
           turn_title={"Pieces Left"} 
           turns={piecesLeft}  
           howTo={"This game is played by erasing clumps of two or more pieces of the same color attached to each other, and the game is completed when all the pieces are finally erased."}  
+          isTimerPaused={isTimerPaused}
+          setIsTimerPaused={setIsTimerPaused}
         />
         {/* GAME */}
         <div className="fusion_game_wrapper" >

@@ -19,8 +19,9 @@ const Tetris = React.lazy(() => import('./views/Tetris'));
 const ColorFusion = React.lazy(() => import('./views/ColorFusion'));
 const Sudoku = React.lazy(() => import('./views/Sudoku'));
 // const BubbleMania = React.lazy(() => import('./views/BubbleMania'));
-const Stacker3d = React.lazy(() => import('./views/Stacker3d'));
+// const Stacker3d = React.lazy(() => import('./views/Stacker3d'));
 import FutoshikiGame from "./views/Futoshiki";
+import TreasureHunt from "./views/TreasureHunt";
 
 // Import custom hooks
 import useLoadMetaData from './customHooks/useLoadMetaData';
@@ -28,20 +29,23 @@ import useUpdateMetaData from './customHooks/useUpdateMetaData';
 
 function App() {
   const [isWinningModalOpen, setIsWinningModalOpen] = useState(false);
+  const [isTimerPaused, setIsTimerPaused] = useState(false);
 
   return (
-    <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div className="loading">Loading...</div>}>
+      <BrowserRouter>
         <AppContent 
           isWinningModalOpen={isWinningModalOpen} 
           setIsWinningModalOpen={setIsWinningModalOpen} 
+          isTimerPaused={isTimerPaused}
+          setIsTimerPaused={setIsTimerPaused}
         />
-      </Suspense>
-    </BrowserRouter>
+      </BrowserRouter>
+    </Suspense>
   );
 }
 
-function AppContent({ isWinningModalOpen, setIsWinningModalOpen }) {
+function AppContent({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, setIsTimerPaused }) {
   const location = useLocation();
 
   // Fetch metadata from custom hook
@@ -67,6 +71,8 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen }) {
           <Memory
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
+            isTimerPaused={isTimerPaused}
+            setIsTimerPaused={setIsTimerPaused}
           />} 
         />
 
@@ -75,6 +81,8 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen }) {
           <SimonSays 
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
+            isTimerPaused={isTimerPaused}
+            setIsTimerPaused={setIsTimerPaused}
           />}/>
         
         {/* WORDLE GAME */}
@@ -82,6 +90,8 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen }) {
           <Wordle 
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
+            isTimerPaused={isTimerPaused}
+            setIsTimerPaused={setIsTimerPaused}
           />}/>
 
         {/* LIGHTS OUT GAME */}
@@ -89,6 +99,8 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen }) {
           <LightsOut
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
+            isTimerPaused={isTimerPaused}
+            setIsTimerPaused={setIsTimerPaused}
           />}/>
 
         {/* STACKABLE GAME */}
@@ -96,6 +108,8 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen }) {
           <Stackable
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
+            isTimerPaused={isTimerPaused}
+            setIsTimerPaused={setIsTimerPaused}
           />}/>
 
         {/* TETRIS GAME */}
@@ -103,6 +117,8 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen }) {
           <Tetris
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
+            isTimerPaused={isTimerPaused}
+            setIsTimerPaused={setIsTimerPaused}
           />}/>
 
         {/* COLOR FUSION GAME */}
@@ -110,6 +126,8 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen }) {
           <ColorFusion
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
+            isTimerPaused={isTimerPaused}
+            setIsTimerPaused={setIsTimerPaused}
           />}/>
 
         {/* BUBBLE MANIA GAME */}
@@ -117,6 +135,8 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen }) {
           <Sudoku
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
+            isTimerPaused={isTimerPaused}
+            setIsTimerPaused={setIsTimerPaused}
           />}/>
 
         {/* BUBBLE MANIA GAME */}
@@ -124,20 +144,35 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen }) {
           <BubbleMania
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
+            isTimerPaused={isTimerPaused}
+            setIsTimerPaused={setIsTimerPaused}
           />}/> */}
 
+        {/* TREASURE HUNT GAME */}
+        <Route path='/games/treasurehunt' element={
+          <TreasureHunt
+            isWinningModalOpen={isWinningModalOpen} 
+            setIsWinningModalOpen={setIsWinningModalOpen}
+            isTimerPaused={isTimerPaused}
+            setIsTimerPaused={setIsTimerPaused}
+          />}/>
+
         {/* STACKER 3D GAME */}
-        <Route path='/games/stacker3d' element={
+        {/* <Route path='/games/stacker3d' element={
           <Stacker3d
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
-          />}/>
+            isTimerPaused={isTimerPaused}
+            setIsTimerPaused={setIsTimerPaused}
+          />}/> */}
 
         {/* STACKER 3D GAME */}
         <Route path='/games/futoshiki' element={
           <FutoshikiGame
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
+            isTimerPaused={isTimerPaused}
+            setIsTimerPaused={setIsTimerPaused}
           />}/>
 
         {/* CATCHALL FOR BAD ROUTES */}
