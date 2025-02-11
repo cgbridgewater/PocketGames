@@ -5,7 +5,7 @@ import Header from '../components/GameHeader/GameHeader';
 import WinningModal from '../components/Modals/WinningModal';
 
 const BOARD_SIZE = 20;
-const MAX_MOVES = 10;
+const MAX_MOVES = 8;
 
 export default function TreasureHunt({ 
   isWinningModalOpen, 
@@ -108,16 +108,20 @@ export default function TreasureHunt({
 
   // Revised score calculation: apply a time penalty and increased deduction per reset.
   const calculateScore = () => {
+    // Set Base Score
     const baseScore = 10000;
-    const effectiveDeduction = 50 * (1 + resets * 0.2);
+    // Deduction Base 100 x resets gain
+    const effectiveDeduction = 100 * (1 + resets * 0.2);
+    // Calculate penalty based off time and reset deductions
     const penalty = elapsedTime * effectiveDeduction;
+    // Calculate Score from base score - penalty amount
     const score = Math.max(baseScore - penalty, 0);
     return Math.floor(score);
   };
 
   const movesRemaining = MAX_MOVES - moves;
   let movesColor = "treasure_hunt_distance_low";
-  if (movesRemaining <= 5 && movesRemaining >= 2) movesColor = "treasure_hunt_distance_medium";
+  if (movesRemaining <= (MAX_MOVES-2) && movesRemaining >= 3) movesColor = "treasure_hunt_distance_medium";
   if (movesRemaining === 1) movesColor = "treasure_hunt_distance_high";
 
   return (
