@@ -131,8 +131,9 @@ export default function TreasureHunt({
         onclick={restartGame}
         turn_title={"Time"}
         turns={formatTime(elapsedTime)}
-        howTo={`Embark on a quest to find the hidden treasure! Click any tile to reveal its distance from the treasure. Use these clues to pinpoint the treasure’s location.
-                You have a limited number of moves before the board reshuffles, and every second decreases your score. Win by finding the treasure before your score hits zero or you run out of moves. Good luck, treasure hunter!`}
+        howTo={`Embark on a quest to find the hidden treasure! Click any tile to reveal its distance from the treasure. Use these clues to pinpoint the treasure’s location. \n
+                You have a ${MAX_MOVES} moves before the board reshuffles, every second and reshuffle decreases your score. \n
+                Win by finding the treasure before your score hits zero. Good luck!`}
         isTimerPaused={isTimerPaused}
         setIsTimerPaused={setIsTimerPaused}
       />
