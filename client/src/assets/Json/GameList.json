@@ -153,12 +153,12 @@
     },
     {
         "id": "9",
-        "status": "3",
+        "status": "2",
         "title": "Bubble Mania",
         "url": "bubblemania",
-        "img_ref": "PlaceHolder",
+        "img_ref": "BubbleManiaIcon",
         "external_link": false,
-        "isActive": false,
+        "isActive": true,
         "requirements": [],
         "meta": {
             "title": "Bubble Mania - Pocket Games",

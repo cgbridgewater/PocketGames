@@ -18,7 +18,7 @@ const Stackable = React.lazy(() => import('./views/Stackable'));
 const Tetris = React.lazy(() => import('./views/Tetris'));
 const ColorFusion = React.lazy(() => import('./views/ColorFusion'));
 const Sudoku = React.lazy(() => import('./views/Sudoku'));
-// const BubbleMania = React.lazy(() => import('./views/BubbleMania'));
+const BubbleMania = React.lazy(() => import('./views/BubbleMania'));
 // const Stacker3d = React.lazy(() => import('./views/Stacker3d'));
 import FutoshikiGame from "./views/Futoshiki";
 import TreasureHunt from "./views/TreasureHunt";
@@ -140,13 +140,13 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, 
           />}/>
 
         {/* BUBBLE MANIA GAME */}
-        {/* <Route path='/games/bubblemania' element={
+        <Route path='/games/bubblemania' element={
           <BubbleMania
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
             isTimerPaused={isTimerPaused}
             setIsTimerPaused={setIsTimerPaused}
-          />}/> */}
+          />}/>
 
         {/* TREASURE HUNT GAME */}
         <Route path='/games/treasurehunt' element={

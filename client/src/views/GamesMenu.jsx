@@ -5,6 +5,7 @@ import GameCard from "../components/GameCards/GameCard";
 import MemoryIcon from "../assets/images/MemoryIcon.jpg";
 import SimonIcon from "../assets/images/SimonIcon.jpg";
 import WordleIcon from "../assets/images/WordleIcon.png";
+import BubbleManiaIcon from "../assets/images/BubbleManiaIcon.png";
 import LightsOutIcon from "../assets/images/LightsOutIcon.png";
 import StackitIcon from "../assets/images/StackitIcon.png";
 import TetrisIcon from "../assets/images/TetrisIcon.png";
@@ -18,6 +19,7 @@ import GamesData from "../assets/Json/GameList.json";
 
 // Map image references in JSON to the actual image imports  // MUST MATCH JSON NAME
 const imageMap = {
+    BubbleManiaIcon,
     MemoryIcon,
     SimonIcon,
     WordleIcon,
