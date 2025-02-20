@@ -19,6 +19,7 @@ const Tetris = React.lazy(() => import('./views/Tetris'));
 const ColorFusion = React.lazy(() => import('./views/ColorFusion'));
 const Sudoku = React.lazy(() => import('./views/Sudoku'));
 const BubbleMania = React.lazy(() => import('./views/BubbleMania'));
+import MiniGolfGame from "./views/MiniGolf";
 // const Stacker3d = React.lazy(() => import('./views/Stacker3d'));
 import FutoshikiGame from "./views/Futoshiki";
 import TreasureHunt from "./views/TreasureHunt";
@@ -151,6 +152,15 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, 
         {/* TREASURE HUNT GAME */}
         <Route path='/games/treasurehunt' element={
           <TreasureHunt
+            isWinningModalOpen={isWinningModalOpen} 
+            setIsWinningModalOpen={setIsWinningModalOpen}
+            isTimerPaused={isTimerPaused}
+            setIsTimerPaused={setIsTimerPaused}
+          />}/>
+
+        {/* Mini Golf GAME */}
+        <Route path='/games/minigolf' element={
+          <MiniGolfGame
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
             isTimerPaused={isTimerPaused}

@@ -5,7 +5,7 @@ function GameCard ({ to, text, image, status }) {
     // List of available statuses for game production state
     const statusMap = {
         1: <span>&nbsp;</span>,
-        2: "(beta version)",
+        2: "(In Testing)",
         3: "(coming soon)"
     };
 

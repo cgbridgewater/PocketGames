@@ -210,7 +210,7 @@
     },
     {
         "id": "12",
-        "status": "1",
+        "status": "2",
         "title": "Sudoku",
         "url": "sudoku",
         "img_ref": "SudokuIcon",
@@ -242,6 +242,25 @@
             "keywords": "Treasure Hunt, Treasure, game, coming soon",
             "ogTitle": "Treasure Hunt - Pocket Games",
             "ogDescription": "Find the budied treasure as quickly as you can! - coming soon to Pocket Games.",
+            "ogImage": "",
+            "ogUrl": ""
+        }
+    },
+    {
+        "id": "14",
+        "status": "3",
+        "title": "Mini Golf",
+        "url": "minigolf",
+        "img_ref": "PlaceHolder",
+        "external_link": false,
+        "isActive": true,
+        "requirements": [],
+        "meta": {
+            "title": "Mini Golf - Pocket Games",
+            "description": "A miniature golf adventure game coming soon to Pocket Games.",
+            "keywords": "Mini Golf, Putt Putt Adventure, coming soon",
+            "ogTitle": "Mini Golf - Pocket Games",
+            "ogDescription": "A miniature golf adventure game coming soon to Pocket Games.",
             "ogImage": "",
             "ogUrl": ""
         }

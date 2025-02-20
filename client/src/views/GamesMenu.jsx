@@ -41,7 +41,7 @@ function GameMenu() {
 
     return (
         <main>
-            <h2>Select a game</h2>
+            {/* <h2>Select a game</h2> */}
             <div className="game_icon_container">
                 {/* Map through GameData */}
                 {GameData.map((Game) => {
