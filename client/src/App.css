@@ -261,10 +261,10 @@ a {
 /*      GAME CARDS      */
 /* ==================== */
 .game_icon_container{
-  margin: 16px;
+  margin: 20px auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 16px;
+  grid-gap: 8px;
   
   * {
     transition: all 300ms ease;
@@ -338,6 +338,14 @@ a {
     span {
       font-size: 1rem;
     }
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .game_icon_container{
+    margin-top: 48px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 12px;
   }
 }
 

@@ -210,21 +210,21 @@ export default function BubbleShooter({
 
         // Draw a progress bar
         const loadpercentage = loadcount / loadtotal;
-        context.strokeStyle = '#ff8080';
+        context.strokeStyle = '#fff';
         context.lineWidth = 3;
         context.strokeRect(18.5, canvas.height - 51, canvas.width - 37, 32);
-        context.fillStyle = '#ff8080';
+        context.fillStyle = '#991843';
         context.fillRect(
-          18.5,
-          canvas.height - 51,
-          loadpercentage * (canvas.width - 37),
-          32
+          22,
+          canvas.height - 47,
+          loadpercentage * (canvas.width * .6),
+          24
         );
 
         // Draw the progress text
         // const loadtext = 'Loaded ' + loadcount + '/' + loadtotal + ' images';
         const loadtext = 'Loading images';
-        context.fillStyle = '#000000';
+        context.fillStyle = '#D9B14B';
         context.font = '16px Verdana';
         context.fillText(loadtext, 18, canvas.height - 63);
 
@@ -232,7 +232,7 @@ export default function BubbleShooter({
           // Add a small delay for demonstration
           setTimeout(() => {
             initialized = true;
-          }, 100);
+          }, 250);
         }
       } else {
         update(tframe);
@@ -619,13 +619,13 @@ export default function BubbleShooter({
     }
 
     function drawFrame() {
-      context.fillStyle = '#e8eaec';
+      context.fillStyle = '#000';
       context.fillRect(0, 0, canvas.width, canvas.height);
 
-      context.fillStyle = '#000';
-      context.font = '0.85rem Verdana';
-      context.fillText('Fps: ' + fps, 5, 15);
-      setFpsState(fps);
+    //   context.fillStyle = '#000';
+    //   context.font = '0.85rem Verdana';
+    //   context.fillText('Fps: ' + fps, 5, 15);
+    //   setFpsState(fps);
     }
 
     function renderTiles() {
