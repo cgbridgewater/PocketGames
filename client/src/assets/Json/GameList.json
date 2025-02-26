@@ -248,10 +248,10 @@
     },
     {
         "id": "14",
-        "status": "3",
+        "status": "2",
         "title": "Mini Golf",
         "url": "minigolf",
-        "img_ref": "PlaceHolder",
+        "img_ref": "MiniGolfIcon",
         "external_link": false,
         "isActive": true,
         "requirements": [],

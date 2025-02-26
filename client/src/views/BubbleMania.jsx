@@ -15,46 +15,62 @@ export default function BubbleShooter({
   setIsTimerPaused,
 }) {
   const canvasRef = useRef(null);
-  // We'll store the current score so we can display it in Header/Modal.
+  // State for score, FPS, shot counter, and current threshold.
   const [scoreState, setScoreState] = useState(0);
   const [fpsState, setFpsState] = useState(0);
+  const [counter, setCounter] = useState(0);
+  const [thresholdState, setThresholdState] = useState(20);
 
   // We'll store a ref to the newGame() function so Header/Modal can call it.
   const newGameRef = useRef(null);
 
+  // Reset function: resets all game state and closes the modal.
+  const resetGame = () => {
+    if (newGameRef.current) newGameRef.current();
+    setIsWinningModalOpen(false);
+  };
+
   useEffect(() => {
     // ------------------------------
-    // Original game code starts here
+    // Game code starts here
     // ------------------------------
 
-    // Get the canvas and context from the ref
+    // New row logic constants
+    const MIN_BUBBLE_COUNT = 5; // Force a new row if board is nearly empty.
+    let currentThreshold = 20; // Starting threshold for row addition.
+
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
 
-    // Timing and frames per second
+    // Timing and FPS variables.
     let lastframe = 0;
     let fpstime = 0;
     let framecount = 0;
     let fps = 0;
-    
     let initialized = false;
-    
-    // Level
+
+    // Level configuration.
     const level = {
-      x: 3,           
-      y: 3,          
-      width: 0,       
-      height: 0,      
-      columns: 10,    
-      rows: 14,       
-      tilewidth: 32,  
-      tileheight: 32, 
-      rowheight: 27.2,  
-      radius: 16,     
-      tiles: []       
+      x: 3,
+      y: 3,
+      width: 0,
+      height: 0,
+      columns: 10,
+      rows: 14,
+      tilewidth: 32,
+      tileheight: 32,
+      rowheight: 27.2,
+      radius: 16,
+      tiles: [],
     };
 
-    // Define a tile class
+    // Instead of a single global row offset, use an array for each row's offset.
+    let rowOffsets = [];
+    for (let j = 0; j < level.rows; j++) {
+      rowOffsets[j] = j % 2; // Pattern: row0 = 0, row1 = 1, row2 = 0, etc.
+    }
+
+    // Define Tile class.
     class Tile {
       constructor(x, y, type, shift) {
         this.x = x;
@@ -68,7 +84,7 @@ export default function BubbleShooter({
       }
     }
 
-    // Player
+    // Player object.
     const player = {
       x: 0,
       y: 0,
@@ -90,66 +106,47 @@ export default function BubbleShooter({
       },
     };
 
-    // Neighbor offset table
+    // Neighbor offset table based on rowOffsets.
     const neighborsoffsets = [
-      [
-        [1, 0],
-        [0, 1],
-        [-1, 1],
-        [-1, 0],
-        [-1, -1],
-        [0, -1],
-      ], // Even row tiles
-      [
-        [1, 0],
-        [1, 1],
-        [0, 1],
-        [-1, 0],
-        [0, -1],
-        [1, -1],
-      ], // Odd row tiles
+      [[1, 0], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1]],
+      [[1, 0], [1, 1], [0, 1], [-1, 0], [0, -1], [1, -1]],
     ];
-    
-    // Number of different colors
-    const bubblecolors = 7;
-    
-    // Game states
-    const gamestates = { init: 0, ready: 1, shootbubble: 2, removecluster: 3, gameover: 4 };
+
+    const bubblecolors = 7; // Total colors.
+
+    const gamestates = {
+      init: 0,
+      ready: 1,
+      shootbubble: 2,
+      removecluster: 3,
+      gameover: 4,
+    };
     let gamestate = gamestates.init;
-    
-    // Score (this is our internal mutable variable; we mirror it into scoreState via setScoreState)
+
+    // Internal mutable score.
     let score = 0;
-    
-    let turncounter = 0;
-    let rowoffset = 0;
-    
-    // Animation variables
+    let turncounter = 0; // Counts every shot.
+
     let animationstate = 0;
     let animationtime = 0;
-    
-    // Clusters
+
     let showcluster = false;
     let cluster = [];
     let floatingclusters = [];
-    
-    // Images
+
     let images = [];
     let bubbleimage;
-    
-    // Image loading globals
     let loadcount = 0;
     let loadtotal = 0;
     let preloaded = false;
 
     // ----------------------------------
-    // Original methods from the JS file
+    // Image loading function.
     // ----------------------------------
-
     function loadImages(imagefiles) {
       loadcount = 0;
       loadtotal = imagefiles.length;
       preloaded = false;
-      
       const loadedimages = [];
       for (let i = 0; i < imagefiles.length; i++) {
         const image = new Image();
@@ -165,27 +162,48 @@ export default function BubbleShooter({
       return loadedimages;
     }
 
+    // Use rowOffsets array in rendering coordinates.
+    function getTileCoordinate(column, row) {
+      let tilex = level.x + column * level.tilewidth;
+      if (rowOffsets[row] === 1) {
+        tilex += level.tilewidth / 2;
+      }
+      const tiley = level.y + row * level.rowheight;
+      return { tilex, tiley };
+    }
+
+    // For neighbor lookup, use the stored row offset.
+    function getNeighbors(tile) {
+      const n = neighborsoffsets[rowOffsets[tile.y]];
+      const neighbors = [];
+      for (let i = 0; i < n.length; i++) {
+        const nx = tile.x + n[i][0];
+        const ny = tile.y + n[i][1];
+        if (nx >= 0 && nx < level.columns && ny >= 0 && ny < level.rows) {
+          neighbors.push(level.tiles[nx][ny]);
+        }
+      }
+      return neighbors;
+    }
+
     function init() {
-      // Load images
       images = loadImages([bubbleSpritePath]);
       bubbleimage = images[0];
 
-      // Add mouse events
       canvas.addEventListener('mousemove', onMouseMove);
       canvas.addEventListener('mousedown', onMouseDown);
 
-      // Initialize the two-dimensional tile array
+      // Initialize board tiles.
       for (let i = 0; i < level.columns; i++) {
         level.tiles[i] = [];
         for (let j = 0; j < level.rows; j++) {
           level.tiles[i][j] = new Tile(i, j, 0, 0);
         }
       }
-
       level.width = level.columns * level.tilewidth + level.tilewidth / 2;
       level.height = (level.rows - 1) * level.rowheight + level.tileheight;
 
-      // Init the player
+      // Initialize player position and next bubble.
       player.x = level.x + level.width / 2 - level.tilewidth / 2;
       player.y = level.y + level.height;
       player.angle = 90;
@@ -193,43 +211,26 @@ export default function BubbleShooter({
       player.nextbubble.x = player.x - 2 * level.tilewidth;
       player.nextbubble.y = player.y;
 
-      // New game (resets score, tiles, etc.)
       newGame();
-
-      // Enter main loop
       main(0);
     }
 
     function main(tframe) {
       window.requestAnimationFrame(main);
-
       if (!initialized) {
-        // Preloader
         context.clearRect(0, 0, canvas.width, canvas.height);
         drawFrame();
-
-        // Draw a progress bar
         const loadpercentage = loadcount / loadtotal;
         context.strokeStyle = '#fff';
         context.lineWidth = 3;
         context.strokeRect(18.5, canvas.height - 51, canvas.width - 37, 32);
         context.fillStyle = '#991843';
-        context.fillRect(
-          22,
-          canvas.height - 47,
-          loadpercentage * (canvas.width * .6),
-          24
-        );
-
-        // Draw the progress text
-        // const loadtext = 'Loaded ' + loadcount + '/' + loadtotal + ' images';
+        context.fillRect(22, canvas.height - 47, loadpercentage * (canvas.width * 0.6), 24);
         const loadtext = 'Loading images';
         context.fillStyle = '#D9B14B';
         context.font = '16px Verdana';
         context.fillText(loadtext, 18, canvas.height - 63);
-
         if (preloaded) {
-          // Add a small delay for demonstration
           setTimeout(() => {
             initialized = true;
           }, 250);
@@ -243,13 +244,10 @@ export default function BubbleShooter({
     function update(tframe) {
       const dt = (tframe - lastframe) / 1000;
       lastframe = tframe;
-
-      // Update the fps counter
       updateFps(dt);
 
       switch (gamestate) {
         case gamestates.ready:
-          // Waiting for input.
           break;
         case gamestates.shootbubble:
           stateShootBubble(dt);
@@ -268,12 +266,11 @@ export default function BubbleShooter({
       animationtime = 0;
     }
 
+    // --- Bubble in-flight state ---
     function stateShootBubble(dt) {
-      // Move bubble
       player.bubble.x += dt * player.bubble.speed * Math.cos(degToRad(player.bubble.angle));
       player.bubble.y += dt * player.bubble.speed * -Math.sin(degToRad(player.bubble.angle));
 
-      // Collide with left/right boundaries
       if (player.bubble.x <= level.x) {
         player.bubble.angle = 180 - player.bubble.angle;
         player.bubble.x = level.x;
@@ -282,14 +279,12 @@ export default function BubbleShooter({
         player.bubble.x = level.x + level.width - level.tilewidth;
       }
 
-      // Collide with the top
       if (player.bubble.y <= level.y) {
         player.bubble.y = level.y;
         snapBubble();
         return;
       }
 
-      // Collide with other tiles
       for (let i = 0; i < level.columns; i++) {
         for (let j = 0; j < level.rows; j++) {
           const tile = level.tiles[i][j];
@@ -312,13 +307,14 @@ export default function BubbleShooter({
       }
     }
 
+    // --- Cluster removal state ---
+    // In this state, after removal is complete, we increment the shot counter and process the threshold.
     function stateRemoveCluster(dt) {
       if (animationstate === 0) {
         resetRemoved();
         for (let i = 0; i < cluster.length; i++) {
           cluster[i].removed = true;
         }
-        // Increase score for removed cluster
         score += cluster.length * 100;
         setScoreState(score);
         floatingclusters = findFloatingClusters();
@@ -335,10 +331,8 @@ export default function BubbleShooter({
         }
         animationstate = 1;
       }
-
       if (animationstate === 1) {
         let tilesleft = false;
-        // Animate popping bubbles
         for (let i = 0; i < cluster.length; i++) {
           const tile = cluster[i];
           if (tile.type >= 0) {
@@ -351,7 +345,6 @@ export default function BubbleShooter({
             }
           }
         }
-        // Animate dropping floating clusters
         for (let i = 0; i < floatingclusters.length; i++) {
           for (let j = 0; j < floatingclusters[i].length; j++) {
             const tile = floatingclusters[i][j];
@@ -373,30 +366,19 @@ export default function BubbleShooter({
             }
           }
         }
-
+        // When removal is complete (i.e. no tiles left in the cluster), count the shot.
         if (!tilesleft) {
+          turncounter++;
+          setCounter(turncounter);
+          processThreshold();
           nextBubble();
-          // Check for game over (or win) condition
-          let tilefound = false;
-          for (let i = 0; i < level.columns; i++) {
-            for (let j = 0; j < level.rows; j++) {
-              if (level.tiles[i][j].type !== -1) {
-                tilefound = true;
-                break;
-              }
-            }
-          }
-          if (tilefound) {
-            setGameState(gamestates.ready);
-          } else {
-            // Instead of drawing a game over overlay, we open our WinningModal.
-            setGameState(gamestates.gameover);
-            setIsWinningModalOpen(true);
-          }
+          setGameState(gamestates.ready);
         }
       }
     }
 
+    // --- Revised snapBubble() function ---
+    // Order: collision detection -> cluster detection -> if cluster exists, then enter removal state; otherwise, increment shot counter and process threshold.
     function snapBubble() {
       const centerx = player.bubble.x + level.tilewidth / 2;
       const centery = player.bubble.y + level.tileheight / 2;
@@ -424,24 +406,38 @@ export default function BubbleShooter({
         player.bubble.visible = false;
         level.tiles[gridpos.x][gridpos.y].type = player.bubble.tiletype;
         if (checkGameOver()) return;
-
         cluster = findCluster(gridpos.x, gridpos.y, true, true, false);
-        if (cluster.length >= 3) {
-          setGameState(gamestates.removecluster);
-          return;
-        }
       }
 
+      // If a cluster is detected, enter removal state first.
+      if (cluster.length >= 3) {
+        setGameState(gamestates.removecluster);
+        return;
+      }
+      
+      // No cluster: increment shot counter and process threshold.
       turncounter++;
-      if (turncounter >= 5) {
+      setCounter(turncounter);
+      processThreshold();
+      if (countBubbles() < MIN_BUBBLE_COUNT) {
         addBubbles();
-        turncounter = 0;
-        rowoffset = (rowoffset + 1) % 2;
-        if (checkGameOver()) return;
       }
-
       nextBubble();
       setGameState(gamestates.ready);
+    }
+
+    // Helper to process threshold.
+    function processThreshold() {
+      if (turncounter >= currentThreshold) {
+        addBubbles();
+        turncounter = 0;
+        setCounter(turncounter);
+        if (currentThreshold > 3) {
+          currentThreshold--;
+        }
+        setThresholdState(currentThreshold);
+        if (checkGameOver()) return;
+      }
     }
 
     function checkGameOver() {
@@ -449,7 +445,6 @@ export default function BubbleShooter({
         if (level.tiles[i][level.rows - 1].type !== -1) {
           nextBubble();
           setGameState(gamestates.gameover);
-          // Trigger modal open for game over.
           setIsWinningModalOpen(true);
           return true;
         }
@@ -458,33 +453,42 @@ export default function BubbleShooter({
     }
 
     function addBubbles() {
-      // Move rows down
+      // Shift rows downward.
       for (let i = 0; i < level.columns; i++) {
-        for (let j = 0; j < level.rows - 1; j++) {
-          level.tiles[i][level.rows - 1 - j].type =
-            level.tiles[i][level.rows - 1 - j - 1].type;
+        for (let j = level.rows - 1; j > 0; j--) {
+          level.tiles[i][j].type = level.tiles[i][j - 1].type;
         }
       }
-      // New row at the top
+      // Create a new row with fully random colors.
       for (let i = 0; i < level.columns; i++) {
-        level.tiles[i][0].type = getExistingColor();
+        level.tiles[i][0].type = randRange(0, bubblecolors - 1);
       }
+      // Update rowOffsets: insert new offset at top opposite to current top.
+      const newRowOffset = 1 - rowOffsets[0];
+      rowOffsets.unshift(newRowOffset);
+      rowOffsets.pop();
+    }
+
+    function countBubbles() {
+      let count = 0;
+      for (let i = 0; i < level.columns; i++) {
+        for (let j = 0; j < level.rows; j++) {
+          if (level.tiles[i][j].type !== -1) count++;
+        }
+      }
+      return count;
     }
 
     function findColors() {
       const foundcolors = [];
       const colortable = [];
-      for (let i = 0; i < bubblecolors; i++) {
-        colortable.push(false);
-      }
+      for (let i = 0; i < bubblecolors; i++) colortable.push(false);
       for (let i = 0; i < level.columns; i++) {
         for (let j = 0; j < level.rows; j++) {
           const tile = level.tiles[i][j];
-          if (tile.type >= 0) {
-            if (!colortable[tile.type]) {
-              colortable[tile.type] = true;
-              foundcolors.push(tile.type);
-            }
+          if (tile.type >= 0 && !colortable[tile.type]) {
+            colortable[tile.type] = true;
+            foundcolors.push(tile.type);
           }
         }
       }
@@ -492,14 +496,11 @@ export default function BubbleShooter({
     }
 
     function findCluster(tx, ty, matchtype, reset, skipremoved) {
-      if (reset) {
-        resetProcessed();
-      }
+      if (reset) resetProcessed();
       const targettile = level.tiles[tx][ty];
       const toprocess = [targettile];
       targettile.processed = true;
       const foundcluster = [];
-
       while (toprocess.length > 0) {
         const currenttile = toprocess.pop();
         if (currenttile.type === -1) continue;
@@ -534,9 +535,7 @@ export default function BubbleShooter({
                 break;
               }
             }
-            if (floating) {
-              foundclusters.push(foundcluster);
-            }
+            if (floating) foundclusters.push(foundcluster);
           }
         }
       }
@@ -559,73 +558,31 @@ export default function BubbleShooter({
       }
     }
 
-    function getNeighbors(tile) {
-      const tilerow = (tile.y + rowoffset) % 2;
-      const neighbors = [];
-      const n = neighborsoffsets[tilerow];
-      for (let i = 0; i < n.length; i++) {
-        const nx = tile.x + n[i][0];
-        const ny = tile.y + n[i][1];
-        if (nx >= 0 && nx < level.columns && ny >= 0 && ny < level.rows) {
-          neighbors.push(level.tiles[nx][ny]);
-        }
-      }
-      return neighbors;
-    }
-
     function updateFps(dt) {
       if (fpstime > 0.25) {
         fps = Math.round(framecount / fpstime);
         fpstime = 0;
         framecount = 0;
+        setFpsState(fps);
       }
       fpstime += dt;
       framecount++;
     }
 
-    // function drawCenterText(text, x, y, width) {
-    //   const textdim = context.measureText(text);
-    //   context.fillText(text, x + (width - textdim.width) / 2, y);
-    // }
+    function drawFrame() {
+      context.fillStyle = '#000';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+    }
 
     function render() {
       drawFrame();
       const yoffset = level.tileheight / 2;
-
-      // Level background
       context.fillStyle = '#000';
       context.fillRect(level.x - 4, level.y - 4, level.width + 8, level.height + 4 - yoffset);
-
-      // Render tiles
       renderTiles();
-
-      // Bottom area
       context.fillStyle = '#991843';
       context.fillRect(level.x - 4, level.y - 4 + level.height + 4 - yoffset, level.width + 8, 2 * level.tileheight + 3);
-
-      // Score
-    //   context.fillStyle = '#ffffff';
-    //   context.font = '18px Verdana';
-    //   const scorex = level.x + level.width - 150;
-    //   const scorey = level.y + level.height + level.tileheight - yoffset - 8;
-    //   drawCenterText('Score:', scorex, scorey, 150);
-    //   context.font = '24px Verdana';
-    //   drawCenterText(score, scorex, scorey + 30, 150);
-
-      // (Omit drawing the in-canvas game over message since WinningModal is used.)
-
-      // Render player bubble
       renderPlayer();
-    }
-
-    function drawFrame() {
-      context.fillStyle = '#000';
-      context.fillRect(0, 0, canvas.width, canvas.height);
-
-    //   context.fillStyle = '#000';
-    //   context.font = '0.85rem Verdana';
-    //   context.fillText('Fps: ' + fps, 5, 15);
-    //   setFpsState(fps);
     }
 
     function renderTiles() {
@@ -644,11 +601,10 @@ export default function BubbleShooter({
       }
     }
 
+    // --- Render shooter and next bubble preview ---
     function renderPlayer() {
       const centerx = player.x + level.tilewidth / 2;
       const centery = player.y + level.tileheight / 2;
-
-      // Player background circle
       context.fillStyle = '#7a7a7a';
       context.beginPath();
       context.arc(centerx, centery, level.radius + 12, 0, 2 * Math.PI, false);
@@ -656,8 +612,6 @@ export default function BubbleShooter({
       context.lineWidth = 2;
       context.strokeStyle = '#8c8c8c';
       context.stroke();
-
-      // Angle line
       context.lineWidth = 3;
       context.strokeStyle = '#fff';
       context.beginPath();
@@ -668,28 +622,26 @@ export default function BubbleShooter({
       );
       context.stroke();
 
-      // Next bubble
-      drawBubble(player.nextbubble.x, player.nextbubble.y, player.nextbubble.tiletype);
+      // Next bubble preview: draw a smaller dark circle behind the preview.
+      context.save();
+      const previewX = player.nextbubble.x + level.tilewidth / 2;
+      const previewY = player.nextbubble.y + level.tileheight / 2;
+      context.fillStyle = '#333';
+      context.beginPath();
+      context.arc(previewX, previewY, level.radius, 0, 2 * Math.PI, false);
+      context.fill();
+      context.restore();
 
-      // Current bubble
+      drawBubble(player.nextbubble.x, player.nextbubble.y, player.nextbubble.tiletype);
       if (player.bubble.visible) {
         drawBubble(player.bubble.x, player.bubble.y, player.bubble.tiletype);
       }
     }
 
-    function getTileCoordinate(column, row) {
-      let tilex = level.x + column * level.tilewidth;
-      if ((row + rowoffset) % 2) {
-        tilex += level.tilewidth / 2;
-      }
-      const tiley = level.y + row * level.rowheight;
-      return { tilex, tiley };
-    }
-
     function getGridPosition(x, y) {
       const gridy = Math.floor((y - level.y) / level.rowheight);
       let xoffset = 0;
-      if ((gridy + rowoffset) % 2) {
+      if (rowOffsets[gridy] === 1) {
         xoffset = level.tilewidth / 2;
       }
       const gridx = Math.floor((x - xoffset - level.x) / level.tilewidth);
@@ -711,19 +663,20 @@ export default function BubbleShooter({
       );
     }
 
+    // --- Game reset and new game functions ---
     function newGame() {
-      // Reset game state variables and score.
       score = 0;
       setScoreState(0);
       turncounter = 0;
-      rowoffset = 0;
+      setCounter(0);
+      currentThreshold = 20; // reset threshold
+      setThresholdState(20);
       setGameState(gamestates.ready);
       createLevel();
       nextBubble();
       nextBubble();
+      setIsWinningModalOpen(false);
     }
-
-    // Expose newGame so that Header/Modal can call it.
     newGameRef.current = newGame;
 
     function createLevel() {
@@ -809,13 +762,9 @@ export default function BubbleShooter({
       const lbound = 8;
       const ubound = 172;
       if (mouseangle > 90 && mouseangle < 270) {
-        if (mouseangle > ubound) {
-          mouseangle = ubound;
-        }
+        if (mouseangle > ubound) mouseangle = ubound;
       } else {
-        if (mouseangle < lbound || mouseangle >= 270) {
-          mouseangle = lbound;
-        }
+        if (mouseangle < lbound || mouseangle >= 270) mouseangle = lbound;
       }
       player.angle = mouseangle;
     }
@@ -837,14 +786,8 @@ export default function BubbleShooter({
       };
     }
 
-    // Start the game
     init();
 
-    // ------------------------------
-    // Original game code ends here
-    // ------------------------------
-
-    // Cleanup on unmount
     return () => {
       canvas.removeEventListener('mousemove', onMouseMove);
       canvas.removeEventListener('mousedown', onMouseDown);
@@ -853,41 +796,30 @@ export default function BubbleShooter({
 
   return (
     <main>
-      {/* GAME HEADER */}
       <Header
         title="Bubble Mania"
-        onClick={() => {
-          if (newGameRef.current) {
-            newGameRef.current();
-          }
-          setIsWinningModalOpen(false);
-        }}
+        onclick={resetGame}
         turn_title="Score"
         turns={scoreState}
         howTo="This will contain gameplay text later"
         isTimerPaused={isTimerPaused}
         setIsTimerPaused={setIsTimerPaused}
       />
-      {/* GAME PLAY */}
-      <p style={{width: "345px", textAlign: "end"}}>FPS: { fpsState }</p>
+      <p style={{ width: '345px', textAlign: 'end' }}>FPS: {fpsState}</p>
+      <p style={{ width: '345px', textAlign: 'end' }}>Counter: {counter}</p>
+      <p style={{ width: '345px', textAlign: 'end' }}>Threshold: {thresholdState}</p>
       <canvas
         ref={canvasRef}
         width="343"
         height="435"
-        style={{ border: '4px solid #D9B14B', borderRadius: "6px" }}
+        style={{ border: '4px solid #D9B14B', borderRadius: '6px' }}
       />
-      {/* MODAL POPUP */}
       {isWinningModalOpen && (
         <WinningModal
           message1="GAME OVER - "
           message2="points!"
           turns={scoreState}
-          onClose={() => {
-            if (newGameRef.current) {
-              newGameRef.current();
-            }
-            setIsWinningModalOpen(false);
-          }}
+          onClose={resetGame}
         />
       )}
     </main>
