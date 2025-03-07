@@ -8,7 +8,7 @@ import SudokuBoard from "../components/SudokuGame/SudokuBoard";
 import SudokuNumberInput from "../components/SudokuGame/SudokuNumberInput";
 
 // Import Custom Hook
-import useTimer from "../components/SudokuGame/hooks/useTimer";
+import useTimer from "../customHooks/useTimer";
 
 // Import JSON File Of Puzzles
 import puzzleList from "../assets/Json/sudoku_puzzles.json";
@@ -304,6 +304,7 @@ export default function SodokuGame({ isTimerPaused, setIsTimerPaused }) {
         isTimerPaused={isTimerPaused}
         setIsTimerPaused={setIsTimerPaused}
       />
+      {/* RESET AND DIFFICULTY SELECTION */}
       <div className="button_box">
         <div className="dropdown_container" ref={dropdownRef}>
           <div
