@@ -11,6 +11,7 @@ import StackitIcon from "../assets/images/StackitIcon.png";
 import TetrisIcon from "../assets/images/TetrisIcon.png";
 import ColorFusionIcon from "../assets/images/ColorFusionIcon.png";
 import SudokuIcon from "../assets/images/SudokuIcon.png";
+import Futoshiki from "../assets/images/FutoshikiIcon.png";
 import MiniGolfIcon from "../assets/images/MiniGolfIcon.png";
 import TreasureHunt from "../assets/images/TreasureHuntIcon.jpg";
 import PlaceHolder from "../assets/images/PlaceHolder.jpg";
@@ -29,6 +30,7 @@ const imageMap = {
     TetrisIcon,
     ColorFusionIcon,
     SudokuIcon,
+    Futoshiki,
     TreasureHunt,
     MiniGolfIcon,
     PlaceHolder,

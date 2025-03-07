@@ -191,12 +191,12 @@
     },
     {
         "id": "11",
-        "status": "3",
+        "status": "2",
         "title": "FutoShiki",
         "url": "futoshiki",
-        "img_ref": "PlaceHolder",
+        "img_ref": "Futoshiki",
         "external_link": false,
-        "isActive": false,
+        "isActive": true,
         "requirements": [],
         "meta": {
             "title": "FutoShiki - Pocket Games",
