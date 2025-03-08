@@ -191,7 +191,7 @@
     },
     {
         "id": "11",
-        "status": "2",
+        "status": "1",
         "title": "FutoShiki",
         "url": "futoshiki",
         "img_ref": "Futoshiki",
@@ -248,7 +248,7 @@
     },
     {
         "id": "14",
-        "status": "2",
+        "status": "1",
         "title": "Mini Golf",
         "url": "minigolf",
         "img_ref": "MiniGolfIcon",
