@@ -6,6 +6,7 @@ export default function SudokuBoard({
   activeCell,
   highlightedNumber,
   handleCellSelect,
+  handleCellDelete, // deletion handler for board cells
   lastTapRef,
   errors,
 }) {
@@ -19,21 +20,19 @@ export default function SudokuBoard({
           const borderBottom =
             rowIndex === 8 ? "0" : rowIndex === 2 || rowIndex === 5 ? "5px" : "2px";
 
-          // Determine if the cell is active or highlighted.
+          // Determine if the cell is active.
           const isActive =
             activeCell &&
             activeCell.row === rowIndex &&
             activeCell.col === colIndex;
+          // Only highlight cells with a nonzero number.
           const isHighlighted =
-            highlightedNumber !== null && board[rowIndex][colIndex] === highlightedNumber;
+            highlightedNumber > 0 && board[rowIndex][colIndex] === highlightedNumber;
 
           // Check if this cell is in error.
           const hasError = errors.has(`${rowIndex}-${colIndex}`) && board[rowIndex][colIndex] !== 0;
 
           // Set the background color.
-          // If there's an error, background is yellow.
-          // Otherwise, active cells are dark grey, highlighted cells are green,
-          // and all other cells use the default background.
           let backgroundColor;
           if (hasError) {
             backgroundColor = "#fffaaa";
@@ -45,7 +44,6 @@ export default function SudokuBoard({
             backgroundColor = "#EFEFEF";
           }
 
-          // Determine text color:
           // Fixed cells (given in puzzleData.playable) are blue,
           // while user–entered numbers are black.
           const textColor =
@@ -66,12 +64,31 @@ export default function SudokuBoard({
               value={cell !== 0 ? cell : ""}
               className="sudoku_cell"
               onClick={() => handleCellSelect(rowIndex, colIndex)}
+              onDoubleClick={() => {
+                // Only allow deletion if the cell is user–entered and nonempty.
+                if (puzzleData.playable[rowIndex][colIndex] === 0 && cell !== 0) {
+                  handleCellDelete(rowIndex, colIndex);
+                }
+              }}
               onTouchEnd={() => {
                 const now = Date.now();
                 if (now - lastTapRef.current < 300) {
-                  handleCellSelect(rowIndex, colIndex);
+                  if (puzzleData.playable[rowIndex][colIndex] === 0 && cell !== 0) {
+                    handleCellDelete(rowIndex, colIndex);
+                  } else {
+                    handleCellSelect(rowIndex, colIndex);
+                  }
                 }
                 lastTapRef.current = now;
+              }}
+              onKeyDown={(e) => {
+                // Allow deletion using Delete or Backspace on user–entered cells.
+                if (
+                  puzzleData.playable[rowIndex][colIndex] === 0 &&
+                  (e.key === "Delete" || e.key === "Backspace")
+                ) {
+                  handleCellDelete(rowIndex, colIndex);
+                }
               }}
               onMouseDown={(e) => e.preventDefault()}
               style={dynamicStyle}

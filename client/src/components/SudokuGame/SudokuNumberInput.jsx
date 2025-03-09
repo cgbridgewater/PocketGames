@@ -4,6 +4,7 @@ export default function SudokuNumberInput({
   activeCell,
   highlightedNumber,
   handleNumberInput,
+  handleDelete, // new deletion handler for active cell
   isNumberLocked,
   puzzleId,
   // Optional prop: an array of numbers that are in error.
@@ -40,9 +41,17 @@ export default function SudokuNumberInput({
           );
         })}
         <button
-          onClick={() => handleNumberInput(0)}
+          onClick={() => {
+            // When clicking "X", if there is an active cell, delete its value.
+            if (activeCell && handleDelete) {
+              handleDelete(activeCell.row, activeCell.col);
+            } else {
+              // Fallback: call handleNumberInput(0) if no active cell is set.
+              handleNumberInput(0);
+            }
+          }}
           className="sudoku_number_button"
-          style={{ color: "#991843",border: "none" }}
+          style={{ color: "#991843", border: "none" }}
         >
           X
         </button>
