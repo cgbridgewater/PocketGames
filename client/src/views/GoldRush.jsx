@@ -1,4 +1,4 @@
-// src/views/TreasureHunt.jsx
+// src/views/GoldRush.jsx
 import React, { useState, useEffect, useRef, startTransition } from 'react';
 import Board from '../components/TreasureHuntGame/Board';
 import Header from '../components/GameHeader/GameHeader';
@@ -7,7 +7,7 @@ import WinningModal from '../components/Modals/WinningModal';
 const BOARD_SIZE = 20;
 const MAX_MOVES = 8;
 
-export default function TreasureHunt({ 
+export default function GoldRush({ 
   isWinningModalOpen, 
   setIsWinningModalOpen,
   isTimerPaused,
@@ -127,7 +127,7 @@ export default function TreasureHunt({
   return (
     <main>
       <Header
-        title={"Treasure Hunt"}
+        title={"Gold Rush"}
         onclick={restartGame}
         turn_title={"Time"}
         turns={formatTime(elapsedTime)}

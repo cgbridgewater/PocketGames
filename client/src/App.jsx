@@ -18,11 +18,11 @@ const Stackable = React.lazy(() => import('./views/Stackable'));
 const Tetris = React.lazy(() => import('./views/Tetris'));
 const ColorFusion = React.lazy(() => import('./views/ColorFusion'));
 const Sudoku = React.lazy(() => import('./views/Sudoku'));
-const BubbleMania = React.lazy(() => import('./views/BubbleMania'));
+const BubbleBlast = React.lazy(() => import('./views/BubbleBlast'));
 import MiniGolfGame from "./views/MiniGolf";
 // const Stacker3d = React.lazy(() => import('./views/Stacker3d'));
 import FutoshikiGame from "./views/Futoshiki";
-import TreasureHunt from "./views/TreasureHunt";
+import GoldRush from "./views/GoldRush";
 
 // Import custom hooks
 import useLoadMetaData from './customHooks/useLoadMetaData';
@@ -140,9 +140,9 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, 
             setIsTimerPaused={setIsTimerPaused}
           />}/>
 
-        {/* BUBBLE MANIA GAME */}
-        <Route path='/games/bubblemania' element={
-          <BubbleMania
+        {/* BUBBLE BLAST GAME */}
+        <Route path='/games/bubbleblast' element={
+          <BubbleBlast
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
             isTimerPaused={isTimerPaused}
@@ -150,8 +150,8 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, 
           />}/>
 
         {/* TREASURE HUNT GAME */}
-        <Route path='/games/treasurehunt' element={
-          <TreasureHunt
+        <Route path='/games/GoldRush' element={
+          <GoldRush
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
             isTimerPaused={isTimerPaused}

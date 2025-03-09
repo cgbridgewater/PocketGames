@@ -8,7 +8,7 @@ import WinningModal from '../components/Modals/WinningModal';
 // IMPORT IMAGES
 import bubbleSpritePath from '../assets/images/bubble-sprites.png';
 
-export default function BubbleShooter({
+export default function BubbleBlast({
   isWinningModalOpen,
   setIsWinningModalOpen,
   isTimerPaused,
@@ -805,9 +805,10 @@ export default function BubbleShooter({
         isTimerPaused={isTimerPaused}
         setIsTimerPaused={setIsTimerPaused}
       />
-      <p style={{ width: '345px', textAlign: 'end' }}>FPS: {fpsState}</p>
+      {/* Use For Diagnostics ONLY */}
+      {/* <p style={{ width: '345px', textAlign: 'end' }}>FPS: {fpsState}</p>
       <p style={{ width: '345px', textAlign: 'end' }}>Counter: {counter}</p>
-      <p style={{ width: '345px', textAlign: 'end' }}>Threshold: {thresholdState}</p>
+      <p style={{ width: '345px', textAlign: 'end' }}>Threshold: {thresholdState}</p> */}
       <canvas
         ref={canvasRef}
         width="343"
