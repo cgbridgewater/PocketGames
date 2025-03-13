@@ -570,14 +570,14 @@ export default function BubbleBlast({
     }
 
     function drawFrame() {
-      context.fillStyle = '#000';
+      context.fillStyle = '#8F8389';
       context.fillRect(0, 0, canvas.width, canvas.height);
     }
 
     function render() {
       drawFrame();
       const yoffset = level.tileheight / 2;
-      context.fillStyle = '#000';
+      context.fillStyle = '';
       context.fillRect(level.x - 4, level.y - 4, level.width + 8, level.height + 4 - yoffset);
       renderTiles();
       context.fillStyle = '#991843';
@@ -613,7 +613,7 @@ export default function BubbleBlast({
       context.strokeStyle = '#8c8c8c';
       context.stroke();
       context.lineWidth = 3;
-      context.strokeStyle = '#fff';
+      context.strokeStyle = '#252525';
       context.beginPath();
       context.moveTo(centerx, centery);
       context.lineTo(

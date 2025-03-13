@@ -18,7 +18,7 @@ const Stackable = React.lazy(() => import('./views/Stackable'));
 const Tetris = React.lazy(() => import('./views/Tetris'));
 const ColorFusion = React.lazy(() => import('./views/ColorFusion'));
 const Sudoku = React.lazy(() => import('./views/Sudoku'));
-const BubbleBlast = React.lazy(() => import('./views/BubbleBlast'));
+const BubbleMania = React.lazy(() => import('./views/BubbleMania'));
 import MiniGolfGame from "./views/MiniGolf";
 // const Stacker3d = React.lazy(() => import('./views/Stacker3d'));
 import FutoshikiGame from "./views/Futoshiki";
@@ -131,7 +131,7 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, 
             setIsTimerPaused={setIsTimerPaused}
           />}/>
 
-        {/* BUBBLE MANIA GAME */}
+        {/* SUDOKU GAME */}
         <Route path='/games/sudoku' element={
           <Sudoku
             isWinningModalOpen={isWinningModalOpen} 
@@ -140,9 +140,9 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, 
             setIsTimerPaused={setIsTimerPaused}
           />}/>
 
-        {/* BUBBLE BLAST GAME */}
-        <Route path='/games/bubbleblast' element={
-          <BubbleBlast
+        {/* BUBBLE MANIA GAME */}
+        <Route path='/games/bubblemania' element={
+          <BubbleMania
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
             isTimerPaused={isTimerPaused}

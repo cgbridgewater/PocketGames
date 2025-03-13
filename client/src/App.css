@@ -33,6 +33,7 @@
   --background: #242424;
   --fusion_corner_radius: 4px;
   --treasure-hunt-tile-size: 20px;
+  --treasure-hunt-tile-font: 0.9rem
 }
 
 html {
@@ -260,6 +261,20 @@ a {
 /* ==================== */
 /*      GAME CARDS      */
 /* ==================== */
+
+content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 95%;
+    max-width: 1200px;
+    min-width: 360px;
+    padding-top: 45px;
+    margin: 0px auto;
+    background-color: var(--background);
+}
+
 .game_icon_container{
   margin: 20px auto;
   display: grid;
@@ -310,10 +325,12 @@ a {
   }
   
   img {
-    width: 85%;
-    margin: 12px auto 12px;
+    width: 100%;
+    margin: 0 auto;
     aspect-ratio: 1/.8;
     border-radius: 5px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
   }
 }
 
@@ -341,11 +358,19 @@ a {
   }
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 500px) {
   .game_icon_container{
-    margin-top: 48px;
+    margin-top: 56px;
+    grid-template-columns: 1fr 1fr  1fr;
+    grid-gap: 24px;
+  }
+}
+
+
+@media screen and (min-width: 1000px) {
+  .game_icon_container{
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 12px;
+    grid-gap: 32px;
   }
 }
 
@@ -880,6 +905,38 @@ a {
 }
 
 .game_info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 325px;
+  padding: 16px 10px;
+  text-align: center;
+  background-color: var(--background);
+  border: 3px solid var(--border_trim);
+  border-radius: 6px;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: space-evenly;
+  overflow-x: hidden;
+  overflow-y: auto;
+  
+  h3 {
+    font-size: 1.75rem;
+    font-family: "Rubik Dirt", sans-serif;
+    margin: 0;
+  }
+  
+  p {
+    font-size: 0.9rem;
+    margin: 16px;
+  }
+}
+
+
+.gold_rush_modal {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1741,7 +1798,7 @@ border-radius: var(--fusion_corner_radius);
 
 
 /* ====================== */
-/*  TREASURE HUNT STYLE   */
+/*  GOLD RUSH STYLE   */
 /* ====================== */
 
 
@@ -1785,15 +1842,19 @@ border-radius: var(--fusion_corner_radius);
 
 /* Distance text styling */
 .treasure_hunt_distance_high {
-  color: rgb(251, 15, 15);
+  color: var(--button_hover);
+  filter: brightness(2);
+  font-size: var(--treasure-hunt-tile-font);
 }
 
 .treasure_hunt_distance_medium {
   color: var(--border_trim);
+  font-size: var(--treasure-hunt-tile-font);
 }
 
 .treasure_hunt_distance_low {
   color: rgb(18, 201, 18);
+  font-size: var(--treasure-hunt-tile-font);
 }
 
 /* Game stats styling */
@@ -1802,7 +1863,7 @@ border-radius: var(--fusion_corner_radius);
   margin-bottom: 10px;
   width: 350px;
   display: flex;
-  gap: 15px;
+  gap: 0px;
   justify-content: space-between;
   align-items: center;
 }
@@ -1810,12 +1871,22 @@ border-radius: var(--fusion_corner_radius);
 .treasure_hunt_moves_number {
   font-weight: 800;
   font-size: 1.25rem;
+  width: 60px;
 }
 
 .treasure_hunt_score_number {
   font-size: 1.25rem;
   font-weight: 800;
-  color: rgb(251, 15, 15);
+  color: var(--button_hover);
+  filter: brightness(2);
+  width: 130px;
+}
+
+.treasure_hunt_total_number {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--border_trim);
+  width: 130px;
 }
 
 
@@ -1823,11 +1894,13 @@ border-radius: var(--fusion_corner_radius);
 @media (max-width: 500px) {
   :root {
     --treasure-hunt-tile-size: 15px;
+    --treasure-hunt-tile-font: 0.75rem
   }
 }
 
 @media (min-width: 1400px) {
   :root {
     --treasure-hunt-tile-size: 25px;
+    --treasure-hunt-tile-font: 1.1rem
   }
 }

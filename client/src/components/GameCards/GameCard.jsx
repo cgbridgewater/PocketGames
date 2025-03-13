@@ -16,7 +16,9 @@ function GameCard ({ to, text, image, status }) {
         <Link className="game_card" to={to} >
             <div className="game_card_title">
                 <p>{text}</p>
-                {statusText && <span>{statusText}</span>}
+            </div>
+            <div>
+                {/* {statusText && <span>{statusText}</span>} */}
             </div>
             {/* Game Icon */}
             <img src={`${image}`} alt={`${text} Icon`} />
