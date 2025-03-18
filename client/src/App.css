@@ -262,7 +262,7 @@ a {
 /*      GAME CARDS      */
 /* ==================== */
 
-content {
+.game_menu {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

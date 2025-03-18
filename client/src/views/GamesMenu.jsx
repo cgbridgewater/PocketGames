@@ -62,7 +62,7 @@ function GameMenu() {
         .sort((a, b) => a.title.localeCompare(b.title));
 
     return (
-        <content>
+        <div className="game_menu">
             <div className="game_icon_container">
                 {/* Map through GameData */}
                 {GameData.map((Game) => {
@@ -79,7 +79,7 @@ function GameMenu() {
                     );
                 })}
             </div>
-        </content>
+        </div>
     );
 }
 

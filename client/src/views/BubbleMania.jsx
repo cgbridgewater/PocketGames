@@ -8,6 +8,25 @@ import WinningModal from '../components/Modals/WinningModal';
 // IMPORT IMAGES
 import bubbleSpritePath from '../assets/images/bubble-sprites.png';
 
+// Border colors matching your bubble sprite order with Type 6 updated.
+const borderColors = [
+  "#660000", // Type 0: RED -> dark red
+  "#004d00", // Type 1: GREEN -> dark green
+  "#000033", // Type 2: DARK BLUE -> very dark blue
+  "#666600", // Type 3: YELLOW -> muted dark yellow
+  "#3F007F", // Type 4: PURPLE -> dark purple
+  "#003366", // Type 5: LIGHT BLUE -> darkened light blue
+  "#fafafa"  // Type 6: WHITE -> updated to #fafafa
+];
+
+// Scoring constants
+const BASE_SCORE = 100;
+const BANK_SHOT_MULTIPLIER = 1.25;
+const NON_MATCH_MULTIPLIER = 2;
+const MATCH_MULTIPLIER = 1.0;
+const CLUSTER_BONUS_THRESHOLD = 8;
+const CLUSTER_BONUS_SCORE = 2000;
+
 export default function BubbleBlast({
   isWinningModalOpen,
   setIsWinningModalOpen,
@@ -19,7 +38,7 @@ export default function BubbleBlast({
   const [scoreState, setScoreState] = useState(0);
   const [fpsState, setFpsState] = useState(0);
   const [counter, setCounter] = useState(0);
-  const [thresholdState, setThresholdState] = useState(20);
+  const [thresholdState, setThresholdState] = useState(15);
 
   // We'll store a ref to the newGame() function so Header/Modal can call it.
   const newGameRef = useRef(null);
@@ -35,9 +54,9 @@ export default function BubbleBlast({
     // Game code starts here
     // ------------------------------
 
-    // New row logic constants
-    const MIN_BUBBLE_COUNT = 5; // Force a new row if board is nearly empty.
-    let currentThreshold = 20; // Starting threshold for row addition.
+    const MIN_BUBBLE_COUNT = 1; // Force a new row if board is nearly empty.
+    let currentThreshold = 15; // Starting threshold for row addition.
+    let isAiming = false; // Track if user is holding down for aiming
 
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
@@ -67,7 +86,7 @@ export default function BubbleBlast({
     // Instead of a single global row offset, use an array for each row's offset.
     let rowOffsets = [];
     for (let j = 0; j < level.rows; j++) {
-      rowOffsets[j] = j % 2; // Pattern: row0 = 0, row1 = 1, row2 = 0, etc.
+      rowOffsets[j] = j % 2;
     }
 
     // Define Tile class.
@@ -98,6 +117,7 @@ export default function BubbleBlast({
         dropspeed: 900,
         tiletype: 0,
         visible: false,
+        bankShot: false, // Persistent bank shot flag.
       },
       nextbubble: {
         x: 0,
@@ -106,13 +126,13 @@ export default function BubbleBlast({
       },
     };
 
-    // Neighbor offset table based on rowOffsets.
+    // Neighbor offset table.
     const neighborsoffsets = [
       [[1, 0], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1]],
       [[1, 0], [1, 1], [0, 1], [-1, 0], [0, -1], [1, -1]],
     ];
 
-    const bubblecolors = 7; // Total colors.
+    const bubblecolors = 7;
 
     const gamestates = {
       init: 0,
@@ -123,14 +143,12 @@ export default function BubbleBlast({
     };
     let gamestate = gamestates.init;
 
-    // Internal mutable score.
     let score = 0;
-    let turncounter = 0; // Counts every shot.
+    let turncounter = 0;
 
     let animationstate = 0;
     let animationtime = 0;
 
-    let showcluster = false;
     let cluster = [];
     let floatingclusters = [];
 
@@ -162,7 +180,6 @@ export default function BubbleBlast({
       return loadedimages;
     }
 
-    // Use rowOffsets array in rendering coordinates.
     function getTileCoordinate(column, row) {
       let tilex = level.x + column * level.tilewidth;
       if (rowOffsets[row] === 1) {
@@ -172,7 +189,6 @@ export default function BubbleBlast({
       return { tilex, tiley };
     }
 
-    // For neighbor lookup, use the stored row offset.
     function getNeighbors(tile) {
       const n = neighborsoffsets[rowOffsets[tile.y]];
       const neighbors = [];
@@ -192,8 +208,13 @@ export default function BubbleBlast({
 
       canvas.addEventListener('mousemove', onMouseMove);
       canvas.addEventListener('mousedown', onMouseDown);
+      canvas.addEventListener('mouseup', onMouseUp);
 
-      // Initialize board tiles.
+      // Touch events for mobile.
+      canvas.addEventListener('touchstart', onTouchStart, { passive: false });
+      canvas.addEventListener('touchmove', onTouchMove, { passive: false });
+      canvas.addEventListener('touchend', onTouchEnd, { passive: false });
+
       for (let i = 0; i < level.columns; i++) {
         level.tiles[i] = [];
         for (let j = 0; j < level.rows; j++) {
@@ -203,7 +224,6 @@ export default function BubbleBlast({
       level.width = level.columns * level.tilewidth + level.tilewidth / 2;
       level.height = (level.rows - 1) * level.rowheight + level.tileheight;
 
-      // Initialize player position and next bubble.
       player.x = level.x + level.width / 2 - level.tilewidth / 2;
       player.y = level.y + level.height;
       player.angle = 90;
@@ -211,6 +231,8 @@ export default function BubbleBlast({
       player.nextbubble.x = player.x - 2 * level.tilewidth;
       player.nextbubble.y = player.y;
 
+      // Reset persistent bank shot flag for new game.
+      player.bubble.bankShot = false;
       newGame();
       main(0);
     }
@@ -272,9 +294,11 @@ export default function BubbleBlast({
       player.bubble.y += dt * player.bubble.speed * -Math.sin(degToRad(player.bubble.angle));
 
       if (player.bubble.x <= level.x) {
+        player.bubble.bankShot = true;
         player.bubble.angle = 180 - player.bubble.angle;
         player.bubble.x = level.x;
       } else if (player.bubble.x + level.tilewidth >= level.x + level.width) {
+        player.bubble.bankShot = true;
         player.bubble.angle = 180 - player.bubble.angle;
         player.bubble.x = level.x + level.width - level.tilewidth;
       }
@@ -308,23 +332,47 @@ export default function BubbleBlast({
     }
 
     // --- Cluster removal state ---
-    // In this state, after removal is complete, we increment the shot counter and process the threshold.
     function stateRemoveCluster(dt) {
       if (animationstate === 0) {
         resetRemoved();
         for (let i = 0; i < cluster.length; i++) {
           cluster[i].removed = true;
         }
-        score += cluster.length * 100;
-        setScoreState(score);
+        // Calculate score for the main cluster.
+        // Also, count the number of floating bubbles (those that are disconnected)
+        let mainCount = cluster.length;
         floatingclusters = findFloatingClusters();
+        let floatingCount = 0;
+        if (floatingclusters.length > 0) {
+          for (let i = 0; i < floatingclusters.length; i++) {
+            floatingCount += floatingclusters[i].length;
+          }
+        }
+        let totalPopped = mainCount + floatingCount;
+
+        let clusterScore = 0;
+        for (let i = 0; i < cluster.length; i++) {
+          let multiplier = (cluster[i].type !== player.bubble.tiletype) ? NON_MATCH_MULTIPLIER : MATCH_MULTIPLIER;
+          if (player.bubble.bankShot) multiplier *= BANK_SHOT_MULTIPLIER;
+          clusterScore += BASE_SCORE * multiplier;
+        }
+        // If the total number of bubbles popped (main cluster + floating ones)
+        // is at or over the threshold, add the bonus.
+        if (totalPopped >= CLUSTER_BONUS_THRESHOLD) {
+          clusterScore += CLUSTER_BONUS_SCORE;
+        }
+        score += clusterScore;
+        setScoreState(score);
+        // Process floating clusters: apply drop effect and score for each bubble.
         if (floatingclusters.length > 0) {
           for (let i = 0; i < floatingclusters.length; i++) {
             for (let j = 0; j < floatingclusters[i].length; j++) {
               const tile = floatingclusters[i][j];
               tile.shift = 1;
               tile.velocity = player.bubble.dropspeed;
-              score += 100;
+              let multiplier = (tile.type !== player.bubble.tiletype) ? NON_MATCH_MULTIPLIER : MATCH_MULTIPLIER;
+              if (player.bubble.bankShot) multiplier *= BANK_SHOT_MULTIPLIER;
+              score += BASE_SCORE * multiplier;
               setScoreState(score);
             }
           }
@@ -366,7 +414,6 @@ export default function BubbleBlast({
             }
           }
         }
-        // When removal is complete (i.e. no tiles left in the cluster), count the shot.
         if (!tilesleft) {
           turncounter++;
           setCounter(turncounter);
@@ -378,7 +425,6 @@ export default function BubbleBlast({
     }
 
     // --- Revised snapBubble() function ---
-    // Order: collision detection -> cluster detection -> if cluster exists, then enter removal state; otherwise, increment shot counter and process threshold.
     function snapBubble() {
       const centerx = player.bubble.x + level.tilewidth / 2;
       const centery = player.bubble.y + level.tileheight / 2;
@@ -406,16 +452,15 @@ export default function BubbleBlast({
         player.bubble.visible = false;
         level.tiles[gridpos.x][gridpos.y].type = player.bubble.tiletype;
         if (checkGameOver()) return;
+        // Find cluster matching the shot bubble's color.
         cluster = findCluster(gridpos.x, gridpos.y, true, true, false);
       }
 
-      // If a cluster is detected, enter removal state first.
       if (cluster.length >= 3) {
         setGameState(gamestates.removecluster);
         return;
       }
       
-      // No cluster: increment shot counter and process threshold.
       turncounter++;
       setCounter(turncounter);
       processThreshold();
@@ -426,15 +471,12 @@ export default function BubbleBlast({
       setGameState(gamestates.ready);
     }
 
-    // Helper to process threshold.
     function processThreshold() {
       if (turncounter >= currentThreshold) {
         addBubbles();
         turncounter = 0;
         setCounter(turncounter);
-        if (currentThreshold > 3) {
-          currentThreshold--;
-        }
+        if (currentThreshold > 3) currentThreshold--;
         setThresholdState(currentThreshold);
         if (checkGameOver()) return;
       }
@@ -453,17 +495,14 @@ export default function BubbleBlast({
     }
 
     function addBubbles() {
-      // Shift rows downward.
       for (let i = 0; i < level.columns; i++) {
         for (let j = level.rows - 1; j > 0; j--) {
           level.tiles[i][j].type = level.tiles[i][j - 1].type;
         }
       }
-      // Create a new row with fully random colors.
       for (let i = 0; i < level.columns; i++) {
         level.tiles[i][0].type = randRange(0, bubblecolors - 1);
       }
-      // Update rowOffsets: insert new offset at top opposite to current top.
       const newRowOffset = 1 - rowOffsets[0];
       rowOffsets.unshift(newRowOffset);
       rowOffsets.pop();
@@ -581,7 +620,12 @@ export default function BubbleBlast({
       context.fillRect(level.x - 4, level.y - 4, level.width + 8, level.height + 4 - yoffset);
       renderTiles();
       context.fillStyle = '#991843';
-      context.fillRect(level.x - 4, level.y - 4 + level.height + 4 - yoffset, level.width + 8, 2 * level.tileheight + 3);
+      context.fillRect(
+        level.x - 4,
+        level.y - 4 + level.height + 4 - yoffset,
+        level.width + 8,
+        2 * level.tileheight + 3
+      );
       renderPlayer();
     }
 
@@ -605,6 +649,8 @@ export default function BubbleBlast({
     function renderPlayer() {
       const centerx = player.x + level.tilewidth / 2;
       const centery = player.y + level.tileheight / 2;
+      
+      // Draw shooter base.
       context.fillStyle = '#7a7a7a';
       context.beginPath();
       context.arc(centerx, centery, level.radius + 12, 0, 2 * Math.PI, false);
@@ -612,15 +658,25 @@ export default function BubbleBlast({
       context.lineWidth = 2;
       context.strokeStyle = '#8c8c8c';
       context.stroke();
-      context.lineWidth = 3;
-      context.strokeStyle = '#252525';
-      context.beginPath();
-      context.moveTo(centerx, centery);
-      context.lineTo(
-        centerx + 1.5 * level.tilewidth * Math.cos(degToRad(player.angle)),
-        centery - 1.5 * level.tileheight * Math.sin(degToRad(player.angle))
-      );
-      context.stroke();
+
+      // Aim indicator: draw 3 circles along the aim vector.
+      const aimLengthX = 1.5 * level.tilewidth * Math.cos(degToRad(player.angle));
+      const aimLengthY = -1.5 * level.tileheight * Math.sin(degToRad(player.angle));
+      const aimPos1 = { x: centerx + aimLengthX * 0.45, y: centery + aimLengthY * 0.45 };
+      const aimPos2 = { x: centerx + aimLengthX * 0.7, y: centery + aimLengthY * 0.7 };
+      const aimPos3 = { x: centerx + aimLengthX * 1.025, y: centery + aimLengthY * 1.025 };
+      const aimRadii = [4, 6, 8];
+      for (let i = 0; i < 3; i++) {
+        context.beginPath();
+        const pos = i === 0 ? aimPos1 : i === 1 ? aimPos2 : aimPos3;
+        context.arc(pos.x, pos.y, aimRadii[i], 0, 2 * Math.PI);
+        context.fillStyle = '#D9B14B';
+        context.fill();
+        context.lineWidth = 0.75;
+        context.strokeStyle = 'black';
+        context.stroke();
+      }
+      // End aim indicator.
 
       // Next bubble preview: draw a smaller dark circle behind the preview.
       context.save();
@@ -648,6 +704,8 @@ export default function BubbleBlast({
       return { x: gridx, y: gridy };
     }
 
+    // --- Updated drawBubble() function ---
+    // Draw the bubble image and then a circular 1px border following the bubble's outline.
     function drawBubble(x, y, index) {
       if (index < 0 || index >= bubblecolors) return;
       context.drawImage(
@@ -661,6 +719,11 @@ export default function BubbleBlast({
         level.tilewidth,
         level.tileheight
       );
+      context.beginPath();
+      context.arc(x + level.tilewidth / 2, y + level.tileheight / 2, level.radius - 0.5, 0, 2 * Math.PI);
+      context.lineWidth = 1;
+      context.strokeStyle = borderColors[index];
+      context.stroke();
     }
 
     // --- Game reset and new game functions ---
@@ -669,8 +732,8 @@ export default function BubbleBlast({
       setScoreState(0);
       turncounter = 0;
       setCounter(0);
-      currentThreshold = 20; // reset threshold
-      setThresholdState(20);
+      currentThreshold = 15;
+      setThresholdState(15);
       setGameState(gamestates.ready);
       createLevel();
       nextBubble();
@@ -703,6 +766,8 @@ export default function BubbleBlast({
     }
 
     function nextBubble() {
+      // Reset persistent bank shot flag for new shot.
+      player.bubble.bankShot = false;
       player.tiletype = player.nextbubble.tiletype;
       player.bubble.tiletype = player.nextbubble.tiletype;
       player.bubble.x = player.x;
@@ -748,8 +813,51 @@ export default function BubbleBlast({
       return angle * (Math.PI / 180);
     }
 
+    // --- Modified input handlers for desktop and mobile ---
+
     function onMouseMove(e) {
       const pos = getMousePos(canvas, e);
+      updateAim(pos);
+    }
+
+    function onMouseDown(e) {
+      isAiming = true;
+      const pos = getMousePos(canvas, e);
+      updateAim(pos);
+      // Do not shoot yet—wait for mouseup.
+    }
+
+    function onMouseUp(e) {
+      if (isAiming && gamestate === gamestates.ready) {
+        shootBubble();
+      }
+      isAiming = false;
+    }
+
+    // Touch event handlers
+    function onTouchStart(e) {
+      e.preventDefault();
+      isAiming = true;
+      const pos = getTouchPos(canvas, e);
+      updateAim(pos);
+    }
+
+    function onTouchMove(e) {
+      e.preventDefault();
+      const pos = getTouchPos(canvas, e);
+      updateAim(pos);
+    }
+
+    function onTouchEnd(e) {
+      e.preventDefault();
+      if (isAiming && gamestate === gamestates.ready) {
+        shootBubble();
+      }
+      isAiming = false;
+    }
+
+    function updateAim(pos) {
+      // This logic is the same as before to update player's angle.
       let mouseangle = radToDeg(
         Math.atan2(
           player.y + level.tileheight / 2 - pos.y,
@@ -769,15 +877,6 @@ export default function BubbleBlast({
       player.angle = mouseangle;
     }
 
-    function onMouseDown() {
-      if (gamestate === gamestates.ready) {
-        shootBubble();
-      } else if (gamestate === gamestates.gameover) {
-        newGame();
-        setIsWinningModalOpen(false);
-      }
-    }
-
     function getMousePos(canvas, e) {
       const rect = canvas.getBoundingClientRect();
       return {
@@ -786,11 +885,29 @@ export default function BubbleBlast({
       };
     }
 
+    function getTouchPos(canvas, e) {
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0] || e.changedTouches[0];
+      return {
+        x: Math.round(((touch.clientX - rect.left) / (rect.right - rect.left)) * canvas.width),
+        y: Math.round(((touch.clientY - rect.top) / (rect.bottom - rect.top)) * canvas.height),
+      };
+    }
+
+    function onMouseLeave() {
+      isAiming = false;
+    }
+
     init();
 
     return () => {
       canvas.removeEventListener('mousemove', onMouseMove);
       canvas.removeEventListener('mousedown', onMouseDown);
+      canvas.removeEventListener('mouseup', onMouseUp);
+      canvas.removeEventListener('touchstart', onTouchStart);
+      canvas.removeEventListener('touchmove', onTouchMove);
+      canvas.removeEventListener('touchend', onTouchEnd);
+      canvas.removeEventListener('mouseleave', onMouseLeave);
     };
   }, [setIsWinningModalOpen]);
 
@@ -801,14 +918,18 @@ export default function BubbleBlast({
         onclick={resetGame}
         turn_title="Score"
         turns={scoreState}
-        howTo="This will contain gameplay text later"
+        howTo={`Take aim by clicking on the board to direct the aiming circles. Release to fire the bubble along that path.\n
+          Score points by popping 3 or more bubbles that match the shot bubble. \n
+          Each bubble is worth ${BASE_SCORE} points.\n
+          The game ends when a bubble crosses the bottom edge of the board.\n
+          -- BONUS POINTS --
+          Extra bubbles that do not match the shot bubble color are worth ${NON_MATCH_MULTIPLIER}x.\n
+          A bonus of ${CLUSTER_BONUS_SCORE} is awarded when clusters of ${CLUSTER_BONUS_THRESHOLD} or more are popped.\n
+          Bank shots—bouncing off a wall—add an extra ${(BANK_SHOT_MULTIPLIER * 100) - 100}% to popped bubbles.`}
         isTimerPaused={isTimerPaused}
         setIsTimerPaused={setIsTimerPaused}
       />
-      {/* Use For Diagnostics ONLY */}
-      {/* <p style={{ width: '345px', textAlign: 'end' }}>FPS: {fpsState}</p>
-      <p style={{ width: '345px', textAlign: 'end' }}>Counter: {counter}</p>
-      <p style={{ width: '345px', textAlign: 'end' }}>Threshold: {thresholdState}</p> */}
+      {/* Diagnostic displays have been commented out. */}
       <canvas
         ref={canvasRef}
         width="343"
