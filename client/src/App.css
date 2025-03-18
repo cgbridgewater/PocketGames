@@ -334,6 +334,7 @@ a {
   }
 }
 
+
 @media screen and (min-width: 500px) {
   .game_card .game_card_title {
     p {
@@ -373,6 +374,107 @@ a {
     grid-gap: 32px;
   }
 }
+
+
+/* ==================== */
+/*      GAME CARDS      */
+/* ==================== */
+
+.game_card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  background-color: var(--background);
+  border: 2px solid var(--border_trim);
+  border-radius: 12px;
+  
+  &:hover {
+    border-color: white;
+  }
+  
+  &:focus {
+    outline-offset: 2px;
+    outline: 2px solid var(--white);
+    border-radius: 12px;
+  }
+  
+  .game_card_title {
+    background-color: var(--red);
+    padding: 8px 0;
+    
+    p {
+      font-size: 0.8rem;
+      color: var(--white);
+      font-weight: 700;
+      letter-spacing: 0.03rem;
+    }
+    
+    span {
+      font-size: 0.65rem;
+      color: var(--border_trim);
+      font-weight: 500;
+    }
+  }
+  
+  img {
+    width: 100%;
+    margin: 0 auto;
+    aspect-ratio: 1/.8;
+    border-radius: 5px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+  }
+}
+
+/* ==================== */
+/*    FLOATING BANNER   */
+/* ==================== */
+
+.game_card .banner {
+  position: absolute;
+  top: calc(50% + 12px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 4px;
+  width: 100%;
+  border-top: 3px solid var(--red);
+  border-bottom: 3px solid var(--red);
+  box-shadow: 0 0px 16px 8px var(--red);
+  z-index: 100;
+  background-color: var(--background);
+  
+  span {
+    vertical-align: middle;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.66rem;
+    color: var(--border_trim);
+  }
+}
+
+
+/* Responsive adjustments */
+@media screen and (min-width: 500px) {
+  .game_card .banner {    
+    span {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+@media screen and (min-width: 650px) {
+  .game_card .banner {
+    span {
+      font-size: 1rem;
+    }
+  }
+}
+
+/* ==================== */
+/* END FLOATING BANNER  */
+/* ==================== */
 
 /* ==================== */
 /*     MEMORY CARDS     */
