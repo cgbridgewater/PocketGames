@@ -5,8 +5,8 @@ function GameCard({ to, text, image, status }) {
     // List of available statuses for game production state
     const statusMap = {
         1: "",
-        2: "(In Testing)",
-        3: "(coming soon)"
+        2: "(In Production)",
+        3: "(Coming Soon)"
     };
 
     // Use statusMap options; default to empty string if not defined
@@ -15,9 +15,9 @@ function GameCard({ to, text, image, status }) {
     return (
         <Link className="game_card" to={to}>
             {/* Title */}
-            <div className="game_card_title">
+            {/* <div className="game_card_title">
                 <p>{text}</p>
-            </div>
+            </div> */}
             {/* Dev Banner */}
             {statusText && (
                 <div className="banner">

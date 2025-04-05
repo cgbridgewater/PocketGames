@@ -3,6 +3,7 @@ import GameCard from "../components/GameCards/GameCard";
 
 // Import all images
 import MemoryIcon from "../assets/images/MemoryIcon2.png";
+import BreakOutIcon from "../assets/images/BreakOutIcon.png";
 import SimonIcon from "../assets/images/SimonIcon2.jpg";
 import WordleIcon from "../assets/images/WordleIcon2.png";
 import BubbleManiaIcon from "../assets/images/BubbleManiaIcon.png";
@@ -12,7 +13,9 @@ import StackitIcon from "../assets/images/StackitIcon2.png";
 import TetrisIcon from "../assets/images/TetrisIcon.webp";
 import ColorFusionIcon from "../assets/images/ColorFusionIcon2.png";
 import SudokuIcon from "../assets/images/SudokuIcon2.png";
-import Futoshiki from "../assets/images/FutoshikiIcon2.png";
+import Stacker3dIcon from "../assets/images/Stacker3dIcon.png";
+import Futoshiki from "../assets/images/FutoshikiIcon3.png";
+// import Futoshiki from "../assets/images/FutoshikiIcon2.png";
 import MiniGolfIcon from "../assets/images/MiniGolfIcon2.jpg";
 import GoldRush from "../assets/images/GoldRushIcon.webp";
 import PlaceHolder from "../assets/images/PlaceHolder.jpg";
@@ -22,6 +25,7 @@ import GamesData from "../assets/Json/GameList.json";
 
 // Map image references in JSON to the actual image imports  // MUST MATCH JSON NAME
 const imageMap = {
+    BreakOutIcon,
     BubbleManiaIcon,
     BubbleBlitzIcon,
     MemoryIcon,
@@ -32,6 +36,7 @@ const imageMap = {
     TetrisIcon,
     ColorFusionIcon,
     SudokuIcon,
+    Stacker3dIcon,
     Futoshiki,
     GoldRush,
     MiniGolfIcon,
