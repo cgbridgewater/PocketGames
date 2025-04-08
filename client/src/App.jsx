@@ -28,6 +28,7 @@ import GoldRush from "./views/GoldRush";
 // Import custom hooks
 import useLoadMetaData from './customHooks/useLoadMetaData';
 import useUpdateMetaData from './customHooks/useUpdateMetaData';
+import MatchThree from "./views/MatchThree";
 
 function App() {
   const [isWinningModalOpen, setIsWinningModalOpen] = useState(false);
@@ -189,6 +190,15 @@ function AppContent({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, 
         {/* STACKER 3D GAME */}
         <Route path='/games/futoshiki' element={
           <FutoshikiGame
+            isWinningModalOpen={isWinningModalOpen} 
+            setIsWinningModalOpen={setIsWinningModalOpen}
+            isTimerPaused={isTimerPaused}
+            setIsTimerPaused={setIsTimerPaused}
+          />}/>
+
+        {/* MATCH THREE GAME */}
+        <Route path='/games/matchthree' element={
+          <MatchThree
             isWinningModalOpen={isWinningModalOpen} 
             setIsWinningModalOpen={setIsWinningModalOpen}
             isTimerPaused={isTimerPaused}

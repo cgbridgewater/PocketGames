@@ -285,6 +285,25 @@
         }
     },
     {
+        "id": "17",
+        "status": "2",
+        "title": "Match Three",
+        "url": "matchthree",
+        "img_ref": "MatchThreeIcon",
+        "external_link": false,
+        "isActive": true,
+        "requirements": [],
+        "meta": {
+            "title": "Match Three - Pocket Games",
+            "description": "Coming Soon.",
+            "keywords": "Match Three, Coming Soon!",
+            "ogTitle": "Match Three - Pocket Games",
+            "ogDescription": "Coming Soon.",
+            "ogImage": "",
+            "ogUrl": ""
+        }
+    },
+    {
         "id": "16",
         "status": "2",
         "title": "Bubble Blitz",

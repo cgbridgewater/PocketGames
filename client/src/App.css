@@ -1922,10 +1922,8 @@ border-radius: var(--fusion_corner_radius);
 
 
 /* ====================== */
-/*  GOLD RUSH STYLE   */
+/*  Treasure Hunt STYLE   */
 /* ====================== */
-
-
 
 
 /* Board container styling */
@@ -2027,4 +2025,69 @@ border-radius: var(--fusion_corner_radius);
     --treasure-hunt-tile-size: 25px;
     --treasure-hunt-tile-font: 1.1rem
   }
+}
+
+
+/*   ======================   */
+/*  END Treasure Hunt STYLE   */
+/*   ======================   */
+
+
+
+/* ====================== */
+/*    MATCH THREE STYLE   */
+/* ====================== */
+/* src/components/MatchThreeGame/Board.css */
+
+.match3_board {
+  /* overflow: hidden; */
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+  padding: 6px;
+  max-width: 350px;
+  margin: 0 auto;
+  border: 2px solid var(--border_trim);
+  background-color: rgba(84, 25, 144,.6);
+  cursor: grab;
+}
+
+.match3_gem {
+  width: 35px;
+  aspect-ratio: 1 / 1;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  /* cursor: grab; */
+  filter:drop-shadow(3px 3px 3px rgba(0,0,0,.8));
+  border: 1px solid transparent;
+
+  &:active {
+    border: 1px solid var(--white);
+    cursor: grabbing;
+  }
+}
+
+/* Small screen responsiveness */
+@media (min-width: 500px) {
+  .match3_board {
+    max-width: 500px;
+    gap: 8px;
+    padding: 8px;
+  }
+  .match3_gem {
+    width: 45px;
+  }
+}
+
+.match3_nomoves_popup {
+  background-color: var(--background);
+  border: 4px groove var(--border_trim);
+  padding: 1rem;
+  text-align: center;
+  font-weight: bold;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
 }

@@ -32,7 +32,7 @@ const GameInfo = ({ howTo, isTimerPaused, setIsTimerPaused }) => {
           </div>
         </div>
       ) : null}
-      <button onClick={() => setIsInfoOpen(true)} title="Info">Info</button>
+      <button onClick={() => setIsInfoOpen(true)}>Info</button>
     </>
   );
 };
