@@ -289,7 +289,7 @@
         "status": "2",
         "title": "Match Three",
         "url": "matchthree",
-        "img_ref": "MatchThreeIcon",
+        "img_ref": "GemQuestIcon",
         "external_link": false,
         "isActive": true,
         "requirements": [],
