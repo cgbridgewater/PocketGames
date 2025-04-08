@@ -52,6 +52,7 @@ const createRandomGem = () => {
 
 const findMatches = (brd) => {
   const matches = [];
+  // Horizontal 3-gem matches
   for (let row = 0; row < numRows; row++) {
     for (let col = 0; col < numCols - 2; col++) {
       const gem1 = brd[row][col];
@@ -62,6 +63,7 @@ const findMatches = (brd) => {
       }
     }
   }
+  // Vertical 3-gem matches
   for (let col = 0; col < numCols; col++) {
     for (let row = 0; row < numRows - 2; row++) {
       const gem1 = brd[row][col];
@@ -72,6 +74,7 @@ const findMatches = (brd) => {
       }
     }
   }
+  // 2x2 square matches
   for (let row = 0; row < numRows - 1; row++) {
     for (let col = 0; col < numCols - 1; col++) {
       const gem1 = brd[row][col];
@@ -88,6 +91,8 @@ const findMatches = (brd) => {
       }
     }
   }
+  // Flatten the matches array (each match group is an array of [row, col] pairs)
+  // Note: This simple flattening may count gems more than once if overlaps occur.
   return matches.flat();
 };
 
@@ -162,27 +167,32 @@ const animateGravitySmooth = (oldBoard, finalBoard, setBoard, callback) => {
   requestAnimationFrame(newBoardAnimation);
 };
 
-const processMatches = (currentBoard, setBoard) => {
+// Modified processMatches function to calculate score based on 150 points per gem.
+const processMatches = (currentBoard, setBoard, addScore) => {
   const matches = findMatches(currentBoard);
   if (matches.length > 0) {
+    // Calculate score: 150 points per gem involved in the match(s).
+    const pointsEarned = 150 * matches.length;
+    addScore(pointsEarned);
+
     const boardAfterRemoval = currentBoard.map(row => [...row]);
     matches.forEach(([row, col]) => {
       boardAfterRemoval[row][col] = null;
     });
     const finalBoard = dropGemsFully(boardAfterRemoval);
     animateGravitySmooth(boardAfterRemoval, finalBoard, setBoard, (newBoard) => {
-      processMatches(newBoard, setBoard);
+      processMatches(newBoard, setBoard, addScore);
     });
   }
 };
 
-const Board = ({ onFirstSwap }) => {
+const Board = ({ onFirstSwap, addScore }) => {
   const dragThreshold = 20; // pixels
   const [board, setBoard] = useState(generateBoard);
   const draggingGem = useRef(null);
   const startTouch = useRef(null);
   const [swapping, setSwapping] = useState(null);
-  
+
   // This ref ensures we trigger the first swap callback only once.
   const firstSwapTriggered = useRef(false);
 
@@ -194,7 +204,7 @@ const Board = ({ onFirstSwap }) => {
 
   const handleTouchMove = (e) => {
     if (!startTouch.current || !draggingGem.current) return;
-    
+
     // Trigger the onFirstSwap callback once when the user makes the first gem swap.
     if (!firstSwapTriggered.current && onFirstSwap) {
       onFirstSwap();
@@ -208,7 +218,7 @@ const Board = ({ onFirstSwap }) => {
     const absDy = Math.abs(dy);
     const { row: r1, col: c1 } = draggingGem.current;
     let r2 = r1, c2 = c1;
-    
+
     if (absDx > absDy && absDx > dragThreshold) {
       c2 = dx > 0 ? c1 + 1 : c1 - 1;
     } else if (absDy > dragThreshold) {
@@ -238,7 +248,7 @@ const Board = ({ onFirstSwap }) => {
         if (findMatches(testBoard).length > 0) {
           setBoard(testBoard);
           setSwapping(null);
-          processMatches(testBoard, setBoard);
+          processMatches(testBoard, setBoard, addScore);
         } else {
           const reversedBoard = board.map(row => row.map(g => ({ ...g, swapOffset: { x: 0, y: 0 } })));
           setBoard(reversedBoard);

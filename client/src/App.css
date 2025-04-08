@@ -2091,3 +2091,15 @@ border-radius: var(--fusion_corner_radius);
   transform: translate(-50%, -50%);
   z-index: 10;
 }
+
+.game_timer {
+  margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 1.25rem;
+
+  span {
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: var(--border_trim);
+  }
+}

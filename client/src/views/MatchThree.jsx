@@ -9,6 +9,7 @@ import WinningModal from "../components/Modals/WinningModal";
 const MatchThree = ({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, setIsTimerPaused }) => {
   const [boardSize, setBoardSize] = useState('small');
   const [score, setScore] = useState(0);
+  const StartTime = 60
 
   // Keys to force remounting (reset) of the Timer and Board components
   const [timerKey, setTimerKey] = useState(0);
@@ -26,7 +27,7 @@ const MatchThree = ({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Called when timer reaches 0
+  // Called when the timer reaches 0.
   const handleTimeUp = () => {
     setIsTimerPaused(true);
     setIsWinningModalOpen(true);
@@ -44,36 +45,41 @@ const MatchThree = ({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, 
     setGameStarted(false);
   };
 
+  // addScore function to add points to the score.
+  const addScore = (points) => {
+    setScore(prev => prev + points);
+  };
+
   return (
     <main>
       <Header
-        title="Match 3"
+        title="Gem Quest"
         onclick={restartGame}
-        turn_title="Turns"
-        turns=""
+        turn_title="Score"
+        turns={score}
         howTo={`
-          Match 3, a fast-paced match three puzzle game designed for quick, engaging sessions lasting 60 seconds.
-          The core objective is to score as many points as possible by strategically swapping gems to create matches,
+          Gem Quest, a fast-paced match three puzzle game designed for quick, engaging sessions lasting ${StartTime} seconds.
+          \nThe core objective is to collect as many points as possible by strategically swapping gems to create matches,
           triggering cascades, and taking advantage of power-ups and bonuses.
         `}
         isTimerPaused={isTimerPaused}
         setIsTimerPaused={setIsTimerPaused}
       />
-
-      {/* Pass gameStarted as the startTimer prop to control when Timer begins */}
+      
+      {/* Timer starts only after the first gem swap */}
       <Timer
         key={timerKey}
-        initialTime={60}
+        initialTime={StartTime}
         isPaused={isTimerPaused}
         onTimeUp={handleTimeUp}
         startTimer={gameStarted}
       />
-
-      {/* Pass boardKey (to force a new board) and the onFirstSwap callback */}
+      {/* Pass boardKey to force a new board and addScore so that Board can update the score */}
       <GameBoard
         boardSize={boardSize}
         boardKey={boardKey}
         onFirstSwap={() => setGameStarted(true)}
+        addScore={addScore}
       />
 
       {isWinningModalOpen && (

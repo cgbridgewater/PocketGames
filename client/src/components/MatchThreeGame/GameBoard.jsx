@@ -3,11 +3,12 @@
 import React from 'react';
 import Board from './Board';
 
-const GameBoard = ({ boardSize, boardKey, onFirstSwap }) => {
+const GameBoard = ({ boardSize, boardKey, onFirstSwap, addScore }) => {
   return (
     <div className={`game-board ${boardSize}`}>
-      {/* Passing boardKey as React key forces Board to remount when it changes */}
-      <Board key={boardKey} onFirstSwap={onFirstSwap} />
+      {/* The boardKey forces Board to remount when a new game starts.
+          Pass onFirstSwap and addScore so Board can trigger timer start and update score. */}
+      <Board key={boardKey} onFirstSwap={onFirstSwap} addScore={addScore} />
     </div>
   );
 };
