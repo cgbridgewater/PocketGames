@@ -67,6 +67,7 @@ main {
   padding-top: 45px;
   margin: 0px auto;
   background-color: var(--background);
+  overflow: hidden;
   
   h2 {
     font-family: "Rubik Dirt", sans-serif;
@@ -995,7 +996,7 @@ a {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, .25);
-  /* backdrop-filter: blur(5px);               undo this */   
+  backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1049,6 +1050,12 @@ a {
   
   h3 {
     font-size: 1.75rem;
+    font-family: "Rubik Dirt", sans-serif;
+    margin: 0;
+  }
+
+  h4 {
+    font-size: 1.25rem;
     font-family: "Rubik Dirt", sans-serif;
     margin: 0;
   }
@@ -2054,6 +2061,7 @@ border-radius: var(--fusion_corner_radius);
 }
 
 .match3_gem {
+  position: relative;
   width: 33px;
   aspect-ratio: 1 / 1;
   border-radius: 4px;
@@ -2070,28 +2078,15 @@ border-radius: var(--fusion_corner_radius);
 
 
 
-.special::after {
-  /* content: "";
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(45deg, red, green,
-    rgb(45, 45, 131), yellow, pink, skyblue,
-    purple, red, green, blue, tomato, yellow);
-  z-index: -1;
-  top: 0px;
-  left: 0px;
-  border-radius: 50%;
-  animation: animate 50s linear infinite;
-  background-size: 400%;
-  filter: blur(5px); */
-}
-/* .box::after{
-    filter: blur(20px);
-} */
+
 
 
 /* DISCO GEM */
+.disco {
+  height: 115%;/* size correction */
+  top: -12%;/* position correction */
+}
+
 .disco:after {
   content: "";
   position: absolute;
@@ -2112,20 +2107,16 @@ border-radius: var(--fusion_corner_radius);
   position: absolute;
   height: 80%;
   width: 80%;
-  background: linear-gradient(45deg, lightblue 50%, white 50%);
+  background: linear-gradient( darkblue 50%, blue 50%);
   z-index: -1;
   top: 7%;
-  left: 12%;
+  left: 10%;
   border-radius: 50%;
   animation: spinning 0.1s reverse linear infinite;
   filter: blur(5px); 
 }
 
 /* STAR GEM */
-.star {
-  animation: spinning 7s linear infinite;
-}
-
 .star::after {
   content: "";
   position: absolute;
@@ -2251,5 +2242,92 @@ border-radius: var(--fusion_corner_radius);
     font-weight: 900;
     font-size: 1.4rem;
     color: var(--border_trim);
+  }
+}
+
+
+/* GEM EXPLOSION STYLES */
+
+.explosion-container {
+  position: absolute;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+  z-index: 1000;
+}
+
+.explosion-value {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: "Rubik Dirt", sans-serif;
+  animation: value-fade 1.5s linear forwards;
+  z-index: 5;
+}
+
+.explosion-particle {
+  will-change: transform, opacity;
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 25%;
+  top: 10px;
+  left: 30px;
+  transform: translate(-50%, -50%);
+  animation: particle-explode 1s linear forwards;
+}
+
+/* Particle explosion keyframes with gravity effect.
+   At 50% the particles are partially through their explosion,
+   and by 100% an extra downward offset (40px here) has been added to simulate gravity.
+*/
+@keyframes particle-explode {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(2);
+  }
+  30% {
+    opacity: 0.9;
+    transform: translate(calc(-50% + var(--offsetX) * 0.5), calc(-50% + var(--offsetY) * 0.5 + 30px)) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--offsetX)), calc(-50% + var(--offsetY) + 100px)) scale(0.25);
+  }
+}
+
+@keyframes value-fade {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -80%) scale(1.2);
+  }
+}
+
+.match3_gem.hint {
+  border: 1px solid gold;
+  animation: hint-jump 1s ease-in-out infinite;
+  box-shadow: 0 0 10px gold;
+}
+
+@keyframes hint-jump {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.15) translateY(-2px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
   }
 }
