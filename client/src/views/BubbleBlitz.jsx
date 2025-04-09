@@ -998,7 +998,9 @@ export default function BubbleBlast({
       />
       {/* Clock display */}
       <div style={{ textAlign: 'center', fontSize: '24px', margin: '10px' }}>
-        {formatTime(timeLeft)} -- threshold: {thresholdState} moves -- moves: {counter}
+        {formatTime(timeLeft)}
+        {/* Below is for diagnostics only */}
+        {/* {formatTime(timeLeft)} -- threshold: {thresholdState} moves -- moves: {counter} */}
       </div>
       <canvas
         ref={canvasRef}
