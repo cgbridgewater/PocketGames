@@ -16,6 +16,7 @@ import SudokuIcon from "../assets/images/SudokuIcon2.png";
 import Stacker3dIcon from "../assets/images/Stacker3dIcon.png";
 import Futoshiki from "../assets/images/FutoshikiIcon3.png";
 import GemQuestIcon from "../assets/images/GemQuestIcon.png";
+import GemQuestIcon2 from "../assets/images/GemQuestIcon2.png";
 // import Futoshiki from "../assets/images/FutoshikiIcon2.png";
 import MiniGolfIcon from "../assets/images/MiniGolfIcon2.jpg";
 import GoldRush from "../assets/images/GoldRushIcon.webp";
@@ -41,6 +42,7 @@ const imageMap = {
     Futoshiki,
     GoldRush,
     GemQuestIcon,
+    GemQuestIcon2,
     MiniGolfIcon,
     PlaceHolder,
 };
