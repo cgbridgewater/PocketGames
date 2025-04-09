@@ -31,6 +31,7 @@
   --red: #991843;
   --black: #000;
   --background: #242424;
+  --purple_background: rgba(84, 25, 144,.7);
   --fusion_corner_radius: 4px;
   --treasure-hunt-tile-size: 20px;
   --treasure-hunt-tile-font: 0.9rem
@@ -265,11 +266,10 @@ a {
 .game_menu {
     display: flex;
     flex-direction: column;
-    /* justify-content: flex-start; */
     align-items: center;
     width: 95%;
     max-width: 1100px;
-    min-width: 360px;
+    min-width: 370px;
     margin: 0px auto;
     background-color: var(--background);
 }
@@ -277,8 +277,8 @@ a {
 .game_icon_container{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 16px 8px;
-  padding: 86px 36px;
+  grid-gap: 16px ;
+  padding: 86px 16px;
   
   * {
     transition: all 300ms ease;
@@ -995,7 +995,7 @@ a {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, .25);
-  backdrop-filter: blur(5px);
+  /* backdrop-filter: blur(5px);               undo this */   
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2042,22 +2042,22 @@ border-radius: var(--fusion_corner_radius);
 .match3_board {
   /* overflow: hidden; */
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 6px;
-  padding: 6px;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 4px;
+  padding: 4px;
   max-width: 350px;
   margin: 0 auto;
   border: 2px solid var(--border_trim);
-  background-color: rgba(84, 25, 144,.6);
+  border-radius: 12px;
+  background-color: var(--purple_background);
   cursor: grab;
 }
 
 .match3_gem {
-  width: 35px;
+  width: 33px;
   aspect-ratio: 1 / 1;
   border-radius: 4px;
   transition: all 0.2s ease;
-  /* cursor: grab; */
   filter:drop-shadow(3px 3px 3px rgba(0,0,0,.8));
   border: 1px solid transparent;
 
@@ -2066,6 +2066,156 @@ border-radius: var(--fusion_corner_radius);
     cursor: grabbing;
   }
 }
+
+
+
+
+.special::after {
+  /* content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(45deg, red, green,
+    rgb(45, 45, 131), yellow, pink, skyblue,
+    purple, red, green, blue, tomato, yellow);
+  z-index: -1;
+  top: 0px;
+  left: 0px;
+  border-radius: 50%;
+  animation: animate 50s linear infinite;
+  background-size: 400%;
+  filter: blur(5px); */
+}
+/* .box::after{
+    filter: blur(20px);
+} */
+
+
+/* DISCO GEM */
+.disco:after {
+  content: "";
+  position: absolute;
+  height: 72%;
+  width: 78%;
+  background: linear-gradient(45deg, lightblue 50%, white 50%);
+  z-index: -1;
+  top: 12%;
+  left: 15%;
+  border-radius: 50%;
+  animation: spinning .5s linear infinite;
+  filter: blur(5px); 
+}
+
+/* GLOWING GEM */
+.glow::after {
+  content: "";
+  position: absolute;
+  height: 80%;
+  width: 80%;
+  background: linear-gradient(45deg, lightblue 50%, white 50%);
+  z-index: -1;
+  top: 7%;
+  left: 12%;
+  border-radius: 50%;
+  animation: spinning 0.1s reverse linear infinite;
+  filter: blur(5px); 
+}
+
+/* STAR GEM */
+.star {
+  animation: spinning 7s linear infinite;
+}
+
+.star::after {
+  content: "";
+  position: absolute;
+  height: 80%;
+  width: 80%;
+  background: linear-gradient(45deg, lightblue 50%, white 50%);
+  z-index: -1;
+  top: 8%;
+  left: 8%;
+  border-radius: 50%;
+  animation: spinning 0.8s reverse linear infinite;
+  filter: blur(5px); 
+}
+
+/* FLOWER GEM */
+.flower::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  animation: pulse 1s linear infinite;
+  filter: blur(5px); 
+}
+
+
+/* BLACK GEM */
+.black:after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  top: 0px;
+  left: 0px;
+  border-radius: 50%;
+  animation: strobe 2s linear infinite;
+  filter: blur(5px);
+}
+
+/* ANIMATIONS FOR SPECIAL GEMS */
+@keyframes spinning {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    background-color: var(--purple_background);
+  }
+  30% {
+    background-color: white;
+  }
+}
+
+@keyframes strobe {
+  0%, 100% {
+    background-color: red;
+  }
+  50% {
+    background-color: white;
+  }
+}
+
+@keyframes animate {
+
+    0%{
+        background-position: 0 0;
+    }
+    50%{
+        background-position: 400% 0;
+    }
+    100%{
+        background-position: 0 0;
+    }
+    
+}
+
+
+
+
+
+
 
 /* Small screen responsiveness */
 @media (min-width: 500px) {
