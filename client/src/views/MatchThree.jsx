@@ -9,7 +9,7 @@ import WinningModal from "../components/Modals/WinningModal";
 const MatchThree = ({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, setIsTimerPaused }) => {
   const [boardSize, setBoardSize] = useState('small');
   const [score, setScore] = useState(0);
-  const StartTime = 60
+  const StartTime = 120
 
   // Keys to force remounting (reset) of the Timer and Board components
   const [timerKey, setTimerKey] = useState(0);
@@ -17,6 +17,10 @@ const MatchThree = ({ isWinningModalOpen, setIsWinningModalOpen, isTimerPaused, 
 
   // When false, the timer does not run; it will start on the first gem swap.
   const [gameStarted, setGameStarted] = useState(false);
+
+  useEffect(() => {
+    setIsWinningModalOpen(false);
+  },[]);
 
   useEffect(() => {
     const handleResize = () => {
