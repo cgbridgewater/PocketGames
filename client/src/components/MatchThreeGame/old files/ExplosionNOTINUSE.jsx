@@ -1,7 +1,7 @@
 // src/components/Explosion.jsx
 import React, { useEffect } from 'react';
 
-const NUM_PARTICLES = 40;
+const NUM_PARTICLES = 60;
 
 const Explosion = ({ id, x, y, value, primaryColor, onComplete }) => {
   // Create particles with randomized directions and distances.
@@ -14,7 +14,7 @@ const Explosion = ({ id, x, y, value, primaryColor, onComplete }) => {
     const offsetX = Math.cos(radians) * distance * 3;
     const offsetY = Math.sin(radians) * distance * 3;
     // Randomly choose a particle color from a subset of gem colors.
-    const availableColors = ['blue', 'green', 'yellow', 'red', 'orange', 'purple'];
+    const availableColors = ['#51adf7', '#081794', '#b7fd35', '#386a12', '#fcf438', '#7d3704' , '#e93703', '#e63806', '#f7d45a', '#ea620d', '#a524cc', '#e935e1', '#a899c4', '#6b5d7a'];
     const particleColor = availableColors[Math.floor(Math.random() * availableColors.length)];
     return { id: `${id}-${i}`, offsetX, offsetY, color: particleColor };
   });

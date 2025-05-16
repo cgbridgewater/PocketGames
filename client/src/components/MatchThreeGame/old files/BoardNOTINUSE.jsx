@@ -53,7 +53,6 @@ const createRandomGem = () => {
 };
 
 // --- Matching Helpers ---
-
 const arraysEqual = (a, b) =>
   a.length === b.length && a.every((val, index) => val === b[index]);
 
@@ -108,10 +107,7 @@ const findMatches = (brd) => {
     let col = 0;
     while (col < numCols) {
       const currentGem = brd[row][col];
-      if (!currentGem) {
-        col++;
-        continue;
-      }
+      if (!currentGem) { col++; continue; }
       const color = currentGem.color;
       const start = col;
       while (col < numCols && brd[row][col] && brd[row][col].color === color) {
@@ -132,10 +128,7 @@ const findMatches = (brd) => {
     let row = 0;
     while (row < numRows) {
       const currentGem = brd[row][col];
-      if (!currentGem) {
-        row++;
-        continue;
-      }
+      if (!currentGem) { row++; continue; }
       const color = currentGem.color;
       const start = row;
       while (row < numRows && brd[row][col] && brd[row][col].color === color) {
@@ -244,7 +237,7 @@ const findMatches = (brd) => {
         matches.push([
           [row, col],
           [row + 1, col],
-          [row + 1, col - 1],
+          [row + 1][col - 1],
           [row + 1, col - 2],
           [row + 2, col],
         ]);
@@ -496,10 +489,7 @@ const findHintGem = (brd) => {
         const newCol = col + dc;
         if (newRow < numRows && newCol < numCols) {
           const testBoard = brd.map(r => r.map(gem => (gem ? { ...gem } : null)));
-          [testBoard[row][col], testBoard[newRow][newCol]] = [
-            testBoard[newRow][newCol],
-            testBoard[row][col]
-          ];
+          [testBoard[row][col], testBoard[newRow][newCol]] = [testBoard[newRow][newCol], testBoard[row][col]];
           if (findMatches(testBoard).length > 0) {
             return { row, col };
           }
@@ -511,7 +501,7 @@ const findHintGem = (brd) => {
 };
 
 // --- New Disco Swap Logic ---
-// Now we pass the current board as an argument.
+// Pass the current board as an argument.
 const handleDiscoSwap = (
   currentBoard,
   gem1,
@@ -546,7 +536,6 @@ const handleDiscoSwap = (
     addScore(additionalScore);
     const finalBoard = dropGemsFully(newBoard);
     animateGravitySmooth(newBoard, finalBoard, setBoard, (finalBoard) => {
-      // After disco effect, check for further matches.
       processMatches(finalBoard, setBoard, addScore);
     });
   } else {
@@ -575,13 +564,66 @@ const handleDiscoSwap = (
     addScore(additionalScore);
     const finalBoard = dropGemsFully(newBoard);
     animateGravitySmooth(newBoard, finalBoard, setBoard, (finalBoard) => {
-      // After disco effect, re-check matches.
       processMatches(finalBoard, setBoard, addScore);
     });
   }
 };
 
-// --- processMatches ---
+// --- Final Hurrah: Explode ALL Special Gems Recursively ---
+// This function clears ALL special gems and their chain reactions.
+// For a disco gem, choose a random color from gemColors and remove all gems of that color.
+const explodeSpecialsAndFinish = (currentBoard, setBoard, addScore, spawnExplosion, onFinalHurrahComplete) => {
+  // Create a fresh copy of the board.
+  const newBoard = currentBoard.map(row => [...row]);
+  let additionalScore = 0;
+  let specialsFound = false;
+  for (let i = 0; i < numRows; i++) {
+    for (let j = 0; j < numCols; j++) {
+      const g = newBoard[i][j];
+      if (g && g.special) {
+        specialsFound = true;
+        if (g.special === "disco") {
+          // For Disco, pick a random color and remove all gems with that color.
+          const randomColor = gemColors[Math.floor(Math.random() * gemColors.length)];
+          spawnExplosion(i, j, "+10000", g.color);
+          newBoard[i][j] = null;
+          additionalScore += 10000;
+          for (let a = 0; a < numRows; a++) {
+            for (let b = 0; b < numCols; b++) {
+              const h = newBoard[a][b];
+              if (h && h.color === randomColor) {
+                additionalScore += 150 * 2;
+                spawnExplosion(a, b, `+${150 * 2}`, h.color);
+                newBoard[a][b] = null;
+              }
+            }
+          }
+        } else {
+          // For any other special gem.
+          spawnExplosion(i, j, "+5000", g.color);
+          newBoard[i][j] = null;
+          additionalScore += 5000;
+        }
+      }
+    }
+  }
+  if (additionalScore > 0) {
+    addScore(additionalScore);
+  }
+  // If there were any special gems, drop gems and animate gravity.
+  const dropped = dropGemsFully(newBoard);
+  animateGravitySmooth(newBoard, dropped, setBoard, (droppedBoard) => {
+    // Check if new special gems appeared as a result.
+    const specialsRemain = droppedBoard.some(row => row.some(g => g && g.special));
+    if (specialsRemain) {
+      // Continue exploding until no specials remain.
+      explodeSpecialsAndFinish(droppedBoard, setBoard, addScore, spawnExplosion, onFinalHurrahComplete);
+    } else {
+      if (onFinalHurrahComplete) onFinalHurrahComplete();
+    }
+  });
+};
+
 const processMatches = (currentBoard, setBoard, addScore, options = {}) => {
   const matchGroups = findMatches(currentBoard);
   if (matchGroups.length > 0) {
@@ -670,10 +712,12 @@ const processMatches = (currentBoard, setBoard, addScore, options = {}) => {
   } else {
     if (!hasPossibleMoves(currentBoard)) {
       console.log("No possible moves found, shuffling the board!");
+      if (options.setIsTimerPaused) options.setIsTimerPaused(true);
       if (options.setIsShuffling) options.setIsShuffling(true);
       const newShuffledBoard = shuffleBoard(currentBoard);
       animateShuffle(currentBoard, newShuffledBoard, setBoard, 2000, (finalBoard) => {
         if (options.setIsShuffling) options.setIsShuffling(false);
+        if (options.setIsTimerPaused) options.setIsTimerPaused(false);
         setBoard(finalBoard);
         processMatches(finalBoard, setBoard, addScore, options);
       });
@@ -707,7 +751,14 @@ const hasPossibleMoves = (brd) => {
 
 const dragThreshold = 20;
 
-const Board = ({ onFirstSwap, addScore }) => {
+const Board = ({
+  onFirstSwap,
+  addScore,
+  isTimerPaused,
+  setIsTimerPaused,
+  timeIsUp,
+  onFinalHurrahComplete,
+}) => {
   const [board, setBoard] = useState(generateBoard);
   const [swapping, setSwapping] = useState(null);
   const [explosions, setExplosions] = useState([]);
@@ -730,6 +781,16 @@ const Board = ({ onFirstSwap, addScore }) => {
     return () => clearTimeout(id);
   }, [board]);
 
+  // Final Hurrah: When timeIsUp becomes true, disable input and trigger explosion of all specials.
+  useEffect(() => {
+    if (timeIsUp) {
+      // Disable user input by not processing pointer events.
+      setIsTimerPaused(true);
+      explodeSpecialsAndFinish(board, setBoard, addScore, spawnExplosion, onFinalHurrahComplete);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeIsUp]);
+
   const spawnExplosion = (row, col, value, primaryColor) => {
     const x = col * cellSize + cellSize / 2;
     const y = row * cellSize + cellSize / 2;
@@ -740,11 +801,60 @@ const Board = ({ onFirstSwap, addScore }) => {
       value,
       primaryColor,
     };
-    setExplosions(prev => [...prev, newExplosion]);
+    setExplosions((prev) => [...prev, newExplosion]);
+  };
+
+  // Final Hurrah Function – Recursive explosion of all special gems.
+  const explodeSpecialsAndFinish = (currentBoard, setBoard, addScore, spawnExplosion, onFinalHurrahComplete) => {
+    const newBoard = currentBoard.map((row) => [...row]);
+    let additionalScore = 0;
+    let specialsFound = false;
+    for (let i = 0; i < numRows; i++) {
+      for (let j = 0; j < numCols; j++) {
+        const g = newBoard[i][j];
+        if (g && g.special) {
+          specialsFound = true;
+          if (g.special === "disco") {
+            const randomColor = gemColors[Math.floor(Math.random() * gemColors.length)];
+            spawnExplosion(i, j, "+10000", g.color);
+            newBoard[i][j] = null;
+            additionalScore += 10000;
+            for (let a = 0; a < numRows; a++) {
+              for (let b = 0; b < numCols; b++) {
+                const h = newBoard[a][b];
+                if (h && h.color === randomColor) {
+                  additionalScore += 150 * 2;
+                  spawnExplosion(a, b, `+${150 * 2}`, h.color);
+                  newBoard[a][b] = null;
+                }
+              }
+            }
+          } else {
+            spawnExplosion(i, j, "+5000", g.color);
+            newBoard[i][j] = null;
+            additionalScore += 5000;
+          }
+        }
+      }
+    }
+    if (additionalScore > 0) {
+      addScore(additionalScore);
+    }
+    const dropped = dropGemsFully(newBoard);
+    animateGravitySmooth(newBoard, dropped, setBoard, (droppedBoard) => {
+      const specialsRemain = droppedBoard.some(row => row.some(g => g && g.special));
+      if (specialsRemain) {
+        explodeSpecialsAndFinish(droppedBoard, setBoard, addScore, spawnExplosion, onFinalHurrahComplete);
+      } else {
+        if (onFinalHurrahComplete) onFinalHurrahComplete();
+      }
+    });
   };
 
   // --- Pointer Handlers ---
   const handlePointerDown = (row, col) => (e) => {
+    // If time is up, ignore further user input.
+    if (timeIsUp) return;
     draggingGem.current = { row, col };
     const { clientX, clientY } = e;
     startTouch.current = { x: clientX, y: clientY };
@@ -752,6 +862,8 @@ const Board = ({ onFirstSwap, addScore }) => {
   };
 
   const handlePointerMove = (e) => {
+    // If time is up, ignore pointer moves.
+    if (timeIsUp) return;
     if (!startTouch.current || !draggingGem.current) return;
     if (!firstSwapTriggered.current && onFirstSwap) {
       onFirstSwap();
@@ -789,10 +901,8 @@ const Board = ({ onFirstSwap, addScore }) => {
       newBoard[r2][c2].swapOffset = { x: -deltaX, y: -deltaY };
       setBoard(newBoard);
       setSwapping({ r1, c1, r2, c2 });
-      // Delay processing to let animation show.
       setTimeout(() => {
         if (gem1.special === "disco" || gem2.special === "disco") {
-          // Pass the current board to handleDiscoSwap.
           handleDiscoSwap(board, gem1, gem2, r1, c1, r2, c2, setBoard, addScore, spawnExplosion);
           setSwapping(null);
           return;
@@ -804,6 +914,7 @@ const Board = ({ onFirstSwap, addScore }) => {
             swappedIn: [r2, c2],
             spawnExplosion,
             setIsShuffling,
+            setIsTimerPaused,
           });
         } else {
           const reversedBoard = board.map(row =>
@@ -821,6 +932,7 @@ const Board = ({ onFirstSwap, addScore }) => {
   };
 
   const handlePointerUp = (e) => {
+    if (timeIsUp) return;
     e.currentTarget.releasePointerCapture(e.pointerId);
     draggingGem.current = null;
     startTouch.current = null;
@@ -876,9 +988,7 @@ const Board = ({ onFirstSwap, addScore }) => {
           y={exp.y}
           value={exp.value}
           primaryColor={exp.primaryColor}
-          onComplete={(id) =>
-            setExplosions(prev => prev.filter(exp => exp.id !== id))
-          }
+          onComplete={(id) => setExplosions(prev => prev.filter(exp => exp.id !== id))}
         />
       ))}
     </div>

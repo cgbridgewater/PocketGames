@@ -4,7 +4,7 @@ import GameInfo from "../Modals/GameInfo";
 function Header({ title, onclick, turn_title, turns, howTo, isTimerPaused, setIsTimerPaused }) {
   return (
     <>
-      <h2>{title}</h2>
+      {/* <h2>{title}</h2> */}
       <div className="button_box">
         <button onClick={onclick}>New Game</button>
         {howTo ? <GameInfo howTo={howTo} isTimerPaused={isTimerPaused} setIsTimerPaused={setIsTimerPaused} /> : ""}
